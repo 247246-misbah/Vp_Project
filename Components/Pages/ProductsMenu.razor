@@ -2,7 +2,7 @@
 @inject Misbah_VisualProgramming_Project.Services.CafeService CafeService
 @using Misbah_VisualProgramming_Project.Models
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&display=swap" rel="stylesheet">
 
 <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 40px; color: #ffffff;">
     
@@ -51,11 +51,11 @@
                         }
                         else
                         {
-                            @if (product.Name.Contains("Espresso", StringComparison.OrdinalIgnoreCase))
+                            @if (product.Name != null && product.Name.Contains("Espresso", StringComparison.OrdinalIgnoreCase))
                             {
                                 <img src="https://images.unsplash.com/photo-1510972527409-cac236c0aa17?w=500&q=80" alt="Espresso Layout" style="width: 100%; height: 100%; object-fit: cover;" />
                             }
-                            else if (product.Name.Contains("Latte", StringComparison.OrdinalIgnoreCase) || product.Name.Contains("Cap", StringComparison.OrdinalIgnoreCase))
+                            else if (product.Name != null && (product.Name.Contains("Latte", StringComparison.OrdinalIgnoreCase) || product.Name.Contains("Cap", StringComparison.OrdinalIgnoreCase)))
                             {
                                 <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80" alt="Latte Layout" style="width: 100%; height: 100%; object-fit: cover;" />
                             }
@@ -109,7 +109,7 @@
 </style>
 
 @code {
-    private List<Product>? products;
+    private List<Product>? products = new List<Product>();
 
     protected override async Task OnInitializedAsync()
     {
