@@ -7,7 +7,7 @@ namespace Misbah_VisualProgramming_Project.Models
     public class HardwareStatus
     {
         [Key]
-        [Column("MachineId")]
+        [Column("machineid")] // <-- Isko pure lowercase 'machineid' kar diya hai
         public int MachineId { get; set; }
 
         [Column("machinename")]
