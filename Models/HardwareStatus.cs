@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Misbah_VisualProgramming_Project.Models
 {
-    [Table("HardwareStatus")] // Force matching with your SQL schema table name
+    [Table("HardwareStatus")]
     public class HardwareStatus
     {
         [Key]

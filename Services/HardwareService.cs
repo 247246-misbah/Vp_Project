@@ -13,7 +13,7 @@ namespace Misbah_VisualProgramming_Project.Services
         private readonly Timer _timer;
         private readonly Random _random = new Random();
 
-        public event System.Action<HardwareStatus>? OnTelemetryUpdated;
+        public event Action<HardwareStatus>? OnTelemetryUpdated;
 
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
@@ -27,7 +27,7 @@ namespace Misbah_VisualProgramming_Project.Services
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Simulated boiler target ~92°C
+                double currentTemp = 90.0 + (_random.NextDouble() * 5.0);
                 int waterLevel = _random.Next(95, 101);
 
                 var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
@@ -57,7 +57,7 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry engine sync warning: {ex.Message}");
+                Console.WriteLine($"Telemetry Engine Log: {ex.Message}");
             }
         }
 
