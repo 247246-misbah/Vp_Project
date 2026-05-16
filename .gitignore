@@ -1,0 +1,11 @@
+﻿## Visual Studio Temporary Cache Files
+.vs/
+[Db]/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Compilation Binaries
+bin/
+obj/
