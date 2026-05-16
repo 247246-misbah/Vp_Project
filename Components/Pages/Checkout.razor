@@ -1,0 +1,77 @@
+﻿@page "/checkout"
+@using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager NavManager
+
+<div class="container-fluid py-5 px-4" style="background-color: #fdfbf7; min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden bg-white">
+                <div class="py-4 text-center text-white border-0" style="background-color: #6f4e37;">
+                    <h3 class="m-0 fw-bold" style="font-family: 'Playfair Display', serif;">Secure Checkout Queue</h3>
+                </div>
+                
+                <div class="card-body p-4 p-md-5">
+                    <div class="p-3 rounded-4 mb-4 d-flex justify-content-between align-items-center" style="background-color: #fbf8f3; border: 1px solid #efe5d5;">
+                        <div>
+                            <h6 class="m-0 fw-bold text-secondary">Total Bill Amount</h6>
+                            <small class="text-muted">Pipeline Queue: @ItemCount Items</small>
+                        </div>
+                        <h2 class="fw-extrabold m-0 text-success">Rs. @TotalPrice.ToString("F2")</h2>
+                    </div>
+
+                    @if (!OrderPlaced)
+                    {
+                        <form @onsubmit="HandleOrderProcessing">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small fw-bold">CUSTOMER IDENTIFIER / NAME</label>
+                                <input type="text" class="form-control form-control-lg rounded-3 border-secondary-subtle fs-6" placeholder="e.g. Alex Johnson" required />
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold">DISPATCH DELIVERY TABLE STATION</label>
+                                <select class="form-select class-select-lg rounded-3 border-secondary-subtle fs-6">
+                                    <option>Executive VIP Lounge Table 1</option>
+                                    <option>Standard Window Bay Counter 3</option>
+                                    <option>Main Hall Family Section Table 5</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-lg w-100 fw-bold text-white shadow-sm py-3 mt-2 rounded-3" style="background-color: #6f4e37; border: none;">
+                                🎯 Inject Order to Twin System
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <div class="display-2 text-success mb-3">✔️</div>
+                            <h3 class="fw-bold text-dark mb-2" style="font-family: 'Playfair Display', serif;">Order Routed to System!</h3>
+                            <p class="text-muted px-2 mb-4 small" style="line-height: 1.6;">
+                                Token validated and transmitted successfully. The Café Cove twin system has triggered active hardware extraction logs.
+                            </p>
+                            <button class="btn text-white btn-lg px-5 fw-semibold shadow-sm rounded-3" style="background-color: #6f4e37; border: none;" @onclick="ReturnToHome">
+                                Back to Control Room
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int ItemCount = 0;
+    private decimal TotalPrice = 0.00m;
+    private bool OrderPlaced = false;
+
+    protected override void OnInitialized()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("items", out var items)) int.TryParse(items, out ItemCount);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("total", out var total)) decimal.TryParse(total, out TotalPrice);
+    }
+
+    private void HandleOrderProcessing() => OrderPlaced = true;
+    private void ReturnToHome() => NavManager.NavigateTo("/dashboard");
+}

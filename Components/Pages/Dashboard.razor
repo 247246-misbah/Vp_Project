@@ -1,113 +1,144 @@
 ﻿@page "/dashboard"
-@using Misbah_VisualProgramming_Project.Models
 @using Misbah_VisualProgramming_Project.Services
-@inject HardwareService Hardware
+@using Misbah_VisualProgramming_Project.Models
+@inject HardwareService HardwareService
 @implements IDisposable
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 40px; color: #ffffff; min-height: 100vh; background: #0d0b0a;">
-    
-    <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 24px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-            <h1 style="font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: 0.5px;">
-                📊 COFFEE COVE DIGITAL TWIN
-            </h1>
-            <p style="color: #9ca3af; font-size: 13px; margin: 6px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px;">
-                Hardware Telemetry Canvas • Simulation Mode Active
-            </p>
-        </div>
-        
-        <div style="padding: 8px 18px; border-radius: 30px; font-size: 11px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px;
-            background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25);">
-            <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
-            SYSTEM ONLINE
+<div class="container-fluid py-4 px-4" style="background-color: #fdfbf7; min-height: 100vh;">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm overflow-hidden position-relative rounded-4 text-white"
+                 style="background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200') center/cover; min-height: 200px;">
+                <div class="card-body p-4 p-md-5 d-flex justify-content-between align-items-center flex-wrap position-relative z-1">
+                    <div>
+                        <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold text-uppercase small">A Real Italian Cafe</span>
+                        <h1 class="display-6 fw-bold mb-1" style="font-family: 'Playfair Display', serif;">Discover the Taste of Real Coffee</h1>
+                        <p class="mb-0 text-white-50">Hardware Simulation & Digital Twin Monitoring Station</p>
+                    </div>
+                    <div class="mt-3 mt-lg-0">
+                        @if (machine.IsConnected)
+                        {
+                            <span class="badge bg-white text-success px-4 py-3 fs-6 shadow rounded-pill fw-bold border-0">● Active Twin System</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger text-white px-4 py-3 fs-6 shadow rounded-pill fw-bold">● System Disconnected</span>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    @if (telemetry == null)
-    {
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
-            <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;"></div>
-            <p style="color: #9ca3af; margin-top: 20px; font-size: 13px; text-transform: uppercase;">Booting UI Scaffolding...</p>
+    <div class="row g-4">
+        <div class="col-lg-4 col-md-12">
+            <div class="card h-100 shadow-sm border-0 rounded-4 bg-white p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold text-muted mb-0" style="font-family: 'Playfair Display', serif;">Core Framework</h5>
+                    <span class="fs-4">⚙️</span>
+                </div>
+                <h3 class="fw-extrabold text-dark mb-3">@machine.MachineName</h3>
+                
+                <div class="p-3 rounded-4 mb-4" style="background-color: #fbf8f3; border: 1px solid #efe5d5;">
+                    <div class="d-flex align-items-center mb-1">
+                        <div class="spinner-grow text-warning spinner-grow-sm me-2" role="status"></div>
+                        <span class="text-muted small fw-bold">CURRENT PROCESS STATE</span>
+                    </div>
+                    <div class="fs-5 fw-bold text-dark">@machine.CurrentState</div>
+                </div>
+
+                <button class="btn text-white btn-lg w-100 fw-bold shadow-sm py-3 mt-auto rounded-3"
+                        style="background-color: #6f4e37; border: none; transition: transform 0.2s;"
+                        onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"
+                        @onclick="TriggerBrewCycle">
+                    ☕ Run Espresso Extraction
+                </button>
+            </div>
         </div>
-    }
-    else
-    {
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 30px;">
-            
-            <div class="luxury-card" style="background: rgba(28, 24, 22, 0.65); border: 1px solid rgba(245, 158, 11, 0.12); border-radius: 24px; padding: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-                <div style="font-size: 24px; margin-bottom: 15px;">🤖</div>
-                <span style="color: #d97706; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Twin Node Profile</span>
-                <h3 style="font-size: 22px; font-weight: 700; color: #ffffff; margin: 12px 0 16px 0;">@telemetry.MachineName</h3>
-                <span style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); padding: 6px 14px; border-radius: 12px; font-size: 12px; color: #f59e0b; font-weight: 600; display: inline-block;">
-                    ⚙️ @telemetry.CurrentState
-                </span>
-            </div>
 
-            <div class="luxury-card" style="background: rgba(28, 24, 22, 0.65); border: 1px solid rgba(239, 68, 68, 0.12); border-radius: 24px; padding: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-                <div style="font-size: 24px; margin-bottom: 15px;">🔥</div>
-                <span style="color: #ef4444; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Boiler Core Temperature</span>
-                <h3 style="font-size: 34px; font-weight: 700; color: #ffffff; margin: 10px 0 18px 0;">@telemetry.Temperature.ToString("F1")°C</h3>
-                <div style="height: 6px; background: rgba(255,255,255,0.03); border-radius: 10px; overflow: hidden;">
-                    <div style="height: 100%; background: linear-gradient(90deg, #ef4444, #f97316); width: @(Math.Min(telemetry.Temperature / 120.0 * 100.0, 100.0))%; border-radius: 10px;"></div>
+        <div class="col-lg-8 col-md-12">
+            <div class="card h-100 shadow-sm border-0 rounded-4 bg-white p-4">
+                <h5 class="fw-bold text-dark mb-4" style="font-family: 'Playfair Display', serif;">Live Coffee Machine Telemetry</h5>
+                <div class="row g-4">
+                    
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-4 border-0 shadow-sm" style="background-color: #fdfbf7;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold text-secondary small">🌡️ BOILER TEMPERATURE</span>
+                                <span class="badge bg-danger bg-opacity-10 text-danger fs-6 fw-bold rounded-pill px-3">@machine.Temperature.ToString("F1")°C</span>
+                            </div>
+                            <div class="progress bg-secondary bg-opacity-10" style="height: 12px; border-radius: 10px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                                     role="progressbar" style="width: @(machine.Temperature)%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-4 border-0 shadow-sm" style="background-color: #fdfbf7;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold text-secondary small">💧 WATER RESERVOIR STATUS</span>
+                                <span class="badge bg-info bg-opacity-10 text-info fs-6 fw-bold rounded-pill px-3">@machine.WaterLevel%</span>
+                            </div>
+                            <div class="progress bg-secondary bg-opacity-10" style="height: 12px; border-radius: 10px;">
+                                <div class="progress-bar progress-bar-striped bg-info"
+                                     role="progressbar" style="width: @machine.WaterLevel%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="p-4 rounded-4 border-0 shadow-sm" style="background-color: #fdfbf7;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold text-secondary small">🫘 COFFEE BEANS HOPPER CAPACITY</span>
+                                <span class="badge bg-dark fs-6 fw-bold rounded-pill px-3 text-warning">@machine.BeanWeight g / 500g</span>
+                            </div>
+                            <div class="progress bg-secondary bg-opacity-10" style="height: 16px; border-radius: 10px;">
+                                <div class="progress-bar progress-bar-striped"
+                                     role="progressbar" style="width: @((machine.BeanWeight / 500.0) * 100)%; background-color: #8b5a2b;"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="luxury-card" style="background: rgba(28, 24, 22, 0.65); border: 1px solid rgba(59, 130, 246, 0.12); border-radius: 24px; padding: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-                <div style="font-size: 24px; margin-bottom: 15px;">💧</div>
-                <span style="color: #3b82f6; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Water Level Reservoir</span>
-                <h3 style="font-size: 34px; font-weight: 700; color: #ffffff; margin: 10px 0 18px 0;">@telemetry.WaterLevel%</h3>
-                <div style="height: 6px; background: rgba(255,255,255,0.03); border-radius: 10px; overflow: hidden;">
-                    <div style="height: 100%; background: linear-gradient(90deg, #3b82f6, #06b6d4); width: @telemetry.WaterLevel%; border-radius: 10px;"></div>
-                </div>
-            </div>
-
-            <div class="luxury-card" style="background: rgba(28, 24, 22, 0.65); border: 1px solid rgba(16, 185, 129, 0.12); border-radius: 24px; padding: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-                <div style="font-size: 24px; margin-bottom: 15px;">🫘</div>
-                <span style="color: #10b981; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Hopper Bean Stock</span>
-                <h3 style="font-size: 34px; font-weight: 700; color: #ffffff; margin: 10px 0 18px 0;">@telemetry.BeanWeight <span style="font-size: 16px; color: #6b7280; font-weight: 400;">g</span></h3>
-                <div style="height: 6px; background: rgba(255,255,255,0.03); border-radius: 10px; overflow: hidden;">
-                    <div style="height: 100%; background: linear-gradient(90deg, #10b981, #84cc16); width: @(Math.Min(telemetry.BeanWeight / 500.0 * 100.0, 100.0))%; border-radius: 10px;"></div>
-                </div>
-            </div>
-
         </div>
-    }
+    </div>
 </div>
 
-<style>
-    .luxury-card {
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-        .luxury-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(245, 158, 11, 0.4) !important;
-            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.1) !important;
-        }
-</style>
-
 @code {
-    private HardwareStatus? telemetry;
-    private System.Threading.Timer? _timer;
+    private HardwareStatus machine = new();
+    private System.Threading.Timer? simulationTimer;
 
     protected override async Task OnInitializedAsync()
     {
-        telemetry = await Hardware.GetLatestStatus();
-
-        _timer = new System.Threading.Timer(async _ =>
+        machine = await HardwareService.GetLatestStatus();
+        
+        simulationTimer = new System.Threading.Timer(_ =>
         {
-            await InvokeAsync(async () =>
+            InvokeAsync(() =>
             {
-                telemetry = await Hardware.GetLatestStatus();
+                var random = new Random();
+                machine.Temperature += random.NextDouble() * 2.0 - 1.0;
+                if (machine.Temperature > 96) machine.Temperature = 91;
+                if (machine.Temperature < 88) machine.Temperature = 92;
                 StateHasChanged();
             });
-        }, null, 2500, 2500);
+        }, null, 2000, 2000);
+    }
+
+    private void TriggerBrewCycle()
+    {
+        machine.CurrentState = "Extracting Rich Crema Espresso Shot...";
+        machine.WaterLevel -= 4;
+        machine.BeanWeight -= 15;
+        
+        if (machine.WaterLevel < 20) machine.WaterLevel = 95;
+        if (machine.BeanWeight < 50) machine.BeanWeight = 450;
     }
 
     public void Dispose()
     {
-        _timer?.Dispose();
+        simulationTimer?.Dispose();
     }
 }

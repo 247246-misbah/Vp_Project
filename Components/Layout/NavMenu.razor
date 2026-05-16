@@ -1,19 +1,29 @@
-﻿<div class="top-row ps-3 navbar navbar-dark" style="background-color: #13100e; border-bottom: 1px solid rgba(255,255,255,0.05); height: 3.5rem; display: flex; align-items: center;">
+﻿<div class="top-row ps-3 navbar navbar-light border-bottom" style="background-color: #f3eade;">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-warning" href="" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;">☕ COFFEE COVE TWIN</a>
+        <a class="navbar-brand fw-bold text-dark" href="" style="font-family: 'Playfair Display', serif; letter-spacing: 1px;">
+            <span class="fs-4 me-1">☕</span> COFFEE COVE
+        </a>
     </div>
 </div>
 
-<div class="nav-scrollable" style="background: #13100e; padding-top: 15px; height: calc(100vh - 3.5rem);">
-    <nav class="flex-column nav-pills px-3">
+<div class="nav-scrollable" style="min-height: calc(100vh - 3.5rem); background-color: #efe5d5;">
+    <div class="text-center py-4">
+        <div class="mx-auto bg-white rounded-circle d-flex align-items-center justify-content-center border border-secondary border-opacity-25 shadow-sm" style="width: 70px; height: 70px;">
+            <span class="fs-2">☕</span>
+        </div>
+        <h6 class="mt-2 fw-bold text-dark mb-0" style="font-family: 'Playfair Display', serif;">Coffee Heaven</h6>
+        <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.7rem;">Digital Twin Live</small>
+    </div>
+
+    <nav class="flex-column p-3">
         <div class="nav-item mb-2">
-            <NavLink class="nav-link text-white-50 d-flex align-items-center gap-2 py-2.5 px-3 rounded-3" href="dashboard" Match="NavLinkMatch.All" active-class="active-premium">
-                <span class="bi bi-speedometer2" aria-hidden="true"></span> 📊 Control Dashboard
+            <NavLink class="nav-link text-dark rounded-3 p-3 d-flex align-items-center" href="dashboard" Match="NavLinkMatch.All">
+                <span class="fs-5 me-3">📊</span> <span class="fw-medium">Control Dashboard</span>
             </NavLink>
         </div>
         <div class="nav-item mb-2">
-            <NavLink class="nav-link text-white-50 d-flex align-items-center gap-2 py-2.5 px-3 rounded-3" href="products-menu" active-class="active-premium">
-                <span class="bi bi-list-stars" aria-hidden="true"></span> ☕ Espresso Menu
+            <NavLink class="nav-link text-dark rounded-3 p-3 d-flex align-items-center" href="menu">
+                <span class="fs-5 me-3">📜</span> <span class="fw-medium">Our Speciality Menu</span>
             </NavLink>
         </div>
     </nav>
@@ -21,21 +31,18 @@
 
 <style>
     .nav-link {
-        transition: all 0.3s ease;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 14px;
-        font-weight: 500;
+        transition: all 0.2s ease;
     }
 
         .nav-link:hover {
-            background: rgba(245, 158, 11, 0.08) !important;
-            color: #f59e0b !important;
+            background-color: rgba(111, 78, 55, 0.08) !important;
+            color: #6f4e37 !important;
+            transform: translateX(3px);
         }
-        /* Explicit high-light matching your target aesthetics */
-        .nav-link.active, .active-premium {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-            color: #ffffff !important;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+
+        .nav-link.active {
+            background-color: #6f4e37 !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(111, 78, 55, 0.25);
         }
 </style>
