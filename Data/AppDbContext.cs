@@ -1,24 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Misbah_VisualProgramming_Project.Models;
+using Misbah_VisualProgramming_Project.Models; // THIS LINE WAS MISSING AND CAUSING THE ERROR
 
 namespace Misbah_VisualProgramming_Project.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
-        public DbSet<User> Users { get; set; }
+        // Maps cleanly to your MySQL tables
         public DbSet<Product> Products { get; set; }
         public DbSet<HardwareStatus> HardwareStatuses { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Directly targeting your exact SQL schema table names
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Product>().ToTable("Products");
-            modelBuilder.Entity<HardwareStatus>().ToTable("HardwareStatus");
-        }
     }
 }
