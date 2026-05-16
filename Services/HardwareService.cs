@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
-using Misbah_VisualProgramming_Project.Models;
+using Misbah_VisualProgramming_Project.Models; // Explicitly targeting models folder
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +13,9 @@ namespace Misbah_VisualProgramming_Project.Services
         private readonly Timer _timer;
         private readonly Random _random = new Random();
 
-        public event Action<HardwareStatus>? OnTelemetryUpdated;
+        // FIXED: Using explicit namespace prefix to prevent CS0246 compilation bugs
+        public event Action<Misbah_VisualProgramming_Project.Models.HardwareStatus>? OnTelemetryUpdated;
 
-        // FIXED: Injecting IDbContextFactory instead of direct AppDbContext to fix the scope validation crash
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
@@ -28,13 +28,13 @@ namespace Misbah_VisualProgramming_Project.Services
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Around 92.50°C
-                int waterLevel = _random.Next(95, 101); // Around 100%
+                double currentTemp = 90.0 + (_random.NextDouble() * 5.0);
+                int waterLevel = _random.Next(95, 101);
 
                 var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
                 if (telemetry == null)
                 {
-                    telemetry = new HardwareStatus
+                    telemetry = new Misbah_VisualProgramming_Project.Models.HardwareStatus
                     {
                         MachineName = "Espresso Twin-X1",
                         Status = "Idle",
@@ -56,15 +56,15 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry engine warning: {ex.Message}");
+                Console.WriteLine($"Telemetry warning: {ex.Message}");
             }
         }
 
-        public async Task<HardwareStatus> GetLatestStatus()
+        public async Task<Misbah_VisualProgramming_Project.Models.HardwareStatus> GetLatestStatus()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
             return await context.HardwareStatuses.FirstOrDefaultAsync()
-                   ?? new HardwareStatus { MachineName = "Espresso Twin-X1", Status = "Idle", BoilerTemp = 92.5, WaterLevel = 100 };
+                   ?? new Misbah_VisualProgramming_Project.Models.HardwareStatus { MachineName = "Espresso Twin-X1", Status = "Idle", BoilerTemp = 92.5, WaterLevel = 100 };
         }
 
         public void Dispose()
