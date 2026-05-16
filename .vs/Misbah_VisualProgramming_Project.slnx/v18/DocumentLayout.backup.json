@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\component.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\component.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\productsmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\productsmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\cafeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,12 +63,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Component.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Component.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Component.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Component.razor",
-              "RelativeToolTip": "Components\\Pages\\Component.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ProductsMenu.razor",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\ProductsMenu.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\ProductsMenu.razor",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\ProductsMenu.razor",
+              "RelativeToolTip": "Components\\Pages\\ProductsMenu.razor",
+              "ViewState": "AgIAACkAAAAAAAAAAAAuwEcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-16T13:43:01.504Z",
               "EditorCaption": ""
