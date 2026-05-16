@@ -10,12 +10,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
 
-// 2. Register DbContext and DbContextFactory for Multithreading Telemetry
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion));
-
+// 2. CRUCIAL FIX: Register ONLY the DbContextFactory to completely isolate the Singleton Service
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion));
+    options.UseMySql(connectionString, serverVersion),
+    ServiceLifetime.Singleton); // Explicitly forces Singleton alignment to stop dependency validation crashes
 
 // 3. Register Core Services
 builder.Services.AddScoped<CafeService>();
@@ -23,7 +21,7 @@ builder.Services.AddSingleton<HardwareService>();
 
 // 4. Blazor Server Classic Pipeline Configuration
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor(); // Classic Server Pipeline Fixed
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
