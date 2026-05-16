@@ -9,16 +9,20 @@ namespace Misbah_VisualProgramming_Project.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
+
+        // This targets your model mapping
         public DbSet<HardwareStatus> HardwareStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Force explicit lowercase table mapping to match XAMPP MySQL setup
-            modelBuilder.Entity<Product>().ToTable("product");
-            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatus");
-            modelBuilder.Entity<User>().ToTable("user");
+            // CRUCIAL FIX: Directly telling Entity Framework to look for the exact names from your SQL schema
+            modelBuilder.Entity<Product>().ToTable("Products");
+            modelBuilder.Entity<User>().ToTable("Users");
+
+            // FORCING THE EXACT TABLE NAME WITHOUT EXTRA 'es' OR 's'
+            modelBuilder.Entity<HardwareStatus>().ToTable("HardwareStatus");
         }
     }
 }

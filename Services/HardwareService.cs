@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
+using Misbah_VisualProgramming_Project.Models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Misbah_VisualProgramming_Project.Services
         private readonly Timer _timer;
         private readonly Random _random = new Random();
 
-        public event System.Action<Misbah_VisualProgramming_Project.Models.HardwareStatus>? OnTelemetryUpdated;
+        public event System.Action<HardwareStatus>? OnTelemetryUpdated;
 
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
@@ -26,26 +27,28 @@ namespace Misbah_VisualProgramming_Project.Services
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                double currentTemp = 90.0 + (_random.NextDouble() * 5.0);
+                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Simulated boiler target ~92°C
                 int waterLevel = _random.Next(95, 101);
 
                 var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
                 if (telemetry == null)
                 {
-                    telemetry = new Misbah_VisualProgramming_Project.Models.HardwareStatus
+                    telemetry = new HardwareStatus
                     {
                         MachineName = "Espresso Twin-X1",
-                        Status = "Idle",
-                        BoilerTemp = currentTemp,
-                        WaterLevel = waterLevel
+                        CurrentState = "Idle",
+                        Temperature = currentTemp,
+                        WaterLevel = waterLevel,
+                        BeanWeight = 950,
+                        IsConnected = true
                     };
                     context.HardwareStatuses.Add(telemetry);
                 }
                 else
                 {
-                    telemetry.BoilerTemp = currentTemp;
+                    telemetry.Temperature = currentTemp;
                     telemetry.WaterLevel = waterLevel;
-                    telemetry.Status = "Idle";
+                    telemetry.CurrentState = "Idle";
                     context.HardwareStatuses.Update(telemetry);
                 }
 
@@ -54,15 +57,15 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry engine warning: {ex.Message}");
+                Console.WriteLine($"Telemetry engine sync warning: {ex.Message}");
             }
         }
 
-        public async Task<Misbah_VisualProgramming_Project.Models.HardwareStatus> GetLatestStatus()
+        public async Task<HardwareStatus> GetLatestStatus()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
             return await context.HardwareStatuses.FirstOrDefaultAsync()
-                   ?? new Misbah_VisualProgramming_Project.Models.HardwareStatus { MachineName = "Espresso Twin-X1", Status = "Idle", BoilerTemp = 92.5, WaterLevel = 100 };
+                   ?? new HardwareStatus { MachineName = "Espresso Twin-X1", CurrentState = "Idle", Temperature = 92.5, WaterLevel = 100 };
         }
 
         public void Dispose()
