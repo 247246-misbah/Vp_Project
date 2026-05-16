@@ -7,26 +7,25 @@ namespace Misbah_VisualProgramming_Project.Models
     public class HardwareStatus
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        // Is line ko check karein, hum explicitly column name mapping auto par chhor rahe hain
-        public int Id { get; set; }
+        [Column("MachineId")]
+        public int MachineId { get; set; }
 
-        [Column("MachineName")]
+        [Column("machinename")]
         public string MachineName { get; set; } = "Espresso Twin-X1";
 
-        [Column("CurrentState")]
+        [Column("currentstate")]
         public string CurrentState { get; set; } = "Idle";
 
-        [Column("Temperature")]
-        public double Temperature { get; set; } = 92.5;
+        [Column("temperature")]
+        public double Temperature { get; set; }
 
-        [Column("WaterLevel")]
-        public int WaterLevel { get; set; } = 85;
+        [Column("waterlevel")]
+        public int WaterLevel { get; set; }
 
-        [Column("BeanWeight")]
-        public int BeanWeight { get; set; } = 450;
+        [Column("beanweight")]
+        public int BeanWeight { get; set; }
 
-        [Column("IsConnected")]
-        public bool IsConnected { get; set; } = true;
+        [Column("isconnected")]
+        public bool IsConnected { get; set; }
     }
 }

@@ -1,11 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page" style="display: flex; min-height: 100vh; background-color: #0d0b0a;">
-    <div class="sidebar" style="width: 280px; background: #13100e; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;">
-        <NavMenu />
-    </div>
-
-    <main style="flex-grow: 1; overflow-y: auto;">
-        @body
+<div class="page" style="background: #0d0b0a; min-height: 100vh;">
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
     </main>
 </div>
