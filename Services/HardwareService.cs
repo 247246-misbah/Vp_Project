@@ -2,6 +2,7 @@
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Misbah_VisualProgramming_Project.Services
@@ -20,24 +21,31 @@ namespace Misbah_VisualProgramming_Project.Services
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                var status = await context.HardwareStatuses.FirstOrDefaultAsync();
 
-                if (status != null) return status;
+                // Mapped properly with MachineId instead of Id
+                var status = await context.HardwareStatuses
+                    .OrderBy(h => h.MachineId)
+                    .FirstOrDefaultAsync();
+
+                if (status != null)
+                {
+                    return status;
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Database Pipeline Log: {ex.Message}");
+                Console.WriteLine($"[DB Fallback] Using Local Mock State: {ex.Message}");
             }
 
-            // Fallback object state safe parameters if database row is empty
+            // Fallback safe state data configuration for UI design stability
             return new HardwareStatus
             {
-                Id = 1,
-                MachineName = "Espresso Twin-X1",
-                CurrentState = "Ready",
-                Temperature = 92.4,
+                MachineId = 1,
+                MachineName = "Espresso Twin-Pro X",
+                CurrentState = "Ready to Brew",
+                Temperature = 92.0,
                 WaterLevel = 85,
-                BeanWeight = 420,
+                BeanWeight = 400,
                 IsConnected = true
             };
         }
