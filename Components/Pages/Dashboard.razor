@@ -55,8 +55,7 @@
                         <span class="text-danger fw-semibold ms-1 fs-5">°C</span>
                     </div>
                     <div class="progress custom-progress bg-dark bg-opacity-50" style="height: 6px;">
-                        <div class="progress-bar bg-gradient-danger progress-bar-striped progress-bar-animated" 
-                             role="progressbar" style="width: @(Math.Min(latestTelemetry.BoilerTemp, 100))%"></div>
+                        <div class="progress-bar bg-gradient-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: @(Math.Min(latestTelemetry.BoilerTemp, 100))%"></div>
                     </div>
                 </div>
             </div>
@@ -77,140 +76,33 @@
                 </div>
             </div>
         </div>
-
-        <div class="row g-4">
-            <div class="col-lg-8">
-                <div class="rounded-4 p-4 h-100 glass-card border border-secondary border-opacity-10 shadow-lg">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-white fw-bold mb-0 fs-5">System Alert Diagnostics</h4>
-                        <span class="badge bg-secondary bg-opacity-25 text-white-50 px-2.5 py-1 rounded-3 fw-semibold tracking-wide" style="font-size: 0.7rem;">AUTOMATED RULES</span>
-                    </div>
-                    
-                    <div class="alert-feed-container d-flex flex-column gap-3">
-                        @if (latestTelemetry.BoilerTemp > 94)
-                        {
-                            <div class="diagnostic-item border-start border-danger border-3 bg-danger bg-opacity-10 p-3 rounded-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-exclamation-triangle-fill text-danger fs-4"></i>
-                                <div>
-                                    <h6 class="text-danger fw-bold mb-0.5">CRITICAL: Boiler Heat Threshold</h6>
-                                    <p class="text-white-50 small mb-0">Chamber reading is @latestTelemetry.BoilerTemp.ToString("F2")°C. Automatic cooling cycle routing active.</p>
-                                </div>
-                            </div>
-                        }
-
-                        <div class="diagnostic-item border-start border-success border-3 bg-success bg-opacity-5 p-3 rounded-3 d-flex align-items-center gap-3">
-                            <i class="bi bi-check-circle-fill text-success fs-4"></i>
-                            <div>
-                                <h6 class="text-success fw-bold mb-0.5">Telemetry Integrity Valid</h6>
-                                <p class="text-white-50 small mb-0">All registered IoT simulation nodes are transmitting fully standardized signals into the central data pipeline layer.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="rounded-4 p-4 h-100 glass-card border border-secondary border-opacity-10 shadow-lg d-flex flex-column justify-content-between">
-                    <div>
-                        <h4 class="text-white fw-bold mb-2 fs-5">System Controls</h4>
-                        <p class="text-muted small mb-0">Inject manual state override signals directly down into the virtual twin core.</p>
-                    </div>
-                    <div class="d-flex flex-column gap-2 mt-3">
-                        <button class="btn btn-outline-warning w-100 py-2 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm override-btn">
-                            <i class="bi bi-arrow-clockwise"></i> Force State Reset
-                        </button>
-                        <button class="btn btn-outline-danger w-100 py-2 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm override-btn">
-                            <i class="bi bi-power"></i> Emergency Shutdown
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     }
 </div>
 
 <style>
-    /* Dark Cyberpunk Theme Styling Definitions */
-    .dashboard-wrapper {
-        background-color: #0b0d11 !important;
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-    .text-gradient-gold {
-        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .glass-card {
-        background: rgba(22, 26, 35, 0.65) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    }
-
-    /* Subtle Border Neon Glowing Indicators */
-    .border-glow {
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-    .border-glow:hover {
-        transform: translateY(-3px);
-    }
-    .border-glow-blue:hover { box-shadow: 0 8px 24px rgba(13, 202, 240, 0.12); border-color: rgba(13, 202, 240, 0.3) !important; }
-    .border-glow-red:hover { box-shadow: 0 8px 24px rgba(220, 53, 69, 0.12); border-color: rgba(220, 53, 69, 0.3) !important; }
-    .border-glow-cyan:hover { box-shadow: 0 8px 24px rgba(23, 162, 184, 0.12); border-color: rgba(23, 162, 184, 0.3) !important; }
-
-    /* Custom Color Palettes Dimmed Layers */
-    .icon-circle {
-        width: 38px;
-        height: 38px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-    }
+    .dashboard-wrapper { background-color: #0b0d11 !important; font-family: 'Segoe UI', sans-serif; }
+    .text-gradient-gold { background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .glass-card { background: rgba(22, 26, 35, 0.65) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(255, 255, 255, 0.05) !important; }
+    .border-glow { transition: transform 0.22s ease; }
+    .border-glow:hover { transform: translateY(-3px); }
+    .border-glow-blue:hover { border-color: rgba(13, 202, 240, 0.3) !important; }
+    .border-glow-red:hover { border-color: rgba(220, 53, 69, 0.3) !important; }
+    .border-glow-cyan:hover { border-color: rgba(23, 162, 184, 0.3) !important; }
+    .icon-circle { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
     .bg-blue-dim { background-color: rgba(13, 202, 240, 0.08); }
     .bg-red-dim { background-color: rgba(220, 53, 69, 0.08); }
     .bg-cyan-dim { background-color: rgba(23, 162, 184, 0.08); }
-
     .text-cyan { color: #17a2b8 !important; }
     .bg-gradient-danger { background: linear-gradient(90deg, #dc3545, #ff4757); }
     .bg-gradient-cyan { background: linear-gradient(90deg, #17a2b8, #20c997); }
-
-    /* Dynamic Badges and Indicators styles */
-    .status-badge {
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px; }
     .badge-blue { background-color: rgba(13, 202, 240, 0.12); color: #0dcaf0; }
     .inner-dot { width: 6px; height: 6px; border-radius: 50%; }
-
-    /* Alive Pulse Animation CSS Core */
-    .pulse-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #198754;
-        border-radius: 50%;
-        box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.6);
-        animation: pulseProcessing 1.6s infinite;
-    }
-    
+    .pulse-dot { width: 8px; height: 8px; background-color: #198754; border-radius: 50%; animation: pulseProcessing 1.6s infinite; }
     @@keyframes pulseProcessing {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.6); }
-        70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(25, 135, 84, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
-    }
-    
-    .override-btn {
-        transition: all 0.2s ease;
-    }
-    .override-btn:hover {
-        transform: scale(1.01);
+        0% { transform: scale(0.95); }
+        70% { transform: scale(1); }
+        100% { transform: scale(0.95); }
     }
 </style>
 
@@ -219,10 +111,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // 1. Fetch initial state safely via Async Factory Engine
         latestTelemetry = await Hardware.GetLatestStatus();
-
-        // 2. Safely hook up the background event stream
         Hardware.OnTelemetryUpdated += HandleTelemetryUpdate;
     }
 
@@ -231,13 +120,12 @@
         InvokeAsync(() =>
         {
             latestTelemetry = updatedStatus;
-            StateHasChanged(); // Smoothly re-render UI matrix
+            StateHasChanged();
         });
     }
 
     public void Dispose()
     {
-        // Unsubscribe to prevent background thread memory leaking
         Hardware.OnTelemetryUpdated -= HandleTelemetryUpdate;
     }
 }

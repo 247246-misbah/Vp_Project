@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Misbah_VisualProgramming_Project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffbe7e2e8eae4945a775250fdacb4de72c78d180")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88702110b292ada009b6769ec97b47e83c635c6a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Misbah_VisualProgramming_Project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Misbah_VisualProgramming_Project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
