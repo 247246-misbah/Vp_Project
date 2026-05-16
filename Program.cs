@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Services;
 using Misbah_VisualProgramming_Project.Components;
+// Register Hardware Telemetry Service Context
+builder.Services.AddScoped<Misbah_VisualProgramming_Project.Services.HardwareService>();
 
 var builder = WebApplication.CreateBuilder(args);
 
