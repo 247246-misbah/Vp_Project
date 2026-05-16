@@ -9,7 +9,6 @@ namespace Misbah_VisualProgramming_Project.Services
 {
     public class HardwareService : IDisposable
     {
-        // Factory use karenge taake multi-threading context collision ya scoped lifecycle crash na ho
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly Timer _timer;
         private readonly Random _random = new Random();
@@ -19,7 +18,7 @@ namespace Misbah_VisualProgramming_Project.Services
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
-            // Timer har 3 second baad background thread par safely execute hoga
+            // Background generator simulating virtual espresso twin sensors every 3 seconds
             _timer = new Timer(UpdateHardwareTelemetry, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
         }
 
@@ -27,11 +26,15 @@ namespace Misbah_VisualProgramming_Project.Services
         {
             try
             {
-                // factory se naya context generate karna lifecycle conflict ko zero kar deta hai
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                double currentTemp = 90.0 + (_random.NextDouble() * 5.0);
-                int waterLevel = _random.Next(95, 101);
+                // Advanced Logic: Fluctuating virtual hardware status sensors dynamically
+                double targetedTemp = 92.5 + (_random.NextDouble() * 4.0 - 2.0); // Fluctuates safely around 90-94°C
+                int localizedWater = _random.Next(80, 101); // Mimicking active water capacity level
+                int currentBeans = _random.Next(600, 950);
+
+                string[] availableStates = { "Idle", "Heating Boiler...", "Extracting Espresso Shot", "Steaming Milk Content" };
+                string chosenState = availableStates[_random.Next(availableStates.Length)];
 
                 var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
                 if (telemetry == null)
@@ -39,28 +42,32 @@ namespace Misbah_VisualProgramming_Project.Services
                     telemetry = new HardwareStatus
                     {
                         MachineName = "Espresso Twin-X1",
-                        CurrentState = "Idle",
-                        Temperature = currentTemp,
-                        WaterLevel = waterLevel,
-                        BeanWeight = 950,
+                        CurrentState = chosenState,
+                        Temperature = targetedTemp,
+                        WaterLevel = localizedWater,
+                        BeanWeight = currentBeans,
                         IsConnected = true
                     };
                     context.HardwareStatuses.Add(telemetry);
                 }
                 else
                 {
-                    telemetry.Temperature = currentTemp;
-                    telemetry.WaterLevel = waterLevel;
-                    telemetry.CurrentState = "Idle";
+                    // Sync updates smoothly directly back to local MySQL instances
+                    telemetry.Temperature = targetedTemp;
+                    telemetry.WaterLevel = localizedWater;
+                    telemetry.BeanWeight = currentBeans;
+                    telemetry.CurrentState = chosenState;
                     context.HardwareStatuses.Update(telemetry);
                 }
 
                 await context.SaveChangesAsync();
+
+                // Real-time notification trigger bound straight into the Blazor UI thread pipeline
                 OnTelemetryUpdated?.Invoke(telemetry);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry background log: {ex.Message}");
+                Console.WriteLine($"Digital Twin Engine Exception Captured: {ex.Message}");
             }
         }
 
@@ -68,7 +75,7 @@ namespace Misbah_VisualProgramming_Project.Services
         {
             using var context = await _contextFactory.CreateDbContextAsync();
             return await context.HardwareStatuses.FirstOrDefaultAsync()
-                   ?? new HardwareStatus { MachineName = "Espresso Twin-X1", CurrentState = "Idle", Temperature = 92.5, WaterLevel = 100 };
+                   ?? new HardwareStatus { MachineName = "Espresso Twin-X1", CurrentState = "System Warmup", Temperature = 25.0, WaterLevel = 100 };
         }
 
         public void Dispose()
