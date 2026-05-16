@@ -12,7 +12,6 @@ namespace Misbah_VisualProgramming_Project.Services
         private readonly Timer _timer;
         private readonly Random _random = new Random();
 
-        // FIXED: Using explicit System.Action to completely bypass local naming conflict bugs
         public event System.Action<Misbah_VisualProgramming_Project.Models.HardwareStatus>? OnTelemetryUpdated;
 
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
@@ -55,7 +54,7 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry core engine warning: {ex.Message}");
+                Console.WriteLine($"Telemetry engine warning: {ex.Message}");
             }
         }
 
