@@ -98,29 +98,57 @@
     .shadow-2xs {
         box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     }
+
+    .object-fit-cover {
+        object-fit: cover;
+    }
 </style>
 
 @code {
-    private string ItemName = "Specialty Brew";
+    private string ItemName = "Premium Specialty Item";
     private decimal BasePrice = 0.00m;
     private string ItemImg = "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=500";
     
     private int QuantityCount = 1;
     private bool OrderPlacedStatus = false;
 
+    // Static Dictionary to safely read data using pure Product ID to secure image rendering
+    private static readonly Dictionary<int, (string Name, decimal Price, string Img)> ProductLookup = new()
+    {
+        { 1, ("Premium Vanilla Latte", 420.00m, "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=500") },
+        { 2, ("Salted Caramel Cold Brew", 490.00m, "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=500") },
+        { 3, ("Hazelnut Macchiato Supreme", 460.00m, "https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=500") },
+        { 4, ("Classic Americano Black", 350.00m, "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500") },
+        { 5, ("Mocha Frappuccino Blend", 520.00m, "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=500") },
+        { 6, ("Ceremonial Matcha Latte", 480.00m, "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=500") },
+        { 7, ("Iced Strawberry Matcha", 540.00m, "https://images.unsplash.com/photo-1594756202469-9ff9799a2e4e?q=80&w=500") },
+        { 8, ("Fudge Chocolate Muffin", 280.00m, "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?q=80&w=500") },
+        { 9, ("Blueberry Streusel Muffin", 290.00m, "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=500") },
+        { 10, ("Lotus Biscoff Cheesecake", 580.00m, "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500") },
+        { 11, ("Red Velvet Dream Slice", 450.00m, "https://images.unsplash.com/photo-1586788680434-30d324671ff6?q=80&w=500") },
+        { 12, ("Creamy Alfredo Fettuccine", 690.00m, "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=500") },
+        { 13, ("Spicy Arrabiata Pasta", 620.00m, "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=500") },
+        { 14, ("Four-Cheese Baked Lasagna", 750.00m, "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=500") }
+    };
+
     protected override void OnInitialized()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
         
-        if (query.TryGetValue("name", out var name)) ItemName = name;
-        if (query.TryGetValue("price", out var price)) decimal.TryParse(price, out BasePrice);
-        if (query.TryGetValue("img", out var img)) ItemImg = img;
+        if (query.TryGetValue("productId", out var idStr) && int.TryParse(idStr, out int pid))
+        {
+            if (ProductLookup.TryGetValue(pid, out var product))
+            {
+                ItemName = product.Name;
+                BasePrice = product.Price;
+                ItemImg = product.Img;
+            }
+        }
     }
 
     private void IncreaseQuantity() => QuantityCount++;
     private void DecreaseQuantity() { if (QuantityCount > 1) QuantityCount--; }
-
     private void ProcessOrderSubmission() => OrderPlacedStatus = true;
     private void ReturnToDashboard() => NavManager.NavigateTo("/dashboard");
 }

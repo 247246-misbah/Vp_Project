@@ -37,7 +37,7 @@
                                 <small class="text-muted d-block fw-bold tracking-wider" style="font-size: 0.7rem;">NET PRICE</small>
                                 <span class="fs-5 fw-extrabold" style="color: #6f4e37;">Rs. @product.Price.ToString("F2")</span>
                             </div>
-                            <button class="btn px-4 py-2 fw-bold rounded-pill text-dark btn-add" @onclick="() => DirectToInstantCheckout(product)">
+                            <button type="button" class="btn px-4 py-2 fw-bold rounded-pill text-dark btn-add" @onclick="() => DirectToInstantCheckout(product)">
                                 + Add Order
                             </button>
                         </div>
@@ -52,24 +52,20 @@
     .specialty-card {
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-        .specialty-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(111,78,55,0.12) !important;
-        }
-
+    .specialty-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(111,78,55,0.12) !important;
+    }
     .btn-add {
         border: 2px solid #6f4e37;
         background: transparent;
         transition: all 0.2s ease-in-out;
         font-size: 0.85rem;
     }
-
-        .btn-add:hover {
-            background-color: #6f4e37;
-            color: white !important;
-        }
-
+    .btn-add:hover {
+        background-color: #6f4e37;
+        color: white !important;
+    }
     .object-fit-cover {
         object-fit: cover;
     }
@@ -78,35 +74,25 @@
 @code {
     private List<Product> sampleProducts = new()
     {
-        // 5 Coffee Cups
         new Product { ProductId = 1, Name = "Premium Vanilla Latte", Description = "Artisan double extraction espresso infused with rich Madagascar vanilla reduction syrup and milk.", Price = 420.00m, Category = "Espresso", DisplayPic = "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=500" },
         new Product { ProductId = 2, Name = "Salted Caramel Cold Brew", Description = "24-hour slow steeped premium concentrate topped with a luxurious layer of signature caramel sweet cream.", Price = 490.00m, Category = "Blends", DisplayPic = "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=500" },
         new Product { ProductId = 3, Name = "Hazelnut Macchiato Supreme", Description = "Fresh intense espresso marked with dense micro-foam velvet crema, drizzled with toasted hazelnut glaze.", Price = 460.00m, Category = "Espresso", DisplayPic = "https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=500" },
         new Product { ProductId = 4, Name = "Classic Americano Black", Description = "Rich espresso shots topped with hot water to preserve the intricate crema layer and deep aromatic taste.", Price = 350.00m, Category = "Espresso", DisplayPic = "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500" },
         new Product { ProductId = 5, Name = "Mocha Frappuccino Blend", Description = "Rich chocolate mocha sauce blended with ice, milk, and premium espresso coffee, finished with whipped cream.", Price = 520.00m, Category = "Cold Brew", DisplayPic = "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=500" },
-
-        // 2 Matcha Items
         new Product { ProductId = 6, Name = "Ceremonial Matcha Latte", Description = "Authentic stone-ground organic Japanese green tea whisked beautifully with velvety steamed milk.", Price = 480.00m, Category = "Matcha", DisplayPic = "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=500" },
         new Product { ProductId = 7, Name = "Iced Strawberry Matcha", Description = "Layered beverage with real strawberry puree reduction at the base, milk, and ceremonial grade matcha.", Price = 540.00m, Category = "Matcha", DisplayPic = "https://images.unsplash.com/photo-1594756202469-9ff9799a2e4e?q=80&w=500" },
-
-        // 2 Muffins
         new Product { ProductId = 8, Name = "Fudge Chocolate Muffin", Description = "Oversized oven-fresh bakery muffin loaded heavily with Belgian dark chocolate chunks and a warm gooey core.", Price = 280.00m, Category = "Muffins", DisplayPic = "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?q=80&w=500" },
         new Product { ProductId = 9, Name = "Blueberry Streusel Muffin", Description = "Classic golden moist muffin folded with wild blueberries, finished with a crunchy brown sugar crust.", Price = 290.00m, Category = "Muffins", DisplayPic = "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=500" },
-
-        // 2 Cakes
         new Product { ProductId = 10, Name = "Lotus Biscoff Cheesecake", Description = "Rich creamy cheesecake on a crushed Biscoff crust, layered smoothly with melted speculoos cookie butter.", Price = 580.00m, Category = "Cakes", DisplayPic = "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500" },
         new Product { ProductId = 11, Name = "Red Velvet Dream Slice", Description = "Traditional vibrant red cocoa sponge cake layers paired perfectly with signature vanilla bean frosting.", Price = 450.00m, Category = "Cakes", DisplayPic = "https://images.unsplash.com/photo-1586788680434-30d324671ff6?q=80&w=500" },
-
-        // 3 Pastas
         new Product { ProductId = 12, Name = "Creamy Alfredo Fettuccine", Description = "Tender fettuccine pasta tossed in a rich parmesan and garlic cream sauce, topped with grilled chicken.", Price = 690.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=500" },
         new Product { ProductId = 13, Name = "Spicy Arrabiata Pasta", Description = "Al dente penne pasta coated evenly in a fiery slow-simmered tomato sauce infused with chili flakes and garlic.", Price = 620.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=500" },
-        new Product { ProductId = 14, Name = "Four-Cheese Baked Lasagna", Description = "Layered sheet pasta stuffed with minced savory filling, loaded with melted mozzarella and ricotta.", Price = 750.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=500" }
+        { 14, ("Four-Cheese Baked Lasagna", 750.00m, "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=500") }
     };
 
     private void DirectToInstantCheckout(Product chosenProduct)
     {
-        // App passes variables to checkout page seamlessly
-        NavManager.NavigateTo($"/checkout?name={Uri.EscapeDataString(chosenProduct.Name)}&price={chosenProduct.Price}&img={Uri.EscapeDataString(chosenProduct.DisplayPic)}");
+        NavManager.NavigateTo($"/checkout?productId={chosenProduct.ProductId}");
     }
 
     public class Product
