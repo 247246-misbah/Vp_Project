@@ -6,34 +6,17 @@ namespace Misbah_VisualProgramming_Project.Services
 {
     public class CafeService
     {
-        private readonly IDbContextFactory<AppDbContext> _contextFactory;
+        private readonly AppDbContext _context;
 
-        public CafeService(IDbContextFactory<AppDbContext> contextFactory)
+        public CafeService(AppDbContext context)
         {
-            _contextFactory = contextFactory;
+            _context = context;
         }
 
-        // Fetch Menu Items (CRUD Read)
+        // Fetch all products from MySQL database
         public async Task<List<Product>> GetMenuAsync()
         {
-            using var context = _contextFactory.CreateDbContext();
-            return await context.Products.Where(p => p.IsAvailable).ToListAsync();
-        }
-
-        // Place Order transaction matching Composition Rules
-        public async Task<bool> PlaceOrderAsync(Order order)
-        {
-            using var context = _contextFactory.CreateDbContext();
-            try
-            {
-                context.Orders.Add(order);
-                await context.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return await _context.Products.ToListAsync();
         }
     }
 }
