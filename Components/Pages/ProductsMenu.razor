@@ -8,7 +8,7 @@
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-white d-flex flex-row justify-content-between align-items-center flex-wrap border-start border-5" style="border-color: #6f4e37 !important;">
                 <div>
                     <h2 class="fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif;">Our Specialty Espresso Menu</h2>
-                    <p class="text-muted mb-0">Select handcrafted signature brews to queue into live production channels.</p>
+                    <p class="text-muted mb-0">Select handcrafted signature brews and treats to queue into live production channels.</p>
                 </div>
                 <div class="mt-3 mt-sm-0 bg-light px-4 py-3 rounded-4 d-flex align-items-center border">
                     <div class="me-3">
@@ -32,7 +32,7 @@
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white specialty-card">
                     <div class="position-relative text-center py-5" style="background: linear-gradient(135deg, #fdfbf7, #f3eade);">
-                        <span style="font-size: 4.5rem;">☕</span>
+                        <span style="font-size: 4.5rem;">@product.DisplayPic</span>
                         <span class="position-absolute top-0 start-0 m-3 badge bg-dark px-3 py-2 rounded-pill">@product.Category</span>
                     </div>
                     
@@ -84,11 +84,30 @@
     private int SelectedItemsCount = 0;
     private decimal OrderTotal = 0;
 
+    // Modified extended list with exactly 14 items, including Cakes, Muffins, Matcha & Pasta with relevant Pics/Icons
     private List<Product> sampleProducts = new()
     {
-        new Product { ProductId = 1, Name = "Premium Vanilla Latte", Description = "Artisan double extraction espresso infused with rich Madagascar vanilla reduction syrup and micro-foam velvet milk.", Price = 420.00m, Category = "Dark Roasts" },
-        new Product { ProductId = 2, Name = "Salted Caramel Cold Brew", Description = "24-hour slow steeped premium organic roast concentrate topped with a luxurious layer of signature salted caramel sweet cream.", Price = 490.00m, Category = "Blends" },
-        new Product { ProductId = 3, Name = "Hazelnut Macchiato Supreme", Description = "Fresh intense espresso marked with dense micro-foam velvet crema, drizzled generously with toasted hazelnut glaze.", Price = 460.00m, Category = "Espresso" }
+        // --- COFFEE ITEMS ---
+        new Product { ProductId = 1, Name = "Premium Vanilla Latte", Description = "Artisan double extraction espresso infused with rich Madagascar vanilla reduction syrup and micro-foam velvet milk.", Price = 420.00m, Category = "Espresso", DisplayPic = "☕" },
+        new Product { ProductId = 2, Name = "Salted Caramel Cold Brew", Description = "24-hour slow steeped premium organic roast concentrate topped with a luxurious layer of signature salted caramel sweet cream.", Price = 490.00m, Category = "Blends", DisplayPic = "🥤" },
+        new Product { ProductId = 3, Name = "Hazelnut Macchiato Supreme", Description = "Fresh intense espresso marked with dense micro-foam velvet crema, drizzled generously with toasted hazelnut glaze.", Price = 460.00m, Category = "Espresso", DisplayPic = "☕" },
+        new Product { ProductId = 4, Name = "Classic Americano Black", Description = "Rich espresso shots topped with hot water to preserve the intricate crema layer and deep aromatic taste.", Price = 350.00m, Category = "Espresso", DisplayPic = "☕" },
+        new Product { ProductId = 5, Name = "Mocha Frappuccino Blend", Description = "Rich chocolate mocha sauce blended with ice, milk, and premium espresso coffee, finished with smooth whipped cream.", Price = 520.00m, Category = "Cold Brew", DisplayPic = "🥤" },
+
+        // --- MATCHA ITEMS ---
+        new Product { ProductId = 6, Name = "Ceremonial Matcha Latte", Description = "Authentic stone-ground organic Japanese green tea whisked beautifully with velvety steamed micro-foam milk.", Price = 480.00m, Category = "Matcha", DisplayPic = "🍵" },
+        new Product { ProductId = 7, Name = "Iced Strawberry Matcha", Description = "Layered beverage with real strawberry puree reduction at the base, milk, and ceremonial grade matcha on top.", Price = 540.00m, Category = "Matcha", DisplayPic = "🧋" },
+
+        // --- BAKERY & CAKES ---
+        new Product { ProductId = 8, Name = "Fudge Chocolate Muffin", Description = "Oversized oven-fresh bakery muffin loaded heavily with Belgian dark chocolate chunks and a warm gooey core.", Price = 280.00m, Category = "Muffins", DisplayPic = "🧁" },
+        new Product { ProductId = 9, Name = "Blueberry Streusel Muffin", Description = "Classic golden moist muffin folded with wild blueberries, finished with a crunchy buttery brown sugar crust.", Price = 290.00m, Category = "Muffins", DisplayPic = "🧁" },
+        new Product { ProductId = 10, Name = "Lotus Biscoff Cheesecake", Description = "Rich creamy New York style cheesecake on a crushed Biscoff crust, layered smoothly with melted speculoos cookie butter.", Price = 580.00m, Category = "Cakes", DisplayPic = "🍰" },
+        new Product { ProductId = 11, Name = "Red Velvet Dream Slice", Description = "Traditional vibrant red cocoa sponge cake layers paired perfectly with signature tangy vanilla bean cream cheese frosting.", Price = 450.00m, Category = "Cakes", DisplayPic = "🍰" },
+
+        // --- PASTA & SAVORIES ---
+        new Product { ProductId = 12, Name = "Creamy Alfredo Fettuccine", Description = "Tender fettuccine pasta tossed in a rich parmesan and garlic butter cream sauce, topped with sliced grilled chicken breasts.", Price = 690.00m, Category = "Pasta", DisplayPic = "🍝" },
+        new Product { ProductId = 13, Name = "Spicy Arrabiata Pasta", Description = "Al dente penne pasta coated evenly in a fiery slow-simmered tomato sauce infused with chili flakes, garlic, and fresh basil leaves.", Price = 620.00m, Category = "Pasta", DisplayPic = "🍝" },
+        new Product { ProductId = 14, Name = "Four-Cheese Baked Lasagna", Description = "Layered sheet pasta stuffed with minced savory filling, marinara sauce, and loaded with melted mozzarella, ricotta, and cheddar.", Price = 750.00m, Category = "Pasta", DisplayPic = "🍲" }
     };
 
     private void AddToBasket(Product product)
@@ -109,5 +128,6 @@
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string Category { get; set; } = string.Empty;
+        public string DisplayPic { get; set; } = string.Empty; // Property for icons/pics box alignment
     }
 }
