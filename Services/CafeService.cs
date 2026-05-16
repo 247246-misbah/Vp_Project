@@ -6,17 +6,17 @@ namespace Misbah_VisualProgramming_Project.Services
 {
     public class CafeService
     {
-        private readonly AppDbContext _context;
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
-        public CafeService(AppDbContext context)
+        public CafeService(IDbContextFactory<AppDbContext> contextFactory)
         {
-            _context = context;
+            _contextFactory = contextFactory;
         }
 
-        // Fetch all products from MySQL database
-        public async Task<List<Product>> GetMenuAsync()
+        public async Task<List<Product>> GetAllProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
+            return await context.Products.ToListAsync();
         }
     }
 }
