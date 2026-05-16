@@ -1,31 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Misbah_VisualProgramming_Project.Models
 {
-    [Table("hardwarestatus")]
     public class HardwareStatus
     {
         [Key]
-        [Column("machineid")]
         public int MachineId { get; set; }
 
-        [Column("machinename")]
-        public string MachineName { get; set; } = "Espresso Twin-X1";
+        [Required]
+        public string MachineName { get; set; } = string.Empty;
 
-        [Column("currentstate")]
-        public string CurrentState { get; set; } = "Idle";
+        [Required]
+        public string CurrentState { get; set; } = string.Empty;
 
-        [Column("temperature")]
+        [Required]
         public double Temperature { get; set; }
 
-        [Column("waterlevel")]
+        [Required]
         public int WaterLevel { get; set; }
 
-        [Column("beanweight")]
+        [Required]
         public int BeanWeight { get; set; }
 
-        [Column("isconnected")]
+        [Required]
         public bool IsConnected { get; set; }
     }
 }

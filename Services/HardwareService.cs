@@ -21,23 +21,17 @@ namespace Misbah_VisualProgramming_Project.Services
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-
-                // Mapped properly with MachineId instead of Id
                 var status = await context.HardwareStatuses
                     .OrderBy(h => h.MachineId)
                     .FirstOrDefaultAsync();
 
-                if (status != null)
-                {
-                    return status;
-                }
+                if (status != null) return status;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[DB Fallback] Using Local Mock State: {ex.Message}");
+                Console.WriteLine($"[DB Fallback] State Alert: {ex.Message}");
             }
 
-            // Fallback safe state data configuration for UI design stability
             return new HardwareStatus
             {
                 MachineId = 1,

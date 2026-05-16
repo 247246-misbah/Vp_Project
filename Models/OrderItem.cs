@@ -6,16 +6,23 @@ namespace Misbah_VisualProgramming_Project.Models
     public class OrderItem
     {
         [Key]
-        public int Id { get; set; }
+        public int OrderItemId { get; set; }
+
+        [Required]
         public int OrderId { get; set; }
+
+        [Required]
         public int ProductId { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
-        public decimal SubTotal { get; set; }
 
-        [ForeignKey("OrderId")]
-        public Order Order { get; set; } // Parent Relationship
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Price { get; set; }
 
-        [ForeignKey("ProductId")]
-        public Product Product { get; set; }
+        // Navigation properties safely initialized to avoid warnings
+        public Order Order { get; set; } = default!;
+        public Product Product { get; set; } = default!;
     }
 }
