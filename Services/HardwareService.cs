@@ -1,54 +1,77 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Models;
+using System;
+using System.Threading;
 
 namespace Misbah_VisualProgramming_Project.Services
 {
-    public class HardwareService
+    public class HardwareService : IDisposable
     {
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
+        private readonly Timer _timer;
+        private readonly Random _random = new Random();
 
-        // Dependency Injection with Context Factory for concurrent Blazor threads
+        public event Action<HardwareStatus>? OnTelemetryUpdated;
+
+        // FIXED: Injecting DbContextFactory instead of direct DbContext to prevent runtime crashes
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
+            _timer = new Timer(UpdateHardwareTelemetry, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
         }
 
-        public async Task<HardwareStatus> GetMachineStateAsync()
+        private async void UpdateHardwareTelemetry(object? state)
         {
-            using var context = _contextFactory.CreateDbContext();
-            var machine = await context.HardwareStatuses.FirstOrDefaultAsync();
-
-            if (machine == null)
+            try
             {
-                machine = new HardwareStatus
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                // Telemetry simulation values matching your UI cards
+                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Loops around 92.50°C
+                int waterLevel = _random.Next(95, 101); // Around 100%
+
+                var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
+                if (telemetry == null)
                 {
-                    MachineName = "Espresso Twin-X1",
-                    WaterLevel = 100,
-                    BeanWeight = 1000,
-                    Temperature = 92.5m,
-                    CurrentState = "Idle",
-                    IsConnected = true
-                };
-                context.HardwareStatuses.Add(machine);
+                    telemetry = new HardwareStatus
+                    {
+                        MachineName = "Espresso Twin-X1",
+                        Status = "Idle",
+                        BoilerTemp = currentTemp,
+                        WaterLevel = waterLevel
+                    };
+                    context.HardwareStatuses.Add(telemetry);
+                }
+                else
+                {
+                    telemetry.BoilerTemp = currentTemp;
+                    telemetry.WaterLevel = waterLevel;
+                    telemetry.Status = "Idle";
+                    context.HardwareStatuses.Update(telemetry);
+                }
+
                 await context.SaveChangesAsync();
+
+                // Trigger real-time visual update to dashboard component tree
+                OnTelemetryUpdated?.Invoke(telemetry);
             }
-            return machine;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Telemetry engine sync warning: {ex.Message}");
+            }
         }
 
-        public async Task UpdateHardwareStateAsync(int waterUsed, int beansUsed, decimal tempChange, string newState)
+        public async Task<HardwareStatus> GetLatestStatusAsync()
         {
-            using var context = _contextFactory.CreateDbContext();
-            var machine = await context.HardwareStatuses.FirstOrDefaultAsync();
-            if (machine != null)
-            {
-                machine.WaterLevel = Math.Max(0, machine.WaterLevel - waterUsed);
-                machine.BeanWeight = Math.Max(0, machine.BeanWeight - beansUsed);
-                machine.Temperature = tempChange;
-                machine.CurrentState = newState;
+            using var context = await _contextFactory.CreateDbContextAsync();
+            return await context.HardwareStatuses.FirstOrDefaultAsync()
+                   ?? new HardwareStatus { MachineName = "Espresso Twin-X1", Status = "Idle", BoilerTemp = 92.5, WaterLevel = 100 };
+        }
 
-                await context.SaveChangesAsync();
-            }
+        public void Dispose()
+        {
+            _timer?.Dispose();
         }
     }
 }
