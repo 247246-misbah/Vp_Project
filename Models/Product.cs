@@ -1,5 +1,4 @@
-﻿
-namespace Misbah_VisualProgramming_Project.Models
+﻿namespace Misbah_VisualProgramming_Project.Models
 {
     public class Product
     {
@@ -9,5 +8,6 @@ namespace Misbah_VisualProgramming_Project.Models
         public decimal Price { get; set; }
         public string Category { get; set; } = string.Empty;
         public string DisplayPic { get; set; } = string.Empty;
+        public int Stock { get; set; } = 10; // Added to fix CS1061 missing definition error
     }
 }
