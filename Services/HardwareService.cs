@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
-using Misbah_VisualProgramming_Project.Models; // Explicitly targeting models folder
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ namespace Misbah_VisualProgramming_Project.Services
         private readonly Timer _timer;
         private readonly Random _random = new Random();
 
-        // FIXED: Using explicit namespace prefix to prevent CS0246 compilation bugs
+        // FIXED: Fully bypassing ambiguous naming to resolve error list bugs
         public event Action<Misbah_VisualProgramming_Project.Models.HardwareStatus>? OnTelemetryUpdated;
 
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
@@ -56,7 +55,7 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry warning: {ex.Message}");
+                Console.WriteLine($"Telemetry engine warning: {ex.Message}");
             }
         }
 
