@@ -15,7 +15,7 @@ namespace Misbah_VisualProgramming_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // FORCE MAPPING: Maps models directly to the exact table names in your phpMyAdmin
+            // Force explicit lowercase table mapping to match XAMPP MySQL setup
             modelBuilder.Entity<Product>().ToTable("product");
             modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatus");
             modelBuilder.Entity<User>().ToTable("user");
