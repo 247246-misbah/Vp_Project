@@ -7,7 +7,6 @@ namespace Misbah_VisualProgramming_Project.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        // Aapke core database tables ke sets
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<HardwareStatus> HardwareStatuses { get; set; }
@@ -16,9 +15,9 @@ namespace Misbah_VisualProgramming_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // FORCE MAPPING: Yeh lines EF ko majboor karengi ke galat naam dhoondne ke bajaye exact aapki tables se connect kare
+            // FORCE MAPPING: Maps models directly to the exact table names in your phpMyAdmin
             modelBuilder.Entity<Product>().ToTable("product");
-            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatus"); // Agar phpMyAdmin mein naam 'hardware_status' hai toh wo likhein
+            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatus");
             modelBuilder.Entity<User>().ToTable("user");
         }
     }
