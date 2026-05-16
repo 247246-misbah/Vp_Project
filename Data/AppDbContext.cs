@@ -15,5 +15,17 @@ namespace Misbah_VisualProgramming_Project.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<HardwareStatus> HardwareStatuses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Standardizing table names to match common plural configurations
+            modelBuilder.Entity<User>().ToTable("users");
+            modelBuilder.Entity<Product>().ToTable("products");
+            modelBuilder.Entity<Order>().ToTable("orders");
+            modelBuilder.Entity<OrderItem>().ToTable("orderitems");
+            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatuses");
+        }
     }
 }

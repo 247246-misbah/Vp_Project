@@ -1,244 +1,193 @@
 ﻿@page "/dashboard"
-@inject HardwareService HardwareService
-@inject NavigationManager NavManager
+@inject HardwareService Hardware
+@inject CafeService Cafe
 
-<div class="dashboard-wrapper py-5 px-4">
-    <div class="header-card d-flex justify-content-between align-items-center mb-5 p-4 rounded-4 shadow-lg border border-secondary">
+<div class="dashboard-wrapper min-vh-100 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-10">
         <div>
-            <h1 class="fw-black text-gradient m-0">☕ CAFE COVE CONTROL HUB</h1>
-            <p class="text-muted small m-0 mt-1">Digital Twin Telemetry Engine & Hardware Simulation Panel</p>
+            <h1 class="fw-bold tracking-tight text-white mb-1 m-0" style="letter-spacing: -0.5px;">
+                CAFE COVE <span class="text-gradient-gold">CONTROL HUB</span>
+            </h1>
+            <p class="text-muted small m-0 uppercase tracking-wider" style="font-size: 0.78rem; letter-spacing: 0.5px;">Digital Twin Telemetry Engine & Hardware Simulation Panel</p>
         </div>
-        <div class="live-sync-badge d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
+        <div class="live-status-pill d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill glass-card shadow-sm border border-success border-opacity-25">
             <span class="pulse-dot"></span>
-            <span class="fw-bold tracking-wider text-uppercase small text-success">Live Engine Active</span>
+            <span class="text-success small fw-bold tracking-wider text-uppercase" style="font-size: 0.7rem;">LIVE ENGINE ACTIVE</span>
         </div>
     </div>
 
-    @if (machine == null)
-    {
-        <div class="d-flex flex-column justify-content-center align-items-center my-5 py-5">
-            <div class="spinner-grow text-warning mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
-            <span class="text-muted tracking-wide text-uppercase small">Interfacing Hardware Matrix...</span>
+    <div class="row g-4 mb-4">
+        <div class="col-xl-4 col-md-6">
+            <div class="telemetry-card h-100 rounded-4 p-4 glass-card border-glow border-glow-blue d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="text-muted small fw-bold text-uppercase tracking-wider">System Registry</span>
+                        <div class="icon-circle bg-blue-dim text-info"><i class="bi bi-cpu-fill"></i></div>
+                    </div>
+                    <h2 class="fw-bold text-white mb-2 font-monospace fs-3">Espresso Twin-X1</h2>
+                </div>
+                <div class="mt-3">
+                    <span class="status-badge badge-blue">
+                        <span class="inner-dot bg-info"></span> Simulation Active
+                    </span>
+                </div>
+            </div>
         </div>
-    }
-    else
-    {
-        <div class="row g-4 mb-5">
-            <div class="col-xl-3 col-sm-6">
-                <div class="bento-card p-4 rounded-4 h-100 border border-secondary d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-muted text-uppercase fw-bold tracking-widest small">System Registry</span>
-                            <i class="bi bi-terminal text-warning fs-4"></i>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="telemetry-card h-100 rounded-4 p-4 glass-card border-glow border-glow-red">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider">Core Boiler Temp</span>
+                    <div class="icon-circle bg-red-dim text-danger"><i class="bi bi-thermometer-half"></i></div>
+                </div>
+                <div class="d-flex align-items-baseline mb-2">
+                    <span class="display-6 fw-bold text-white font-monospace">92.50</span>
+                    <span class="text-danger fw-semibold ms-1 fs-5">°C</span>
+                </div>
+                <div class="progress custom-progress bg-dark bg-opacity-50" style="height: 6px;">
+                    <div class="progress-bar bg-gradient-danger progress-bar-striped progress-bar-animated" 
+                         role="progressbar" style="width: 82%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-12">
+            <div class="telemetry-card h-100 rounded-4 p-4 glass-card border-glow border-glow-cyan">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider">Water Reservoir</span>
+                    <div class="icon-circle bg-cyan-dim text-cyan"><i class="bi bi-droplet-fill"></i></div>
+                </div>
+                <div class="d-flex align-items-baseline mb-2">
+                    <span class="display-6 fw-bold text-white font-monospace">100</span>
+                    <span class="text-cyan fw-semibold ms-1 fs-5">%</span>
+                </div>
+                <div class="progress custom-progress bg-dark bg-opacity-50" style="height: 6px;">
+                    <div class="progress-bar bg-gradient-cyan" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="rounded-4 p-4 h-100 glass-card border border-secondary border-opacity-10 shadow-lg">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-white fw-bold mb-0 fs-5">System Alert Diagnostics</h4>
+                    <span class="badge bg-secondary bg-opacity-25 text-white-50 px-2.5 py-1 rounded-3 fw-semibold tracking-wide" style="font-size: 0.7rem;">AUTOMATED RULES</span>
+                </div>
+                
+                <div class="alert-feed-container d-flex flex-column gap-3">
+                    <div class="diagnostic-item border-start border-success border-3 bg-success bg-opacity-5 p-3 rounded-3 d-flex align-items-center gap-3">
+                        <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                        <div>
+                            <h6 class="text-success fw-bold mb-0.5">Telemetry Integrity Valid</h6>
+                            <p class="text-white-50 small mb-0">All registered IoT simulation nodes are transmitting fully standardized signals into the central data pipeline layer.</p>
                         </div>
-                        <h3 class="fw-bold text-white mb-2">@machine.MachineName</h3>
-                    </div>
-                    <div class="mt-4">
-                        <span class="badge-status @(machine.CurrentState == "Idle" ? "status-idle" : "status-brewing")">
-                            @machine.CurrentState
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6">
-                <div class="bento-card p-4 rounded-4 h-100 border border-secondary">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted text-uppercase fw-bold tracking-widest small">Core Boiler Temp</span>
-                        <i class="bi bi-thermometer-half text-danger fs-4"></i>
-                    </div>
-                    <h2 class="fw-black text-white display-6 mb-3">@machine.Temperature<span class="fs-4 text-muted">°C</span></h2>
-                    <div class="custom-progress rounded-pill overflow-hidden bg-dark-soft">
-                        <div class="progress-fill fill-danger" style="width: @(machine.Temperature)%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6">
-                <div class="bento-card p-4 rounded-4 h-100 border border-secondary">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted text-uppercase fw-bold tracking-widest small">Water Reservoir</span>
-                        <i class="bi bi-droplet-half text-info fs-4"></i>
-                    </div>
-                    <h2 class="fw-black text-white display-6 mb-3">@machine.WaterLevel<span class="fs-4 text-muted">%</span></h2>
-                    <div class="custom-progress rounded-pill overflow-hidden bg-dark-soft">
-                        <div class="progress-fill fill-info" style="width: @(machine.WaterLevel)%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6">
-                <div class="bento-card p-4 rounded-4 h-100 border border-secondary">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted text-uppercase fw-bold tracking-widest small">Espresso Beans</span>
-                        <i class="bi bi-moisture text-success fs-4"></i>
-                    </div>
-                    <h2 class="fw-black text-white display-6 mb-3">@machine.BeanWeight<span class="fs-4 text-muted">g</span></h2>
-                    <div class="custom-progress rounded-pill overflow-hidden bg-dark-soft">
-                        <div class="progress-fill fill-success" style="width: @(machine.BeanWeight / 10)%"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="console-card p-4 rounded-4 shadow border border-secondary">
-            <div class="d-flex align-items-center gap-2 mb-3">
-                <i class="bi bi-sliders text-warning fs-4"></i>
-                <h4 class="fw-bold text-white m-0">Telemetry Controls</h4>
-            </div>
-            <p class="text-muted small mb-4">Manipulate simulation constants directly to evaluate application state changes instantly.</p>
-            
-            <div class="d-flex flex-wrap gap-3 mb-4">
-                <button class="action-btn btn-brew px-4 py-2 text-uppercase fw-bold tracking-wide" @onclick="SimulateBrewTask" disabled="@(machine.WaterLevel < 10 || machine.BeanWeight < 20)">
-                    <i class="bi bi-cup-hot-fill me-2"></i> Trigger Espresso Brew
-                </button>
-                <button class="action-btn btn-refill px-4 py-2 text-uppercase fw-bold tracking-wide" @onclick="RefillResources">
-                    <i class="bi bi-arrow-clockwise me-2"></i> Refill Reservoirs
-                </button>
-            </div>
-
-            @if (!string.IsNullOrEmpty(statusLog))
-            {
-                <div class="terminal-output p-3 rounded-3 font-monospace border border-dark">
-                    <span class="text-warning me-2">$</span> @statusLog
+        <div class="col-lg-4">
+            <div class="rounded-4 p-4 h-100 glass-card border border-secondary border-opacity-10 shadow-lg d-flex flex-column justify-content-between">
+                <div>
+                    <h4 class="text-white fw-bold mb-2 fs-5">System Controls</h4>
+                    <p class="text-muted small mb-0">Inject manual state override signals directly down into the virtual twin core.</p>
                 </div>
-            }
+                <div class="d-flex flex-column gap-2 mt-3">
+                    <button class="btn btn-outline-warning w-100 py-2 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm override-btn">
+                        <i class="bi bi-arrow-clockwise"></i> Force State Reset
+                    </button>
+                    <button class="btn btn-outline-danger w-100 py-2 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm override-btn">
+                        <i class="bi bi-power"></i> Emergency Shutdown
+                    </button>
+                </div>
+            </div>
         </div>
-    }
+    </div>
 </div>
 
 <style>
+    /* Dark Cyberpunk Theme Styling Definitions */
     .dashboard-wrapper {
-        background-color: #0b0b0c;
-        min-height: 100vh;
-        color: #e4e4e7;
+        background-color: #0b0d11 !important;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
-    .fw-black { font-weight: 900; }
-    .tracking-wider { tracking-wider: 0.15em; }
-    .tracking-widest { letter-spacing: 0.12em; }
-    
-    .text-gradient {
-        background: linear-gradient(135deg, #ffc107 0%, #ff8800 100%);
+    .text-gradient-gold {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-
-    .header-card {
-        background: rgba(22, 22, 24, 0.7);
-        backdrop-filter: blur(12px);
-        border-color: rgba(255, 255, 255, 0.05) !important;
+    .glass-card {
+        background: rgba(22, 26, 35, 0.65) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
     }
 
-    .live-sync-badge {
-        background: rgba(25, 135, 84, 0.1);
-        border: 1px solid rgba(25, 135, 84, 0.2);
+    /* Subtle Border Neon Glowing Indicators */
+    .border-glow {
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
+    .border-glow:hover {
+        transform: translateY(-3px);
+    }
+    .border-glow-blue:hover { box-shadow: 0 8px 24px rgba(13, 202, 240, 0.12); border-color: rgba(13, 202, 240, 0.3) !important; }
+    .border-glow-red:hover { box-shadow: 0 8px 24px rgba(220, 53, 69, 0.12); border-color: rgba(220, 53, 69, 0.3) !important; }
+    .border-glow-cyan:hover { box-shadow: 0 8px 24px rgba(23, 162, 184, 0.12); border-color: rgba(23, 162, 184, 0.3) !important; }
 
+    /* Custom Color Palettes Dimmed Layers */
+    .icon-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    .bg-blue-dim { background-color: rgba(13, 202, 240, 0.08); }
+    .bg-red-dim { background-color: rgba(220, 53, 69, 0.08); }
+    .bg-cyan-dim { background-color: rgba(23, 162, 184, 0.08); }
+
+    .text-cyan { color: #17a2b8 !important; }
+    .bg-gradient-danger { background: linear-gradient(90deg, #dc3545, #ff4757); }
+    .bg-gradient-cyan { background: linear-gradient(90deg, #17a2b8, #20c997); }
+
+    /* Dynamic Badges and Indicators styles */
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .badge-blue { background-color: rgba(13, 202, 240, 0.12); color: #0dcaf0; }
+    .inner-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* Alive Pulse Animation CSS Core */
     .pulse-dot {
         width: 8px;
         height: 8px;
         background-color: #198754;
         border-radius: 50%;
-        box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7);
-        animation: pulse 1.6s infinite;
+        box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.6);
+        animation: pulseProcessing 1.6s infinite;
     }
-
-    .bento-card {
-        background: #161618;
-        border-color: rgba(255, 255, 255, 0.05) !important;
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-    .bento-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255, 193, 7, 0.2) !important;
-    }
-
-    .bg-dark-soft { background-color: #242427; }
-    .custom-progress { height: 6px; }
-    .progress-fill { height: 100%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .fill-danger { background: linear-gradient(90deg, #dc3545, #ff4d5e); }
-    .fill-info { background: linear-gradient(90deg, #0dcaf0, #0df0ff); }
-    .fill-success { background: linear-gradient(90deg, #198754, #2ec47d); }
-
-    .badge-status {
-        padding: 6px 14px;
-        border-radius: 30px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-uppercase;
-        letter-spacing: 0.05em;
-    }
-    .status-idle { background: rgba(13, 202, 240, 0.1); color: #0dcaf0; border: 1px solid rgba(13, 202, 240, 0.2); }
-    .status-brewing { background: rgba(220, 53, 69, 0.1); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.2); animation: flash 1.5s infinite; }
-
-    .console-card {
-        background: #161618;
-        border-color: rgba(255, 255, 255, 0.05) !important;
-    }
-
-    .action-btn {
-        border: none;
-        outline: none;
-        font-size: 0.85rem;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
-    .btn-brew { background-color: #ffc107; color: #0b0b0c; }
-    .btn-brew:hover { background-color: #e0a800; transform: scale(1.02); }
-    .btn-refill { background-color: #242427; color: #e4e4e7; border: 1px solid rgba(255,255,255,0.08); }
-    .btn-refill:hover { background-color: #2f2f33; color: #fff; }
-
-    .terminal-output {
-        background-color: #09090a;
-        color: #3dd5f3;
-        border-color: rgba(255, 255, 255, 0.03) !important;
-    }
-
-    @@keyframes pulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.5); }
-        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(25, 135, 84, 0); }
+    
+    @@keyframes pulseProcessing {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.6); }
+        70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(25, 135, 84, 0); }
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
     }
-    @@keyframes flash {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.6; }
+    
+    .override-btn {
+        transition: all 0.2s ease;
+    }
+    .override-btn:hover {
+        transform: scale(1.01);
     }
 </style>
-
-@code {
-    private HardwareStatus? machine;
-    private string statusLog = "Twin telemetry stream synchronized. Standby node active.";
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadTelemetryData();
-    }
-
-    private async Task LoadTelemetryData()
-    {
-        machine = await HardwareService.GetMachineStateAsync();
-    }
-
-    private async Task SimulateBrewTask()
-    {
-        if (machine == null) return;
-        statusLog = "Transmitting brew execution sequence to core factory...";
-        StateHasChanged();
-        await Task.Delay(800);
-
-        await HardwareService.UpdateHardwareStateAsync(15, 30, 94.2m, "Brewing");
-        await LoadTelemetryData();
-        statusLog = machine.GetEngineReport();
-    }
-
-    private async Task RefillResources()
-    {
-        statusLog = "Replenishing core level sensor storage nodes...";
-        StateHasChanged();
-        await Task.Delay(600);
-
-        await HardwareService.UpdateHardwareStateAsync(-100, -1000, 24.5m, "Idle");
-        await LoadTelemetryData();
-        statusLog = "All operational reservoirs calibrated back to threshold limits.";
-    }
-}

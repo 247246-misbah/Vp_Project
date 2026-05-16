@@ -9,10 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Register Custom Database Context (MySQL via XAMPP connection pipeline)
-builder.Services.AddDbContext<AppDbContext>(options =>
+// 1. Corrected: Register Custom Database Context Factory (MySQL via XAMPP connection pipeline)
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+// 2. Fallback registration for standard scoped context requests
+builder.Services.AddScoped(p =>
+    p.GetRequiredService<IDbContextFactory<AppDbContext>>().CreateDbContext());
 
 // Register Application Infrastructure Dependency Injection Nodes
 builder.Services.AddScoped<CafeService>();
