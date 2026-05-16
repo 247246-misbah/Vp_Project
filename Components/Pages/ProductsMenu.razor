@@ -96,7 +96,9 @@
 
     private void DirectToInstantCheckout(Product chosenProduct)
     {
-        NavManager.NavigateTo($"/checkout?productId={chosenProduct.ProductId}");
+        // Pure URL encoding technique to pass complex string arrays without routing crashes
+        string safeUrl = Uri.EscapeDataString(chosenProduct.DisplayPic);
+        NavManager.NavigateTo($"/checkout?name={Uri.EscapeDataString(chosenProduct.Name)}&price={chosenProduct.Price}&img={safeUrl}");
     }
 
     public class Product

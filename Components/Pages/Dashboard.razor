@@ -1,31 +1,96 @@
 ﻿@page "/"
 @page "/dashboard"
 
-<div class="container-fluid py-4" style="background-color: #fdfbf7; min-height: 100vh;">
-    <h3 class="fw-bold mb-1">☕ Cafe Cove Control Center</h3>
-    <p class="text-muted small mb-4">Hardware Simulation & Digital Twin Monitoring Network</p>
+<div class="container-fluid py-4 px-4" style="background-color: #fdfbf7; min-height: 100vh;">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-light">
+        <div>
+            <h2 class="fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif;">☕ Cafe Cove Control Room</h2>
+            <p class="text-muted mb-0 small">Digital Twin Hardware Simulation Network Framework</p>
+        </div>
+        <div>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-semibold">
+                ● LIVE STREAM ACTIVE
+            </span>
+        </div>
+    </div>
 
-    <div class="row g-4">
-        <div class="col-12 col-md-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-                <h6 class="fw-bold text-secondary mb-3">Live Hardware Metrics Telemetry</h6>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-3">🌡 Boiler Temperature: <span class="fw-bold text-dark">@HardwareStatus.BoilerTemp°C</span></li>
-                    <li class="mb-3">💧 Water Level Status: <span class="fw-bold text-dark">@HardwareStatus.WaterLevel%</span></li>
-                    <li>🫘 Beans Hopper Reservoir: <span class="fw-bold text-dark">@HardwareStatus.BeanWeightg / 500g</span></li>
-                </ul>
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Boiler Core</span>
+                    <span class="fs-4 text-danger">🌡</span>
+                </div>
+                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.BoilerTemp°C</h3>
+                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                    <div class="progress-bar bg-danger rounded-pill" role="progressbar" style="width: @(HardwareStatus.BoilerTemp / 1.2)%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Water Level Reservoir</span>
+                    <span class="fs-4 text-primary">💧</span>
+                </div>
+                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.WaterLevel%</h3>
+                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: @HardwareStatus.WaterLevel%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Hopper Beans Weight</span>
+                    <span class="fs-4" style="color: #6f4e37;">🫘</span>
+                </div>
+                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.BeanWeightg <span class="fs-6 fw-normal text-muted">/ 500g</span></h3>
+                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                    <div class="progress-bar rounded-pill" role="progressbar" style="width: @((HardwareStatus.BeanWeightg / 500.0) * 100)%; background-color: #6f4e37;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-dark text-white-50 font-monospace" style="min-height: 180px; box-shadow: inset 0 4px 20px rgba(0,0,0,0.3);">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                    <span class="small text-success fw-bold">✓ VIRTUAL_TWIN_TELEMETRY_SHELL</span>
+                    <span class="small text-muted">SYS_READY</span>
+                </div>
+                <p class="mb-1 text-light small">> INITIALIZING HARDWARE REGISTER MAP SIMULATOR...</p>
+                <p class="mb-1 text-success small">> SYSTEM STATUS 200: SPI BUS STABLE CONNECTED TO STATION GATEWAY.</p>
+                <p class="mb-0 text-warning small">> CURRENT METRICS STREAM SYNCED SUCCESSFULLY AT @DateTime.Now.ToString("HH:mm:ss")</p>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+    .premium-card {
+        border-bottom: 4px solid transparent !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+        .premium-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.05) !important;
+            border-color: #6f4e37 !important;
+        }
+</style>
+
 @code {
-    // Synchronized Model Contract Matching System States
+    // Keeping your exact telemetry data structures completely unchanged
     private TwinHardware HardwareStatus { get; set; } = new()
     {
         BoilerTemp = 92.0,
         WaterLevel = 85,
-        BeanWeightg = 400 // Exact token matching to completely clean the CS1061 warning pipeline
+        BeanWeightg = 400
     };
 
     public class TwinHardware
