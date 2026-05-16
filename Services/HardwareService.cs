@@ -9,6 +9,7 @@ namespace Misbah_VisualProgramming_Project.Services
 {
     public class HardwareService : IDisposable
     {
+        // Factory use karenge taake multi-threading context collision ya scoped lifecycle crash na ho
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly Timer _timer;
         private readonly Random _random = new Random();
@@ -18,6 +19,7 @@ namespace Misbah_VisualProgramming_Project.Services
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
+            // Timer har 3 second baad background thread par safely execute hoga
             _timer = new Timer(UpdateHardwareTelemetry, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
         }
 
@@ -25,6 +27,7 @@ namespace Misbah_VisualProgramming_Project.Services
         {
             try
             {
+                // factory se naya context generate karna lifecycle conflict ko zero kar deta hai
                 using var context = await _contextFactory.CreateDbContextAsync();
 
                 double currentTemp = 90.0 + (_random.NextDouble() * 5.0);
@@ -57,7 +60,7 @@ namespace Misbah_VisualProgramming_Project.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry Engine Log: {ex.Message}");
+                Console.WriteLine($"Telemetry background log: {ex.Message}");
             }
         }
 
