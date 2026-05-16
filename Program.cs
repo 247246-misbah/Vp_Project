@@ -1,43 +1,43 @@
 using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Services;
-using Misbah_VisualProgramming_Project.Components; // Crucial namespace for App.razor
 
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Connection String Setup (XAMPP MySQL)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
+    ?? "Server=localhost;Database=cafe_management;User=root;Password=;";
 
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
 
-// 2. Register ONLY the DbContextFactory cleanly with Singleton lifetime alignment
+// 2. Register DbContext AND DbContextFactory properly
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion),
-    ServiceLifetime.Singleton);
+    options.UseMySql(connectionString, serverVersion));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, serverVersion));
 
 // 3. Register Core Application Services
 builder.Services.AddScoped<CafeService>();
 builder.Services.AddSingleton<HardwareService>();
 
-// 4. Register Razor Components for Modern Interactive Server Rendering
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+// 4. Blazor Server Classic Pipeline Setup
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAntiforgery();
+app.UseRouting();
 
-// 5. 100% CORRECT ROUTING: Points directly to App.razor component pipeline instead of non-existent _Host page
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
 
 app.Run();

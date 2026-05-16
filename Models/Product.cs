@@ -7,19 +7,22 @@ namespace Misbah_VisualProgramming_Project.Models
     public class Product
     {
         [Key]
-        [Column("ProductId")]
-        public int ProductId { get; set; }
+        [Column("id")] // Maps uppercase 'Id' property to your database lowercase 'id' column
+        public int Id { get; set; }
 
         [Required]
         [Column("Name")]
         public string Name { get; set; } = string.Empty;
 
+        [Column("Price")]
+        public decimal Price { get; set; }
+
         [Required]
         [Column("Category")]
         public string Category { get; set; } = string.Empty;
 
-        [Column("Price")]
-        public decimal Price { get; set; }
+        [Column("IsAvailable")]
+        public bool IsAvailable { get; set; }
 
         [Column("Stock")]
         public int Stock { get; set; }
