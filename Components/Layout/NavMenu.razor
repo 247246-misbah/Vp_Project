@@ -1,103 +1,41 @@
-﻿<div class="top-row ps-4 navbar navbar-dark bg-dark border-bottom border-secondary border-opacity-25">
+﻿<div class="top-row ps-3 navbar navbar-dark" style="background-color: #13100e; border-bottom: 1px solid rgba(255,255,255,0.05); height: 3.5rem; display: flex; align-items: center;">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="">
-            <span class="fs-4">☕</span>
-            <span class="text-warning fw-bold tracking-wide" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing: 0.5px;">Cafe Cove Twin</span>
-        </a>
+        <a class="navbar-brand fw-bold text-warning" href="" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;">☕ COFFEE COVE TWIN</a>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable custom-sidebar-bg" onclick="document.querySelector('.navbar-toggler').checked = false">
-    <nav class="flex-column w-100 py-3 gap-1">
-        
-        <div class="px-4 mb-3 text-muted uppercase fs-7 fw-bold text-uppercase tracking-wider opacity-50">
-            Control Systems
-        </div>
-
-        <div class="nav-item px-3 mb-1">
-            <NavLink class="nav-link custom-nav-btn d-flex align-items-center gap-3 rounded-3 px-3 py-2.5" href="" Match="NavLinkMatch.All">
-                <div class="icon-box d-flex align-items-center justify-content-center rounded-2">
-                    <i class="bi bi-grid-1x2-fill fs-5"></i>
-                </div>
-                <span class="nav-text fw-medium">Dashboard Core</span>
+<div class="nav-scrollable" style="background: #13100e; padding-top: 15px; height: calc(100vh - 3.5rem);">
+    <nav class="flex-column nav-pills px-3">
+        <div class="nav-item mb-2">
+            <NavLink class="nav-link text-white-50 d-flex align-items-center gap-2 py-2.5 px-3 rounded-3" href="dashboard" Match="NavLinkMatch.All" active-class="active-premium">
+                <span class="bi bi-speedometer2" aria-hidden="true"></span> 📊 Control Dashboard
             </NavLink>
         </div>
-
-        <div class="nav-item px-3 mb-1">
-            <NavLink class="nav-link custom-nav-btn d-flex align-items-center gap-3 rounded-3 px-3 py-2.5" href="dashboard">
-                <div class="icon-box d-flex align-items-center justify-content-center rounded-2">
-                    <i class="bi bi-cpu-fill fs-5 text-info"></i>
-                </div>
-                <span class="nav-text fw-medium">Twin Telemetry</span>
+        <div class="nav-item mb-2">
+            <NavLink class="nav-link text-white-50 d-flex align-items-center gap-2 py-2.5 px-3 rounded-3" href="products-menu" active-class="active-premium">
+                <span class="bi bi-list-stars" aria-hidden="true"></span> ☕ Espresso Menu
             </NavLink>
         </div>
-
-        <div class="px-4 my-3 text-muted uppercase fs-7 fw-bold text-uppercase tracking-wider opacity-50 border-top pt-3 border-secondary border-opacity-25">
-            Business Management
-        </div>
-
-        <div class="nav-item px-3 mb-1">
-            <NavLink class="nav-link custom-nav-btn d-flex align-items-center gap-3 rounded-3 px-3 py-2.5" href="products">
-                <div class="icon-box d-flex align-items-center justify-content-center rounded-2">
-                    <i class="bi bi-cup-hot-fill fs-5 text-warning"></i>
-                </div>
-                <span class="nav-text fw-medium">Products Menu</span>
-            </NavLink>
-        </div>
-
     </nav>
 </div>
 
 <style>
-    /* Premium Premium Sidebar Background */
-    .custom-sidebar-bg {
-        background: linear-gradient(180deg, #11141a 0%, #161a23 100%) !important;
-        height: calc(100vh - 56px);
+    .nav-link {
+        transition: all 0.3s ease;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
     }
 
-    /* Base Styling for Sidebar Text Links */
-    .custom-nav-btn {
-        color: #a3b1cc !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        text-decoration: none;
-    }
-
-    /* Icon Container Box Style */
-    .icon-box {
-        width: 32px;
-        height: 32px;
-        background-color: rgba(255, 255, 255, 0.03);
-        transition: all 0.25s ease;
-    }
-
-    /* Premium Hover States */
-    .custom-nav-btn:hover {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #ffffff !important;
-    }
-
-    /* Active Highlight States (When Page is Selected) */
-    .custom-nav-btn.active {
-        background: linear-gradient(90deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.02) 100%) !important;
-        color: #ffc107 !important;
-        border-left: 3px solid #ffc107;
-        border-radius: 0 8px 8px 0 !important;
-    }
-
-        .custom-nav-btn.active .icon-box {
-            background-color: rgba(255, 193, 7, 0.2) !important;
-            color: #ffc107 !important;
+        .nav-link:hover {
+            background: rgba(245, 158, 11, 0.08) !important;
+            color: #f59e0b !important;
         }
-
-    /* Micro typography helpers */
-    .fs-7 {
-        font-size: 0.75rem;
-    }
-
-    .tracking-wider {
-        letter-spacing: 0.08em;
-    }
+        /* Explicit high-light matching your target aesthetics */
+        .nav-link.active, .active-premium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+            color: #ffffff !important;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+        }
 </style>
-

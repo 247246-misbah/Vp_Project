@@ -2,207 +2,126 @@
 @inject Misbah_VisualProgramming_Project.Services.CafeService CafeService
 @using Misbah_VisualProgramming_Project.Models
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-    .twin-lounge-body {
-        background: radial-gradient(circle at top right, #1a1512 0%, #0d0b0a 100%) !important;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        min-height: 100vh;
-        color: #f3f4f6;
-        padding: 40px 25px;
-    }
-
-    .brand-title {
-        font-family: 'Playfair Display', serif;
-        font-weight: 600;
-        letter-spacing: 1px;
-        background: linear-gradient(to right, #f59e0b, #d97706);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-        gap: 30px;
-        margin-top: 35px;
-    }
-
-    .premium-card {
-        background: rgba(30, 26, 24, 0.65);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(217, 119, 6, 0.15);
-        border-radius: 24px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-        .premium-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(245, 158, 11, 0.6);
-            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
-        }
-
-    .img-wrapper {
-        height: 220px;
-        position: relative;
-        background: #151210;
-        overflow: hidden;
-    }
-
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-    .premium-card:hover .img-wrapper img {
-        transform: scale(1.06);
-    }
-
-    .badge-status {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: rgba(13, 11, 10, 0.75);
-        backdrop-filter: blur(8px);
-        border: 1px solid #10b981;
-        color: #10b981;
-        padding: 6px 14px;
-        font-size: 11px;
-        font-weight: 600;
-        border-radius: 30px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-        .badge-status.out {
-            border-color: #ef4444;
-            color: #ef4444;
-        }
-
-    .card-info {
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
-    .category-tag {
-        color: #d97706;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 6px;
-    }
-
-    .item-name {
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 12px;
-    }
-
-    .price-meta-box {
-        margin-top: auto;
-        padding-top: 18px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .price-text {
-        font-size: 22px;
-        font-weight: 700;
-        color: #f59e0b;
-    }
-
-    .stock-text {
-        font-size: 12px;
-        color: #9ca3af;
-    }
-
-    .stock-count {
-        color: #ffffff;
-        font-weight: 600;
-    }
-</style>
-
-<div class="twin-lounge-body">
-    <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
+<div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 40px; color: #ffffff;">
+    
+    <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 24px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end;">
         <div>
-            <h1 class="brand-title m-0 fs-2">The Coffee Cove Menu</h1>
-            <p class="text-muted m-0 mt-1 small text-uppercase" style="letter-spacing: 1px;">Premium Product Catalog & Visual Data Layer</p>
+            <h1 style="font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: 0.5px;">
+                ☕ ESPRESSO LOUNGE MENU
+            </h1>
+            <p style="color: #9ca3af; font-size: 13px; margin: 6px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;">
+                Live Inventory Context • Connected to MySQL Service Layer
+            </p>
         </div>
-        <div style="color: #9ca3af; font-size: 13px;">
-            Active Session: <span style="color: #f59e0b; font-weight: 600;">Twin Console v3.1</span>
+        <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
+            Console State: <span style="color: #10b981; font-weight: 600;">● ONLINE</span>
         </div>
     </div>
 
     @if (products == null)
     {
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
-            <div class="spinner-border text-warning" role="status"></div>
-            <p style="color: #9ca3af; margin-top: 15px; font-size: 13px;" class="text-uppercase">Querying Database Collections...</p>
+            <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem; border-width: 0.25em;"></div>
+            <p style="color: #9ca3af; margin-top: 20px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Fetching live menu collections...</p>
         </div>
     }
     else if (!products.Any())
     {
-        <div style="background: rgba(30,26,24,0.5); border: 1px dashed rgba(245,158,11,0.3); border-radius: 16px; padding: 40px; text-align: center; max-width: 500px; margin: 50px auto;">
-            <h5 style="color: #f59e0b;">No Menu Data Found</h5>
-            <p class="text-muted small m-0">Table is currently empty inside your XAMPP MySQL environment.</p>
+        <div style="background: rgba(30,26,24,0.4); border: 1px dashed rgba(245,158,11,0.25); border-radius: 24px; padding: 60px; text-align: center; max-width: 550px; margin: 40px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <span style="font-size: 45px; display: block; margin-bottom: 15px;">📥</span>
+            <h5 style="color: #f59e0b; font-weight: 600; font-size: 18px; margin: 0 0 10px 0;">Menu Context is Empty</h5>
+            <p style="color: #9ca3af; font-size: 13px; margin: 0; line-height: 1.6;">
+                Aapke XAMPP MySQL database table `products` mein koi entry nahi mili. Please phpMyAdmin mein check karein.
+            </p>
         </div>
     }
     else
     {
-        <div class="grid-container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 35px;">
             @foreach (var product in products)
             {
-                <div class="premium-card">
-                    <div class="img-wrapper">
+                <div class="lounge-card" style="background: rgba(28, 24, 22, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(245, 158, 11, 0.12); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.4); transition: transform 0.3s ease, border-color 0.3s ease;">
+                    
+                    <div style="height: 200px; background: #110f0e; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.03);">
                         @if (!string.IsNullOrEmpty(product.ImageUrl))
                         {
-                            <img src="@product.ImageUrl" alt="@product.Name" />
+                            <img src="@product.ImageUrl" alt="@product.Name" style="width: 100%; height: 100%; object-fit: cover;" />
                         }
                         else
                         {
                             @if (product.Name.Contains("Espresso", StringComparison.OrdinalIgnoreCase))
                             {
-                                <img src="https://images.unsplash.com/photo-1510972527409-cac236c0aa17?w=500&q=80" alt="Espresso" />
+                                <img src="https://images.unsplash.com/photo-1510972527409-cac236c0aa17?w=500&q=80" alt="Espresso Layout" style="width: 100%; height: 100%; object-fit: cover;" />
                             }
-                            else if (product.Name.Contains("Latte", StringComparison.OrdinalIgnoreCase))
+                            else if (product.Name.Contains("Latte", StringComparison.OrdinalIgnoreCase) || product.Name.Contains("Cap", StringComparison.OrdinalIgnoreCase))
                             {
-                                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80" alt="Latte" />
+                                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80" alt="Latte Layout" style="width: 100%; height: 100%; object-fit: cover;" />
                             }
                             else
                             {
-                                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80" alt="Coffee" />
+                                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80" alt="Coffee Layout" style="width: 100%; height: 100%; object-fit: cover;" />
                             }
                         }
+
+                        <span style="position: absolute; top: 18px; right: 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 5px 12px; border-radius: 30px; letter-spacing: 0.5px; backdrop-filter: blur(8px);
+                            background: @(product.Stock > 0 ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)");
+                            color: @(product.Stock > 0 ? "#10b981" : "#ef4444");
+                            border: 1px solid @(product.Stock > 0 ? "rgba(16, 185, 129, 0.3)" : "rgba(239, 68, 68, 0.3)");">
+                            @(product.Stock > 0 ? "Available" : "Out of Stock")
+                        </span>
+                    </div>
+
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <span style="color: #d97706; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; display: block;">
+                            @product.Category
+                        </span>
+                        <h3 style="font-size: 20px; font-weight: 600; color: #ffffff; margin: 0 0 20px 0; line-height: 1.4; letter-spacing: 0.3px;">
+                            @product.Name
+                        </h3>
                         
-                        <div class="badge-status @(product.Stock > 0 ? "" : "out")">
-                            @(product.Stock > 0 ? "In Stock" : "Unavailable")
+                        <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span style="font-size: 11px; color: #9ca3af; display: block; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Price</span>
+                                <span style="font-size: 22px; font-weight: 700; color: #f59e0b;">Rs. @product.Price.ToString("F0")</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="font-size: 11px; color: #9ca3af; display: block; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Stock Status</span>
+                                <span style="font-size: 15px; color: #ffffff; font-weight: 600;">@product.Stock <span style="color: #6b7280; font-size: 12px; font-weight: 400;">units</span></span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="card-info">
-                        <span class="category-tag">@product.Category</span>
-                        <h3 class="item-name">@product.Name</h3>
-                        
-                        <div class="price-meta-box">
-                            <span class="price-text">Rs. @product.Price.ToString("F0")</span>
-                            <span class="stock-text">Units: <span class="stock-count">@product.Stock</span></span>
-                        </div>
-                    </div>
                 </div>
             }
         </div>
     }
 </div>
+
+<style>
+    /* Global Hover transitions executed natively via browser compiler */
+    .lounge-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(245, 158, 11, 0.5) !important;
+        box-shadow: 0 20px 40px rgba(245, 158, 11, 0.12) !important;
+    }
+</style>
+
+@code {
+    private List<Product>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var allProducts = await CafeService.GetProductsAsync();
+            products = allProducts?.ToList() ?? new List<Product>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Render Architecture Error: {ex.Message}");
+            products = new List<Product>();
+        }
+    }
+}
