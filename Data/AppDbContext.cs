@@ -5,27 +5,21 @@ namespace Misbah_VisualProgramming_Project.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        // Mapping C# Models to MySQL Tables
+        // Aapke core database tables ke sets
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<HardwareStatus> HardwareStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Standardizing table names to match common plural configurations
-            modelBuilder.Entity<User>().ToTable("users");
-            modelBuilder.Entity<Product>().ToTable("products");
-            modelBuilder.Entity<Order>().ToTable("orders");
-            modelBuilder.Entity<OrderItem>().ToTable("orderitems");
-            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatuses");
+            // FORCE MAPPING: Yeh lines EF ko majboor karengi ke galat naam dhoondne ke bajaye exact aapki tables se connect kare
+            modelBuilder.Entity<Product>().ToTable("product");
+            modelBuilder.Entity<HardwareStatus>().ToTable("hardwarestatus"); // Agar phpMyAdmin mein naam 'hardware_status' hai toh wo likhein
+            modelBuilder.Entity<User>().ToTable("user");
         }
     }
 }
