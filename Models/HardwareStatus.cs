@@ -2,34 +2,18 @@
 
 namespace Misbah_VisualProgramming_Project.Models
 {
-    // UML Requirement: Base Class with virtual method
-    public class Machine
+    public class HardwareStatus
     {
         [Key]
-        public int MachineId { get; set; }
-        [Required]
-        public string MachineName { get; set; }
-        public bool IsConnected { get; set; } = true;
-        public string CurrentState { get; set; } = "Idle";
+        public int Id { get; set; }
 
-        // Virtual method for Polymorphism criteria
-        public virtual string GetEngineReport()
-        {
-            return "Core machine systems functional.";
-        }
-    }
+        public string MachineName { get; set; } = "Espresso Twin-X1";
 
-    // UML Requirement: Derived Class Specialization
-    public class HardwareStatus : Machine
-    {
+        // Exact names needed by the Telemetry service and Dashboard UI
+        public string Status { get; set; } = "Idle";
+
+        public double BoilerTemp { get; set; } = 92.50;
+
         public int WaterLevel { get; set; } = 100;
-        public int BeanWeight { get; set; } = 1000;
-        public decimal Temperature { get; set; } = 25.0m;
-
-        // Polymorphic Override
-        public override string GetEngineReport()
-        {
-            return $"[Digital Twin Dynamic State] Temp: {Temperature}°C | Water: {WaterLevel}% | Beans: {BeanWeight}g";
-        }
     }
 }
