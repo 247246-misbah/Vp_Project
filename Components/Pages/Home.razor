@@ -1,7 +1,10 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
 
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+@code {
+    protected override void OnInitialized()
+    {
+        // Automatically redirects the home layout scope directly into our twin engine dashboard
+        NavManager.NavigateTo("dashboard");
+    }
+}
