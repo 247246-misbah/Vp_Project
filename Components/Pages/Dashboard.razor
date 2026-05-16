@@ -1,96 +1,110 @@
 ﻿@page "/"
 @page "/dashboard"
 
-<div class="container-fluid py-4 px-4" style="background-color: #fdfbf7; min-height: 100vh;">
+<div class="container-fluid py-4 px-4" style="background-color: #fcf9f5; min-height: 100vh;">
     
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-light">
-        <div>
-            <h2 class="fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif;">☕ Cafe Cove Control Room</h2>
-            <p class="text-muted mb-0 small">Digital Twin Hardware Simulation Network Framework</p>
-        </div>
-        <div>
-            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-semibold">
-                ● LIVE STREAM ACTIVE
-            </span>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white border-start border-5" style="border-color: #6f4e37 !important;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif; letter-spacing: -0.5px;">Coffee Cove Central Station</h2>
+                        <p class="text-muted mb-0 small text-uppercase tracking-wider fw-semibold">Hardware Telemetry & Digital Twin Synced Monitor</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold small">
+                            ● STREAM ACTIVE
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row g-4 mb-4">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Boiler Core</span>
-                    <span class="fs-4 text-danger">🌡</span>
+                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Boiler Vessel Core</span>
+                    <span class="badge rounded-circle p-2 bg-danger bg-opacity-10 text-danger fs-5">🌡</span>
                 </div>
-                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.BoilerTemp°C</h3>
-                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.BoilerTemp°C</h2>
+                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
                     <div class="progress-bar bg-danger rounded-pill" role="progressbar" style="width: @(HardwareStatus.BoilerTemp / 1.2)%"></div>
                 </div>
+                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Optimal range: 90°C - 96°C</small>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Water Level Reservoir</span>
-                    <span class="fs-4 text-primary">💧</span>
+                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Reservoir Hydration</span>
+                    <span class="badge rounded-circle p-2 bg-primary bg-opacity-10 text-primary fs-5">💧</span>
                 </div>
-                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.WaterLevel%</h3>
-                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.WaterLevel%</h2>
+                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
                     <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: @HardwareStatus.WaterLevel%"></div>
                 </div>
+                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Capacity standard: 2.5 Liters</small>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white position-relative overflow-hidden premium-card">
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider small fw-bold text-muted">Hopper Beans Weight</span>
-                    <span class="fs-4" style="color: #6f4e37;">🫘</span>
+                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Hopper Bean Volume</span>
+                    <span class="badge rounded-circle p-2 bg-warning bg-opacity-10 fs-5" style="color: #6f4e37;">🫘</span>
                 </div>
-                <h3 class="fw-extrabold text-dark mb-1">@HardwareStatus.BeanWeightg <span class="fs-6 fw-normal text-muted">/ 500g</span></h3>
-                <div class="progress rounded-pill mt-2" style="height: 6px; background-color: #f1ebd9;">
+                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.BeanWeightg<span class="fs-5 fw-normal text-muted"> grams</span></h2>
+                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
                     <div class="progress-bar rounded-pill" role="progressbar" style="width: @((HardwareStatus.BeanWeightg / 500.0) * 100)%; background-color: #6f4e37;"></div>
                 </div>
+                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Max storage capacity: 500g</small>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-dark text-white-50 font-monospace" style="min-height: 180px; box-shadow: inset 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="card border-0 shadow-lg rounded-4 p-4 bg-dark text-white-50 position-relative" style="min-height: 200px; box-shadow: inset 0 4px 30px rgba(0,0,0,0.4);">
                 <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
-                    <span class="small text-success fw-bold">✓ VIRTUAL_TWIN_TELEMETRY_SHELL</span>
-                    <span class="small text-muted">SYS_READY</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="rounded-circle bg-success d-inline-block" style="width: 8px; height: 8px;"></span>
+                        <span class="small font-monospace text-success fw-bold">TWIN_BUS_CONTROLLER_SHELL</span>
+                    </div>
+                    <span class="small font-monospace text-muted">BAUD_RATE_115200</span>
                 </div>
-                <p class="mb-1 text-light small">> INITIALIZING HARDWARE REGISTER MAP SIMULATOR...</p>
-                <p class="mb-1 text-success small">> SYSTEM STATUS 200: SPI BUS STABLE CONNECTED TO STATION GATEWAY.</p>
-                <p class="mb-0 text-warning small">> CURRENT METRICS STREAM SYNCED SUCCESSFULLY AT @DateTime.Now.ToString("HH:mm:ss")</p>
+                <div class="font-monospace small style-terminal-lines" style="line-height: 1.7;">
+                    <p class="mb-1 text-secondary">[SYS] Loading local hardware architectural structures configurations...</p>
+                    <p class="mb-1 text-success">[OK] Framework data map compilation completed. No errors found.</p>
+                    <p class="mb-1 text-warning">[WARN] SPI communications standard buffer pool refreshed safely.</p>
+                    <p class="mb-0 text-light">> Current runtime environment synchronized at @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    .premium-card {
-        border-bottom: 4px solid transparent !important;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    .telemetry-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-bottom: 3px solid transparent !important;
     }
-
-        .premium-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.05) !important;
-            border-color: #6f4e37 !important;
-        }
+    .telemetry-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(111,78,55,0.06) !important;
+        border-color: #6f4e37 !important;
+    }
 </style>
 
 @code {
-    // Keeping your exact telemetry data structures completely unchanged
+    // Model structure matching exactly with the controller context variables
     private TwinHardware HardwareStatus { get; set; } = new()
     {
-        BoilerTemp = 92.0,
-        WaterLevel = 85,
-        BeanWeightg = 400
+        BoilerTemp = 93.4,
+        WaterLevel = 88,
+        BeanWeightg = 425
     };
 
     public class TwinHardware
