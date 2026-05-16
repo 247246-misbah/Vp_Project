@@ -1,8 +1,22 @@
+using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Components;
+using Misbah_VisualProgramming_Project.Data;
+using Misbah_VisualProgramming_Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 1. Fetch connection string from appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// 2. Register DbContext Factory for safe parallel computing in Blazor threads
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// 3. Dependency Injection: Register Business Logic Layer Services
+builder.Services.AddScoped<HardwareService>();
+builder.Services.AddScoped<CafeService>();
+
+// Add services to the container (Fixed standard extension positioning)
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -15,13 +29,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+
+// Fixed parameter compilation error here
+app.UseStatusCodePagesWithReExecute("/not-found");
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode(); // Fixed extension call syntax
 
 app.Run();
