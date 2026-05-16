@@ -112,19 +112,17 @@
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
         
-        if (query.TryGetValue("name", out var name) && !string.IsNullOrEmpty(name))
-            ItemName = Uri.UnescapeDataString(name!);
-            
-        if (query.TryGetValue("price", out var price) && !string.IsNullOrEmpty(price))
+        if (query.TryGetValue("id", out var idStr) && int.TryParse(idStr, out var id))
         {
-            if (decimal.TryParse(price, out var parsedPrice))
+            // Pull product properties cleanly using the shared central storage array matching
+            var targetProduct = ProductsMenu.sampleProducts.FirstOrDefault(p => p.ProductId == id);
+            if (targetProduct != null)
             {
-                BasePrice = parsedPrice;
+                ItemName = targetProduct.Name;
+                BasePrice = targetProduct.Price;
+                ItemImg = targetProduct.DisplayPic;
             }
         }
-            
-        if (query.TryGetValue("img", out var img) && !string.IsNullOrEmpty(img))
-            ItemImg = Uri.UnescapeDataString(img!);
     }
 
     private void IncreaseQuantity() => QuantityCount++;
