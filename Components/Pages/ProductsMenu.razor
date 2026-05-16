@@ -52,20 +52,24 @@
     .specialty-card {
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .specialty-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(111,78,55,0.12) !important;
-    }
+
+        .specialty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(111,78,55,0.12) !important;
+        }
+
     .btn-add {
         border: 2px solid #6f4e37;
         background: transparent;
         transition: all 0.2s ease-in-out;
         font-size: 0.85rem;
     }
-    .btn-add:hover {
-        background-color: #6f4e37;
-        color: white !important;
-    }
+
+        .btn-add:hover {
+            background-color: #6f4e37;
+            color: white !important;
+        }
+
     .object-fit-cover {
         object-fit: cover;
     }
@@ -87,7 +91,7 @@
         new Product { ProductId = 11, Name = "Red Velvet Dream Slice", Description = "Traditional vibrant red cocoa sponge cake layers paired perfectly with signature vanilla bean frosting.", Price = 450.00m, Category = "Cakes", DisplayPic = "https://images.unsplash.com/photo-1586788680434-30d324671ff6?q=80&w=500" },
         new Product { ProductId = 12, Name = "Creamy Alfredo Fettuccine", Description = "Tender fettuccine pasta tossed in a rich parmesan and garlic cream sauce, topped with grilled chicken.", Price = 690.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=500" },
         new Product { ProductId = 13, Name = "Spicy Arrabiata Pasta", Description = "Al dente penne pasta coated evenly in a fiery slow-simmered tomato sauce infused with chili flakes and garlic.", Price = 620.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=500" },
-        { 14, ("Four-Cheese Baked Lasagna", 750.00m, "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=500") }
+        new Product { ProductId = 14, Name = "Four-Cheese Baked Lasagna", Description = "Layered sheet pasta stuffed with minced savory filling, loaded with melted mozzarella and ricotta.", Price = 750.00m, Category = "Pasta", DisplayPic = "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=500" }
     };
 
     private void DirectToInstantCheckout(Product chosenProduct)

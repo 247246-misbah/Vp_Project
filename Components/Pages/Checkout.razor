@@ -4,14 +4,14 @@
 
 <div class="container-fluid py-5 px-3" style="background-color: #fdfbf7; min-height: 100vh;">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8 bg-white shadow-sm rounded-4 border-0 p-0 overflow-hidden d-flex flex-column flex-md-row">
+        <div class="col-12 col-md-10 col-lg-9 bg-white shadow-sm rounded-4 border-0 p-0 overflow-hidden d-flex flex-column flex-md-row">
             
             <div class="col-12 col-md-6 p-4 p-lg-5 d-flex flex-column justify-content-between" style="background-color: #faf6f0;">
                 <div>
                     <span class="text-uppercase tracking-wider small fw-bold text-muted d-block mb-3">Check your order!</span>
                     
                     <div class="card border-0 shadow-sm rounded-4 p-3 bg-white d-flex flex-row align-items-center mb-4">
-                        <img src="@ItemImg" alt="Selected Dish" class="rounded-3 object-fit-cover me-3 shadow-2xs" style="width: 85px; height: 85px;" />
+                        <img src="@ItemImg" alt="Selected Dish" class="rounded-3 object-fit-cover me-3" style="width: 85px; height: 85px;" />
                         <div class="flex-grow-1">
                             <h6 class="fw-bold text-dark mb-1">@ItemName</h6>
                             <small class="text-muted d-block mb-2">Standard Station Serving</small>
@@ -47,7 +47,7 @@
             <div class="col-12 col-md-6 p-4 p-lg-5 d-flex flex-column justify-content-center border-start border-light">
                 @if (!OrderPlacedStatus)
                 {
-                    <h4 class="fw-bold text-dark mb-4" style="font-family: 'Playfair Display', serif;">Dispatch Assignment</h4>
+                    <h4 class="fw-bold text-dark mb-4" style="font-family: 'Playfair Display', serif;">Customer Information</h4>
                     <form @onsubmit="ProcessOrderSubmission">
                         <div class="mb-3">
                             <label class="form-label text-muted small fw-bold">CUSTOMER IDENTIFIER / NAME</label>
@@ -55,7 +55,7 @@
                         </div>
                         
                         <div class="mb-4">
-                            <label class="form-label text-muted small fw-bold">DISPATCH DELIVERY TABLE STATION</label>
+                            <label class="form-label text-muted small fw-bold">DISPATCH DELIVERY STATION</label>
                             <select class="form-select form-select-lg rounded-3 border-secondary-subtle fs-6 bg-light bg-opacity-25">
                                 <option>Executive VIP Lounge Table 1</option>
                                 <option>Standard Window Bay Counter 3</option>
@@ -112,7 +112,6 @@
     private int QuantityCount = 1;
     private bool OrderPlacedStatus = false;
 
-    // Static Dictionary to safely read data using pure Product ID to secure image rendering
     private static readonly Dictionary<int, (string Name, decimal Price, string Img)> ProductLookup = new()
     {
         { 1, ("Premium Vanilla Latte", 420.00m, "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=500") },
@@ -150,5 +149,5 @@
     private void IncreaseQuantity() => QuantityCount++;
     private void DecreaseQuantity() { if (QuantityCount > 1) QuantityCount--; }
     private void ProcessOrderSubmission() => OrderPlacedStatus = true;
-    private void ReturnToDashboard() => NavManager.NavigateTo("/dashboard");
+    private void ReturnToDashboard() => NavManager.NavigateTo("/");
 }
