@@ -3,6 +3,7 @@ using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Models;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Misbah_VisualProgramming_Project.Services
 {
@@ -14,7 +15,7 @@ namespace Misbah_VisualProgramming_Project.Services
 
         public event Action<HardwareStatus>? OnTelemetryUpdated;
 
-        // FIXED: Injecting DbContextFactory instead of direct DbContext to prevent runtime crashes
+        // FIXED: Injecting IDbContextFactory instead of direct AppDbContext to fix the scope validation crash
         public HardwareService(IDbContextFactory<AppDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
@@ -27,8 +28,7 @@ namespace Misbah_VisualProgramming_Project.Services
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                // Telemetry simulation values matching your UI cards
-                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Loops around 92.50°C
+                double currentTemp = 90.0 + (_random.NextDouble() * 5.0); // Around 92.50°C
                 int waterLevel = _random.Next(95, 101); // Around 100%
 
                 var telemetry = await context.HardwareStatuses.FirstOrDefaultAsync();
@@ -52,17 +52,15 @@ namespace Misbah_VisualProgramming_Project.Services
                 }
 
                 await context.SaveChangesAsync();
-
-                // Trigger real-time visual update to dashboard component tree
                 OnTelemetryUpdated?.Invoke(telemetry);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Telemetry engine sync warning: {ex.Message}");
+                Console.WriteLine($"Telemetry engine warning: {ex.Message}");
             }
         }
 
-        public async Task<HardwareStatus> GetLatestStatusAsync()
+        public async Task<HardwareStatus> GetLatestStatus()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
             return await context.HardwareStatuses.FirstOrDefaultAsync()
