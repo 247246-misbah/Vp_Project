@@ -6,8 +6,9 @@ namespace Misbah_VisualProgramming_Project.Models
     [Table("hardwarestatus")]
     public class HardwareStatus
     {
+        // Agar aapke database table mein column ka naam capital "Id" hai, toh yahan "Id" likhein
         [Key]
-        [Column("id")]
+        [Column("Id")]
         public int Id { get; set; }
 
         [Column("MachineName")]
