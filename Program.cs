@@ -1,41 +1,44 @@
-using Misbah_VisualProgramming_Project.Components;
+using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+// 1. Database Connections Infrastructure (MySQL Setup via XAMPP)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
 
-// 1. Corrected: Register Custom Database Context Factory (MySQL via XAMPP connection pipeline)
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, serverVersion));
+
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+    options.UseMySql(connectionString, serverVersion));
 
-// 2. Fallback registration for standard scoped context requests
-builder.Services.AddScoped(p =>
-    p.GetRequiredService<IDbContextFactory<AppDbContext>>().CreateDbContext());
-
-// Register Application Infrastructure Dependency Injection Nodes
+// 2. Core Application Services Configuration Matrix
 builder.Services.AddScoped<CafeService>();
-builder.Services.AddScoped<HardwareService>();
+builder.Services.AddSingleton<HardwareService>();
+
+// 3. Register Standard Blazor Razor Components Service
+builder.Services.AddServerSideBlazor();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+// FIXED ROUTING PIPELINE: Universal routing engine that eliminates extension compilation bugs
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
 
 app.Run();
