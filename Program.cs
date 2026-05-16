@@ -1,30 +1,26 @@
 using Microsoft.EntityFrameworkCore;
+using Misbah_VisualProgramming_Project.Components;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Services;
-using Misbah_VisualProgramming_Project.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. SERVICES CONFIGURATION (Yahan .AddInteractiveServerComponents lagta hai)
+// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped<HardwareService>();
-builder.Services.AddScoped<CafeService>();
+// 1. Database Connection Engine Setup
+builder.Services.AddDbContext<CafeDbContext>(options =>
+    options.UseSqlite("Data Source=Data/cafecove.db"));
 
-// 2. DATABASE CONFIGURATION
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=localhost;Database=cafe_management;User=root;Password=;";
-
-var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
-
-builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion),
-    ServiceLifetime.Singleton);
+// 2. Strong Binding of Injected Services with Interfaces
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ISensorService, SensorService>();
 
 var app = builder.Build();
 
-// 3. HTTP PIPELINE
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -35,7 +31,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-// 4. ROUTING PIPELINE (Yahan .AddInteractiveServerRenderMode lagta hai!)
+// Absolute Route Endpoint Target to bypass 404 on Root "/"
+app.MapGet("/", async context =>
+{
+    context.Response.Redirect("/dashboard");
+    await Task.CompletedTask;
+});
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

@@ -1,10 +1,93 @@
-﻿@page "/old-home"
-@inject NavigationManager NavManager
+﻿@page "/"
 
-@code {
-    protected override void OnInitialized()
-    {
-        // Automatically redirects the home layout scope directly into our twin engine dashboard
-        NavManager.NavigateTo("dashboard");
-    }
-}
+<div class="container-fluid fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0 text-dark">Cafe Cove Analytics</h2>
+            <p class="text-muted m-0">Real-time business trends & digital twin statuses.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <span class="badge bg-light text-dark border d-flex align-items-center px-3 rounded-pill">
+                <span class="spinner-grow spinner-grow-sm text-success me-2" role="status"></span> Live Update
+            </span>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cafe-card p-4 shadow-sm border bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Gross Revenue</span>
+                    <span class="fs-4">📈</span>
+                </div>
+                <h3 class="fw-bold m-0 text-dark">Rs. 42,350</h3>
+                <small class="text-success fw-semibold">▲ +14% Since yesterday</small>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cafe-card p-4 shadow-sm border bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Active Orders Queue</span>
+                    <span class="fs-4">⏳</span>
+                </div>
+                <h3 class="fw-bold m-0 text-warning">6 Orders</h3>
+                <small class="text-muted">Kitchen processing load: Normal</small>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cafe-card p-4 shadow-sm border bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Twin Appliances</span>
+                    <span class="fs-4">🤖</span>
+                </div>
+                <h3 class="fw-bold m-0 text-success">4 / 4 Online</h3>
+                <small class="text-success fw-semibold">Telemetry link stable</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="cafe-card p-4 shadow-sm bg-white border">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="fw-bold m-0 text-dark">Active Kitchen Preparation Line</h5>
+            <span class="badge bg-dark rounded-pill px-3 py-2">Real-time State</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle m-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Order Reference</th>
+                        <th>Customer / Table</th>
+                        <th>Selection Details</th>
+                        <th>Financials</th>
+                        <th>Live Flag</th>
+                        <th class="text-center">Action Interventions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="font-monospace fw-bold">#CC-4921</span></td>
+                        <td class="fw-semibold">Muhammad Ali (Table 4)</td>
+                        <td>1x Hazelnut Macchiato, 1x Melted Cheese Panini</td>
+                        <td class="fw-semibold">Rs. 1,150</td>
+                        <td><span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Preparing</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-dark rounded-pill px-3">Dispatch Order</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-monospace fw-bold">#CC-4920</span></td>
+                        <td class="fw-semibold">Ayesha Khan (Takeaway)</td>
+                        <td>2x Signature Cold Brew Coffee</td>
+                        <td class="fw-semibold">Rs. 900</td>
+                        <td><span class="badge bg-success text-white px-3 py-2 rounded-pill">Completed</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-light disabled rounded-pill px-3">Archived</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

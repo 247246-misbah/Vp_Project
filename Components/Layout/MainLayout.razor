@@ -1,13 +1,45 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="d-flex flex-column flex-md-row" style="min-height: 100vh; overflow-x: hidden;">
-    <div style="min-width: 280px; max-width: 280px;" class="bg-white text-dark shadow-sm flex-shrink-0">
-        <NavMenu />
-    </div>
+<div class="container-fluid m-0 p-0">
+    <div class="row g-0">
+        <div class="col-md-3 col-lg-2 sidebar-wrapper p-3 d-none d-md-block sticky-top" style="height: 100vh;">
+            <div class="text-center my-4">
+                <h3 class="fw-bold tracking-wide m-0" style="color: var(--coffee-light); font-size: 1.6rem;">☕ Cafe Cove</h3>
+                <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.7rem;">Digital Twin System</small>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.15);" />
+            
+            <nav class="nav flex-column mt-3">
+                <NavLink class="nav-link-custom" href="" Match="NavLinkMatch.All">
+                    <span class="me-2">📊</span> Dashboard
+                </NavLink>
+                <NavLink class="nav-link-custom" href="menu">
+                    <span class="me-2">☕</span> Order Menu
+                </NavLink>
+                <NavLink class="nav-link-custom" href="manage-menu">
+                    <span class="me-2">⚙️</span> Manage Items
+                </NavLink>
+                <NavLink class="nav-link-custom" href="hardware-simulator">
+                    <span class="me-2">🤖</span> Digital Twin
+                </NavLink>
+            </nav>
+        </div>
 
-    <main class="flex-grow-1" style="background-color: #f8f9fa;">
-        <article class="p-0">
-            @Body
-        </article>
-    </main>
+        <div class="col-md-9 col-lg-10 min-vh-100 d-flex flex-column">
+            <header class="navbar navbar-expand navbar-light bg-white shadow-sm px-4 py-3 border-bottom sticky-top">
+                <div class="container-fluid p-0">
+                    <span class="navbar-brand fw-semibold text-muted fs-6 m-0">
+                        Current Session: <strong class="text-dark">Operational Staff</strong>
+                    </span>
+                    <div class="ms-auto d-flex align-items-center">
+                        <span class="badge bg-success rounded-pill px-3 py-2 me-2" style="font-size: 0.75rem;">🟢 Live Engine</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-4 flex-grow-1">
+                @Body
+            </main>
+        </div>
+    </div>
 </div>

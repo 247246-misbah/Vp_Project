@@ -1,0 +1,88 @@
+﻿@page "/manage-menu"
+
+<div class="container-fluid fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold m-0 text-dark">Menu Inventory Management</h3>
+            <p class="text-muted m-0">Admin system utilities to create, update, and manage café items.</p>
+        </div>
+        <button class="btn btn-dark rounded-pill px-4 shadow-sm">
+            ➕ Register New Menu Item
+        </button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-xl-4">
+            <div class="cafe-card p-4 border bg-white shadow-sm">
+                <h5 class="fw-bold mb-4 border-bottom pb-2">Item Definition Form</h5>
+                
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold text-uppercase">Item Title / Name</label>
+                        <input type="text" class="form-control" placeholder="e.g., Cold Brew Latte" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold text-uppercase">Menu Classification Category</label>
+                        <select class="form-select">
+                            <option>Hot Coffee Base</option>
+                            <option>Cold Blended</option>
+                            <option>Artisan Bakery Patisserie</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label class="form-label small text-muted fw-bold text-uppercase">Pricing (PKR)</label>
+                            <input type="number" class="form-control" placeholder="450" required />
+                        </div>
+                        <div class="col">
+                            <label class="form-label small text-muted fw-bold text-uppercase">Stock Level</label>
+                            <input type="number" class="form-control" placeholder="50" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small text-muted fw-bold text-uppercase">Item Summary Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Brief details about raw materials or flavor profile..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-pill fw-bold" style="background-color: var(--coffee-warm); border:none;">
+                        Save Item Configuration
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="cafe-card p-4 border bg-white shadow-sm">
+                <h5 class="fw-bold mb-4">Current Registered Catalog</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle m-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Base Price</th>
+                                <th>Availability State</th>
+                                <th class="text-end">Modifications</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold text-dark">Irish Velvet Cream Latte</td>
+                                <td><span class="badge bg-light text-dark border">Hot Coffee Base</span></td>
+                                <td class="fw-semibold">Rs. 520</td>
+                                <td><span class="badge bg-success-subtle text-success px-2.5 py-1.5 rounded border border-success-subtle">Active In-Stock</span></td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 me-1">Edit</button>
+                                    <button class="btn btn-sm btn-outline-danger rounded-pill px-3">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,117 +1,170 @@
-﻿@page "/"
-@page "/dashboard"
+﻿@page "/dashboard"
+@using Misbah_VisualProgramming_Project.Data.Entities
+@using Misbah_VisualProgramming_Project.Services
+@inject IMenuService MenuService
+@inject IOrderService OrderService
+@inject ISensorService SensorService
 
-<div class="container-fluid py-4 px-4" style="background-color: #fcf9f5; min-height: 100vh;">
-    
+<div class="container-fluid mt-4">
+    <div class="p-4 mb-4 bg-dark text-white rounded shadow-sm">
+        <h2 class="fw-bold">☕ Cafe Cove Management Dashboard</h2>
+        <p class="text-light mb-0">Visual Programming Final Project Web Portal | Air University Kharian Campus</p>
+    </div>
+
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white border-start border-5" style="border-color: #6f4e37 !important;">
-                <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
-                    <div>
-                        <h2 class="fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif; letter-spacing: -0.5px;">Coffee Cove Central Station</h2>
-                        <p class="text-muted mb-0 small text-uppercase tracking-wider fw-semibold">Hardware Telemetry & Digital Twin Synced Monitor</p>
-                    </div>
-                    <div>
-                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold small">
-                            ● STREAM ACTIVE
-                        </span>
-                    </div>
+        <div class="col-md-12">
+            <div class="card border-primary shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-semibold">⚙️ Digital Twin Hardware Stream</h5>
+                    <span class="badge bg-light text-primary fw-bold">Live Telemetry</span>
+                </div>
+                <div class="card-body bg-light">
+                    @if (activeSensor != null)
+                    {
+                        <div class="row text-center">
+                            <div class="col-sm-4 border-end">
+                                <small class="text-muted d-block">Appliance Node</small>
+                                <strong class="fs-5 text-dark">@activeSensor.MachineName</strong>
+                            </div>
+                            <div class="col-sm-4 border-end">
+                                <small class="text-muted d-block">Core Temp Boiler</small>
+                                <strong class="fs-5 text-danger">@activeSensor.Temperature °C</strong>
+                            </div>
+                            <div class="col-sm-4">
+                                <small class="text-muted d-block">Binary Register Math Bitmask</small>
+                                <strong class="fs-5 text-success">0x0@activeSensor.StatusBitmask.ToString("X")</strong>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2">
+                            <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                            <span class="ms-2 text-muted">Reading physical appliance parameters...</span>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-4 mb-4">
-        <div class="col-12 col-md-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Boiler Vessel Core</span>
-                    <span class="badge rounded-circle p-2 bg-danger bg-opacity-10 text-danger fs-5">🌡</span>
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-success h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h6 class="card-title text-uppercase opacity-75">Active Menu Items</h6>
+                    <h2 class="display-6 fw-bold">@menuCount</h2>
                 </div>
-                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.BoilerTemp°C</h2>
-                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
-                    <div class="progress-bar bg-danger rounded-pill" role="progressbar" style="width: @(HardwareStatus.BoilerTemp / 1.2)%"></div>
-                </div>
-                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Optimal range: 90°C - 96°C</small>
             </div>
         </div>
-
-        <div class="col-12 col-md-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Reservoir Hydration</span>
-                    <span class="badge rounded-circle p-2 bg-primary bg-opacity-10 text-primary fs-5">💧</span>
+        <div class="col-md-4">
+            <div class="card text-white bg-info h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h6 class="card-title text-uppercase opacity-75">Pending Orders</h6>
+                    <h2 class="display-6 fw-bold">@orderCount</h2>
                 </div>
-                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.WaterLevel%</h2>
-                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
-                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: @HardwareStatus.WaterLevel%"></div>
-                </div>
-                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Capacity standard: 2.5 Liters</small>
             </div>
         </div>
-
-        <div class="col-12 col-md-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 telemetry-card">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="text-uppercase tracking-wider font-monospace text-muted small fw-bold">Hopper Bean Volume</span>
-                    <span class="badge rounded-circle p-2 bg-warning bg-opacity-10 fs-5" style="color: #6f4e37;">🫘</span>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h6 class="card-title text-uppercase opacity-75">System Role Context</h6>
+                    <h2 class="fs-3 fw-bold">Authorized Session</h2>
                 </div>
-                <h2 class="fw-extrabold text-dark tracking-tight mb-2">@HardwareStatus.BeanWeightg<span class="fs-5 fw-normal text-muted"> grams</span></h2>
-                <div class="progress rounded-pill" style="height: 6px; background-color: #f1ebd9;">
-                    <div class="progress-bar rounded-pill" role="progressbar" style="width: @((HardwareStatus.BeanWeightg / 500.0) * 100)%; background-color: #6f4e37;"></div>
-                </div>
-                <small class="text-muted d-block mt-2 font-monospace" style="font-size: 0.75rem;">Max storage capacity: 500g</small>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card border-0 shadow-lg rounded-4 p-4 bg-dark text-white-50 position-relative" style="min-height: 200px; box-shadow: inset 0 4px 30px rgba(0,0,0,0.4);">
-                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="rounded-circle bg-success d-inline-block" style="width: 8px; height: 8px;"></span>
-                        <span class="small font-monospace text-success fw-bold">TWIN_BUS_CONTROLLER_SHELL</span>
-                    </div>
-                    <span class="small font-monospace text-muted">BAUD_RATE_115200</span>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="mb-0 fw-bold text-secondary">📋 SQLite Verified Live Menu Inventory</h5>
                 </div>
-                <div class="font-monospace small style-terminal-lines" style="line-height: 1.7;">
-                    <p class="mb-1 text-secondary">[SYS] Loading local hardware architectural structures configurations...</p>
-                    <p class="mb-1 text-success">[OK] Framework data map compilation completed. No errors found.</p>
-                    <p class="mb-1 text-warning">[WARN] SPI communications standard buffer pool refreshed safely.</p>
-                    <p class="mb-0 text-light">> Current runtime environment synchronized at @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Item Title</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (loadedItems != null && loadedItems.Any())
+                                {
+                                    @foreach (var item in loadedItems)
+                                    {
+                                        <tr>
+                                            <td><strong>#@item.Id</strong></td>
+                                            <td class="text-start text-primary fw-semibold">@item.Name</td>
+                                            <td><span class="badge bg-secondary">@item.Category</span></td>
+                                            <td class="text-success fw-bold">Rs. @item.Price</td>
+                                            <td>
+                                                <span class="badge @(item.IsAvailable ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger")">
+                                                    @(item.IsAvailable ? $"{item.StockLevel} Units Left" : "Out of stock")
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-muted py-4">No data seed tracks recognized in SQLite tables.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="mb-0 fw-bold text-secondary">🚀 Direct Project Operations Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a href="/menu/list" class="btn btn-outline-dark p-3 text-start shadow-sm rounded">
+                            <h5>📜 Main Menu List Page</h5>
+                            <small class="text-muted">Display items cards grid system for walk-in orders</small>
+                        </a>
+                        <a href="/menu/manage" class="btn btn-outline-primary p-3 text-start shadow-sm rounded">
+                            <h5>🛠️ Manage Inventory Panel</h5>
+                            <small class="text-muted">Perform complete CRUD adjustments directly on SQL tables</small>
+                        </a>
+                        <a href="/simulator/digitaltwin" class="btn btn-outline-danger p-3 text-start shadow-sm rounded">
+                            <h5>🕹️ Machine Telemetry Simulator</h5>
+                            <small class="text-muted">Inspect bitwise state registers and thermal controller grids</small>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .telemetry-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        border-bottom: 3px solid transparent !important;
-    }
-
-        .telemetry-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(111,78,55,0.06) !important;
-            border-color: #6f4e37 !important;
-        }
-</style>
-
 @code {
-    // Model structure matching exactly with the controller context variables
-    private TwinHardware HardwareStatus { get; set; } = new()
-    {
-        BoilerTemp = 93.4,
-        WaterLevel = 88,
-        BeanWeightg = 425
-    };
+    private List<MenuItem> loadedItems = new();
+    private HardwareSensor? activeSensor;
+    private int menuCount = 0;
+    private int orderCount = 0;
 
-    public class TwinHardware
+    protected override async Task OnInitializedAsync()
     {
-        public double BoilerTemp { get; set; }
-        public int WaterLevel { get; set; }
-        public int BeanWeightg { get; set; }
+        // Fetching structural lists asynchronously via Dependency Injected repositories
+        loadedItems = await MenuService.GetAllMenuItemsAsync();
+        menuCount = loadedItems.Count;
+
+        var activeOrders = await OrderService.GetActiveOrdersAsync();
+        orderCount = activeOrders.Count;
+
+        activeSensor = await SensorService.GetMachineTelemetryAsync();
     }
 }
