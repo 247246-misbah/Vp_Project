@@ -1,78 +1,73 @@
 ﻿@page "/dashboard"
-@inject Misbah_VisualProgramming_Project.Services.HardwareService Hardware
+@using Misbah_VisualProgramming_Project.Models
+@using Misbah_VisualProgramming_Project.Services
+@inject HardwareService Hardware
 @implements IDisposable
 
-<div class="twin-panel p-4 min-vh-100 text-white" style="background-color: #0b0d11;">
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-10">
+<div class="container-fluid p-4 text-white" style="background-color: #0b0d11; min-height: 100vh;">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-20">
         <div>
-            <h2 class="fw-bold text-warning mb-1 m-0">⚙️ TWIN ENGINE RADAR CONSOLE</h2>
-            <p class="text-muted small m-0 text-uppercase tracking-wider">Cyber-Physical Industrial Telemetry Verification & State Sync</p>
+            <h2 class="text-warning fw-bold m-0">☕ DIGITAL TWIN SIMULATOR CONTROL</h2>
+            <p class="text-muted small m-0">Hardware Status Pipeline Intel Telemetry Sync</p>
         </div>
-        @if (latestTelemetry != null && latestTelemetry.IsConnected)
-        {
-            <div class="px-3 py-2 rounded-pill d-flex align-items-center gap-2" style="background: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3);">
-                <div class="spinner-grow spinner-grow-sm text-success" role="status"></div>
-                <span class="text-success small fw-bold tracking-wide">HARDWARE ONLINE</span>
-            </div>
-        }
-        else
-        {
-            <div class="px-3 py-2 rounded-pill d-flex align-items-center gap-2" style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3);">
-                <span class="text-danger small fw-bold tracking-wide">🚨 HARDWARE DISCONNECTED</span>
-            </div>
-        }
+        <div class="badge @(telemetry?.IsConnected == true ? "bg-success" : "bg-danger") px-3 py-2 fs-6">
+            @(telemetry?.IsConnected == true ? "● ONLINE" : "○ OFFLINE")
+        </div>
     </div>
 
-    @if (latestTelemetry == null)
+    @if (telemetry == null)
     {
         <div class="text-center py-5">
-            <div class="spinner-border text-warning mb-3" role="status"></div>
-            <p class="text-muted tracking-wide text-uppercase small">Awaiting First Telemetry Stream Packet...</p>
+            <div class="spinner-border text-warning" role="status"></div>
+            <p class="text-muted mt-2">Connecting Hardware Telemetry State...</p>
         </div>
     }
     else
     {
-        <div class="row g-4">
-            <div class="col-xl-4 col-md-6">
-                <div class="card h-100 p-4 border border-secondary border-opacity-10" style="background: #161a23; border-radius: 16px;">
-                    <span class="text-muted small fw-bold text-uppercase tracking-wider mb-2 d-block">Device Registry Spec</span>
-                    <h3 class="fw-bold text-white mb-3 font-monospace">@latestTelemetry.MachineName</h3>
-                    <div class="mt-auto">
-                        <span class="badge w-100 py-2 fs-6 text-uppercase" style="background-color: rgba(255, 193, 7, 0.1); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.2); border-radius: 8px;">
-                            🔄 Current Loop: @latestTelemetry.CurrentState
-                        </span>
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card h-100 text-white" style="background: #161a23; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small font-monospace">Machine Model</h6>
+                        <h4 class="text-warning fw-bold mt-2">@telemetry.MachineName</h4>
+                        <span class="badge bg-dark border border-secondary text-info mt-2">State: @telemetry.CurrentState</span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-xl-4 col-md-6">
-                <div class="card h-100 p-4 border border-secondary border-opacity-10" style="background: #161a23; border-radius: 16px;">
-                    <span class="text-muted small fw-bold text-uppercase tracking-wider mb-2 d-block">Core Boiler Heat Gauge</span>
-                    <div class="d-flex align-items-baseline mb-3">
-                        <span class="display-5 fw-bold font-monospace @(latestTelemetry.Temperature > 90 ? "text-danger" : "text-warning")">
-                            @latestTelemetry.Temperature.ToString("F1")
-                        </span>
-                        <span class="fs-4 text-muted ms-1">°C</span>
+            <div class="col-md-3">
+                <div class="card h-100 text-white" style="background: #161a23; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small font-monospace">Core Temperature</h6>
+                        <h3 class="fw-bold text-danger mt-2">@telemetry.Temperature.ToString("F1")°C</h3>
+                        <div class="progress mt-3" style="height: 6px; background-color: #2a2f3b;">
+                            <div class="progress-bar bg-danger" style="width: @(telemetry.Temperature / 120.0 * 100.0)%"></div>
+                        </div>
                     </div>
-                    <div class="progress bg-dark style-holder" style="height: 8px; border-radius: 4px;">
-                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar"
-                             style="width: @(Math.Min((latestTelemetry.Temperature / 120.0) * 100, 100))%;"></div>
-                    </div>
-                    <span class="text-muted small mt-2 d-block">Optimal extraction bracket: 90°C - 96°C</span>
                 </div>
             </div>
 
-            <div class="col-xl-4 col-md-12">
-                <div class="card h-100 p-4 border border-secondary border-opacity-10" style="background: #161a23; border-radius: 16px;">
-                    <span class="text-muted small fw-bold text-uppercase tracking-wider mb-2 d-block">Fluid Reservoir Volume</span>
-                    <div class="d-flex align-items-baseline mb-3">
-                        <span class="display-5 fw-bold text-info font-monospace">@latestTelemetry.WaterLevel</span>
-                        <span class="fs-4 text-muted ms-1">% Volume</span>
+            <div class="col-md-3">
+                <div class="card h-100 text-white" style="background: #161a23; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small font-monospace">Water Reservoir Level</h6>
+                        <h3 class="fw-bold text-info mt-2">@telemetry.WaterLevel%</h3>
+                        <div class="progress mt-3" style="height: 6px; background-color: #2a2f3b;">
+                            <div class="progress-bar bg-info" style="width: @telemetry.WaterLevel%"></div>
+                        </div>
                     </div>
-                    <div class="progress bg-dark" style="height: 8px; border-radius: 4px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: @latestTelemetry.WaterLevel%;"></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card h-100 text-white" style="background: #161a23; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small font-monospace">Espresso Bean Weight</h6>
+                        <h3 class="fw-bold text-success mt-2">@telemetry.BeanWeight g</h3>
+                        <div class="progress mt-3" style="height: 6px; background-color: #2a2f3b;">
+                            <div class="progress-bar bg-success" style="width: @(telemetry.BeanWeight / 500.0 * 100.0)%"></div>
+                        </div>
                     </div>
-                    <span class="text-muted small mt-2 d-block">Bean Hopper Level: <strong class="text-white">@latestTelemetry.BeanWeight g</strong> remaining</span>
                 </div>
             </div>
         </div>
@@ -80,29 +75,27 @@
 </div>
 
 @code {
-    private Misbah_VisualProgramming_Project.Models.HardwareStatus? latestTelemetry;
+    private HardwareStatus? telemetry;
+    private System.Threading.Timer? _timer;
 
     protected override async Task OnInitializedAsync()
     {
-        // Load initial status configurations
-        latestTelemetry = await Hardware.GetLatestStatus();
-        
-        // Wire up the live hardware update stream event handler
-        Hardware.OnTelemetryUpdated += UpdateUiView;
-    }
+        // Initial clean data pull from Service
+        telemetry = await Hardware.GetLatestStatus();
 
-    private void UpdateUiView(Misbah_VisualProgramming_Project.Models.HardwareStatus liveStatus)
-    {
-        InvokeAsync(() =>
+        // Safe poll timer loop to simulate real-time interactive updates every 3 seconds
+        _timer = new System.Threading.Timer(async _ =>
         {
-            latestTelemetry = liveStatus;
-            StateHasChanged(); // Forcing direct virtual tree rendering updates instantly
-        });
+            await InvokeAsync(async () =>
+            {
+                telemetry = await Hardware.GetLatestStatus();
+                StateHasChanged();
+            });
+        }, null, 3000, 3000);
     }
 
     public void Dispose()
     {
-        // Unbinding delegate handlers safely on route disposal to block memory leaks
-        Hardware.OnTelemetryUpdated -= UpdateUiView;
+        _timer?.Dispose();
     }
 }

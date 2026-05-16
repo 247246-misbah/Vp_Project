@@ -6,9 +6,9 @@ namespace Misbah_VisualProgramming_Project.Models
     [Table("hardwarestatus")]
     public class HardwareStatus
     {
-        // Agar aapke database table mein column ka naam capital "Id" hai, toh yahan "Id" likhein
         [Key]
-        [Column("Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // Is line ko check karein, hum explicitly column name mapping auto par chhor rahe hain
         public int Id { get; set; }
 
         [Column("MachineName")]
@@ -18,15 +18,15 @@ namespace Misbah_VisualProgramming_Project.Models
         public string CurrentState { get; set; } = "Idle";
 
         [Column("Temperature")]
-        public double Temperature { get; set; }
+        public double Temperature { get; set; } = 92.5;
 
         [Column("WaterLevel")]
-        public int WaterLevel { get; set; }
+        public int WaterLevel { get; set; } = 85;
 
         [Column("BeanWeight")]
-        public int BeanWeight { get; set; }
+        public int BeanWeight { get; set; } = 450;
 
         [Column("IsConnected")]
-        public bool IsConnected { get; set; }
+        public bool IsConnected { get; set; } = true;
     }
 }
