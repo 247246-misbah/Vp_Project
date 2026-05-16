@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Misbah_VisualProgramming_Project.Services
 {
@@ -13,7 +15,8 @@ namespace Misbah_VisualProgramming_Project.Services
             _contextFactory = contextFactory;
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        // Exact method name matching the frontend page requirements
+        public async Task<List<Product>> GetProductsAsync()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
             return await context.Products.ToListAsync();

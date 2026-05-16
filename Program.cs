@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Misbah_VisualProgramming_Project.Data;
 using Misbah_VisualProgramming_Project.Services;
+using Misbah_VisualProgramming_Project.Components; // Ensure this namespace is present
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,34 +11,33 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
 
-// 2. Register DbContext AND DbContextFactory properly
+// 2. Register DbContext and DbContextFactory
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion));
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion));
+    options.UseMySql(connectionString, serverVersion),
+    ServiceLifetime.Singleton);
 
 // 3. Register Core Application Services
 builder.Services.AddScoped<CafeService>();
 builder.Services.AddSingleton<HardwareService>();
 
-// 4. Blazor Server Classic Pipeline Setup
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+// 4. Register Razor Components for Modern Interactive Server Rendering
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
+app.UseAntiforgery();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+// 5. THE STRICT FIX: Maps directly to App.razor instead of non-existent _Host page
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();
