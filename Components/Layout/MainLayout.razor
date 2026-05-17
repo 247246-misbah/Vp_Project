@@ -3,7 +3,9 @@
 
 @if (Navigation.Uri.Contains("/login") || Navigation.Uri.EndsWith("/"))
 {
-    @Body
+    <div class="login-full-layout">
+        @Body
+    </div>
 }
 else
 {
@@ -23,3 +25,13 @@ else
         </main>
     </div>
 }
+
+<style>
+    .login-full-layout {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+</style>

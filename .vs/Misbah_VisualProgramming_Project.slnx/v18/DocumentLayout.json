@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -46,20 +46,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "MainLayout.razor",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Layout\\MainLayout.razor",
               "RelativeDocumentMoniker": "Components\\Layout\\MainLayout.razor",
               "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Layout\\MainLayout.razor",
               "RelativeToolTip": "Components\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAowCQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-17T07:14:04.512Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Dashboard.razor",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Dashboard.razor",
               "RelativeDocumentMoniker": "Components\\Pages\\Dashboard.razor",
@@ -91,7 +91,7 @@
               "RelativeDocumentMoniker": "Components\\Pages\\Login.razor",
               "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Login.razor",
               "RelativeToolTip": "Components\\Pages\\Login.razor",
-              "ViewState": "AgIAAL8AAAAAAAAAAAAAAN4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAALkAAAAAAAAAAAAAANgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-17T06:52:43.005Z",
               "EditorCaption": ""
