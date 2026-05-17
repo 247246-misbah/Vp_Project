@@ -21,7 +21,7 @@
 
         @if (!string.IsNullOrEmpty(feedbackMessage))
         {
-            <div class="alert alert-danger border-0 rounded-3 text-center small mb-3 animate-shake" role="alert">
+            <div class="alert alert-danger border-0 rounded-3 text-center small mb-3" role="alert">
                 ⚠️ @feedbackMessage
             </div>
         }
@@ -73,7 +73,20 @@
 </div>
 
 <style>
-    /* Fixed screen grid box keeping everything perfectly aligned in the absolute mid center layout */
+    /* CRITICAL: Forcefully hide Blazor default layout elements leaking from background */
+    .sidebar, main .top-row, .page nav, ::deep .sidebar, .nav-scrollable {
+        display: none !important;
+        width: 0 !important;
+    }
+    
+    html, body, main, .page {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Fixed screen layout keeping everything perfectly aligned in the absolute mid center screen */
     .auth-viewport-wrapper {
         position: fixed;
         top: 0;
@@ -84,7 +97,7 @@
         display: flex;
         align-items: center; /* Vertical center lock */
         justify-content: center; /* Horizontal center lock */
-        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), 
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
                     url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
         background-size: cover;
         padding: 20px;
