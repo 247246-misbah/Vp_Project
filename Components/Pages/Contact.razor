@@ -1,4 +1,5 @@
 ﻿@page "/contact"
+@using Microsoft.AspNetCore.Authorization
 @attribute [AllowAnonymous]
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
@@ -18,9 +19,7 @@
 </header>
 
 <div class="contact-viewport-container">
-
     <main class="contact-main-layout">
-        
         <div class="contact-grid-wrapper">
             
             <div class="contact-card-panel">
@@ -92,250 +91,70 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
-
     </main>
 </div>
 
 <style>
-    /* TOP NAVIGATION BAR STYLING */
     .top-glass-navbar {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 70px;
+        top: 0; left: 0; width: 100vw; height: 70px;
         background: rgba(18, 10, 6, 0.6);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 50px;
-        box-sizing: border-box;
-        z-index: 10000;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0 50px; box-sizing: border-box; z-index: 10000;
     }
 
-    .nav-brand-side {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .nav-brand-icon { font-size: 1.4rem; }
-    .nav-brand-text {
-        color: #ffffff;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        font-size: 1.2rem;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .nav-links-side {
-        display: flex;
-        align-items: center;
-        gap: 35px;
-    }
+    .nav-brand-side { display: flex; align-items: center; gap: 10px; }
+    .nav-brand-text { color: #ffffff; font-weight: 800; letter-spacing: 1.5px; font-size: 1.2rem; }
+    .nav-links-side { display: flex; align-items: center; gap: 35px; }
 
     .portal-nav-link {
-        background: none;
-        border: none;
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 600;
-        opacity: 0.75;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        padding: 0;
+        background: none; border: none; color: #ffffff;
+        font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px;
+        font-weight: 600; opacity: 0.75; cursor: pointer;
     }
 
-    .portal-nav-link:hover, .portal-nav-link.active-panel-flag {
-        opacity: 1;
-        color: #e67e22;
-    }
+    .portal-nav-link:hover, .portal-nav-link.active-panel-flag { opacity: 1; color: #e67e22; }
 
-    /* VIEWPORT MAIN LAYOUT */
     .contact-viewport-container {
-        width: 100vw;
-        height: 100vh;
-        background-color: #160d08;
-        color: #ffffff;
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        margin: 0; padding: 0;
-        overflow: hidden;
-        position: fixed; top: 0; left: 0;
-        padding-top: 70px;
-        box-sizing: border-box;
+        width: 100vw; height: 100vh; background-color: #160d08; color: #ffffff;
+        position: fixed; top: 0; left: 0; padding-top: 70px; box-sizing: border-box;
     }
 
-    .contact-main-layout {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        box-sizing: border-box;
-        overflow-y: auto;
-    }
-
-    .contact-grid-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-        width: 100%;
-        max-width: 1100px;
-        align-items: start;
-    }
-
-    /* CARD PANELS STYLING */
-    .contact-card-panel, .details-card-panel {
-        background: rgba(26, 17, 10, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 14px;
-        padding: 40px;
-    }
-
-    .form-header-node {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding-bottom: 15px;
-    }
-
-    .form-title {
-        font-size: 1.8rem;
-        font-weight: 800;
-        letter-spacing: 1px;
-        margin: 0;
-    }
-
-    .form-header-icon { font-size: 1.8rem; }
-
+    .contact-main-layout { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; }
+    .contact-grid-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; max-width: 1100px; }
+    .contact-card-panel, .details-card-panel { background: rgba(26, 17, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 40px; }
+    
+    .form-header-node { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+    .form-title { font-size: 1.8rem; font-weight: 800; margin: 0; }
+    
     .mb-3-custom { margin-bottom: 20px; }
     .mb-4-custom { margin-bottom: 25px; }
 
     .form-field-node {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 14px 18px;
-        color: #ffffff;
-        font-size: 0.95rem;
-        outline: none;
-        box-sizing: border-box;
-        transition: all 0.2s ease;
+        width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px; padding: 14px 18px; color: #ffffff; font-size: 0.95rem; outline: none; box-sizing: border-box;
     }
 
-    .form-field-node:focus {
-        border-color: #e67e22;
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
-    }
+    .form-field-node:focus { border-color: #e67e22; box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15); }
+    .field-textarea { height: 120px; resize: none; }
 
-    .field-textarea {
-        height: 120px;
-        resize: none;
-    }
+    .btn-send-message { background: #e67e22; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .details-section-title { font-size: 1.5rem; font-weight: 700; margin: 0 0 30px 0; color: #e67e22; }
+    .info-matrix-rows { display: flex; flex-direction: column; gap: 25px; margin-bottom: 35px; }
+    .info-node-item { display: flex; align-items: flex-start; gap: 20px; }
+    .fw-bold-node { font-weight: 600; }
+    .text-muted-node { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
 
-    .btn-send-message {
-        background: #e67e22;
-        color: white;
-        border: none;
-        width: 100%;
-        padding: 15px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-
-    .btn-send-message:hover { background: #d35400; }
-
-    /* DETAILS COLUMN */
-    .details-section-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 30px;
-        color: #e67e22;
-    }
-
-    .info-matrix-rows {
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-        margin-bottom: 35px;
-    }
-
-    .info-node-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .info-icon-pin { font-size: 1.3rem; }
-    .fw-bold-node { font-weight: 600; font-size: 1.05rem; }
-    .text-muted-node { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 4px; }
-    .text-link-node { color: #ffffff; font-size: 1rem; }
-
-    /* MAP SIMULATOR FIXED */
-    .map-embed-container {
-        width: 100%;
-        height: 220px;
-        background: #e5e3df;
-        border-radius: 10px;
-        position: relative;
-        overflow: hidden;
-        color: #333333;
-    }
-
-    .map-control-header {
-        position: absolute;
-        top: 10px; left: 10px;
-        display: flex; gap: 5px;
-        z-index: 5;
-    }
-
-    .map-mode-btn {
-        background: #ffffff; border: none; padding: 6px 12px;
-        font-size: 0.75rem; font-weight: 600; cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .map-mode-btn.active { background: #f5f5f5; color: #000; font-weight: 700; }
-
-    .map-canvas-mock {
-        width: 100%; height: 100%;
-        background-image: radial-gradient(#ccc 1px, transparent 1px), radial-gradient(#ccc 1px, #e5e3df 1px);
-        background-size: 20px 20px;
-        background-position: 0 0, 10px 10px;
-        position: relative;
-    }
-
-    .map-marker-pin {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.8rem;
-    }
-
-    .map-popup-badge {
-        position: absolute;
-        top: 20%; left: 55%;
-        background: white; padding: 8px 12px;
-        border-radius: 4px; font-size: 0.7rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        display: flex; flex-direction: column; gap: 2px;
-    }
+    .map-embed-container { width: 100%; height: 220px; background: #e5e3df; border-radius: 10px; position: relative; overflow: hidden; color: #333333; }
+    .map-control-header { position: absolute; top: 10px; left: 10px; display: flex; gap: 5px; z-index: 5; }
+    .map-mode-btn { background: #ffffff; border: none; padding: 6px 12px; font-size: 0.75rem; font-weight: 600; }
+    .map-mode-btn.active { background: #f5f5f5; font-weight: 700; }
+    .map-canvas-mock { width: 100%; height: 100%; background-color: #e5e3df; position: relative; }
+    .map-marker-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8rem; }
+    .map-popup-badge { position: absolute; top: 20%; left: 55%; background: white; padding: 8px 12px; border-radius: 4px; font-size: 0.7rem; display: flex; flex-direction: column; }
 </style>
