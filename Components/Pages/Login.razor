@@ -73,7 +73,7 @@
 </div>
 
 <style>
-    /* Absolute full-screen wrapper style with a premium high-quality cozy cafe background image overlay */
+    /* Fixed screen grid box keeping everything perfectly aligned in the absolute mid center layout */
     .auth-viewport-wrapper {
         position: fixed;
         top: 0;
@@ -82,10 +82,9 @@
         height: 100vh;
         z-index: 999999;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        /* Professional stock imagery for elegant aesthetic appeal */
-        background: linear-gradient(rgba(17, 34, 51, 0.65), rgba(30, 58, 95, 0.75)), 
+        align-items: center; /* Vertical center lock */
+        justify-content: center; /* Horizontal center lock */
+        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), 
                     url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
         background-size: cover;
         padding: 20px;
@@ -97,41 +96,39 @@
         background: rgba(255, 255, 255, 0.98);
         border-radius: 16px;
         width: 100%;
-        max-width: 455px;
-        padding: 45px 40px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        max-width: 440px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
         border: 1px solid rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
     }
 
     .brand-avatar {
-        width: 65px;
-        height: 65px;
-        background: #1e3a5f;
+        width: 60px;
+        height: 60px;
+        background: #112233;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 18px;
-        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        margin: 0 auto 15px;
+        box-shadow: 0 4px 12px rgba(17, 34, 51, 0.2);
     }
 
-    .avatar-glyph { font-size: 30px; }
-    .brand-title { color: #112233; font-weight: 700; font-size: 1.5rem; margin-bottom: 8px; letter-spacing: -0.3px; }
+    .avatar-glyph { font-size: 28px; }
+    .brand-title { color: #112233; font-weight: 700; font-size: 1.45rem; margin-bottom: 6px; letter-spacing: -0.3px; }
     
     .institution-sub-badge {
         background: #edf2f7;
         color: #2b6cb0;
-        padding: 5px 14px;
+        padding: 4px 14px;
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 600;
         display: inline-block;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         border: 1px solid #e2e8f0;
     }
 
-    /* Customized Form Inputs matching the uploaded image spec sheet */
     .input-group-custom {
         display: flex;
         align-items: center;
@@ -154,7 +151,7 @@
         border: none;
         background: transparent;
         width: 100%;
-        padding: 11px 0;
+        padding: 10px 0;
         outline: none;
         color: #2d3748;
         font-size: 0.95rem;
@@ -177,7 +174,6 @@
         letter-spacing: 0.5px;
         transition: all 0.2s ease-in-out;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(17, 34, 51, 0.2);
     }
 
     .btn-submit-portal:hover { 
@@ -185,12 +181,9 @@
         transform: translateY(-1px);
         box-shadow: 0 6px 15px rgba(43, 108, 176, 0.3);
     }
-    .btn-submit-portal:disabled { background: #a0aec0; cursor: not-allowed; transform: none; box-shadow: none; }
     
     .portal-info-footer { font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 15px; }
-    
-    /* Smooth entrance animations */
-    .animate-fade { animation: fadeIn 0.4s ease-out-out; }
+    .animate-fade { animation: fadeIn 0.4s ease-out; }
     @@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 
@@ -215,12 +208,12 @@
             }
             else
             {
-                feedbackMessage = "Access Denied: Invalid parameters matched against user schemas.";
+                feedbackMessage = "Access Denied: Invalid Username or Password.";
             }
         }
         catch (Exception systemFault)
         {
-            feedbackMessage = $"Repository Connectivity Error: {systemFault.Message}";
+            feedbackMessage = $"Database Error: {systemFault.Message}";
         }
         finally
         {
