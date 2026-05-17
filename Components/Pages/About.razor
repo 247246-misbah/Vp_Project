@@ -2,44 +2,21 @@
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
-<div class="about-viewport-container">
+<header class="top-glass-navbar">
+    <div class="nav-brand-side" @onclick='() => NavTo("/login")' style="cursor: pointer;">
+        <span class="nav-brand-icon">☕</span>
+        <span class="nav-brand-text">CAFE COVE</span>
+    </div>
     
-    <aside class="sidebar-brand-panel">
-        <div class="brand-header-node">
-            <div class="brand-avatar-glyph">
-                <span>☕</span>
-            </div>
-            <h2 class="brand-logo-text">CAFE COVE</h2>
-        </div>
+    <nav class="nav-links-side">
+        <button class="portal-nav-link active-panel-flag">About Us</button>
+        <button class="portal-nav-link" @onclick='() => NavTo("/gallery")'>Gallery</button>
+        <a href="javascript:void(0)" class="portal-nav-link">Support</a>
+        <button class="portal-nav-link" @onclick='() => NavTo("/contact")'>Contact</button>
+    </nav>
+</header>
 
-        <ul class="navigation-matrix-list">
-            <li class="nav-matrix-item" @onclick='() => NavTo("/dashboard")'>
-                <span class="matrix-icon">🏠</span> Home
-            </li>
-           <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/about")'>
-    <span class="matrix-icon">ℹ️</span> About Us
-</li>
-            <li class="nav-matrix-item">
-                <span class="matrix-icon">🍳</span> Menu
-            </li>
-            <li class="nav-matrix-item">
-                <span class="matrix-icon">🖼️</span> Gallery
-            </li>
-            <li class="nav-matrix-item">
-                <span class="matrix-icon">📞</span> Contact
-            </li>
-        </ul>
-
-        <button class="action-btn-shop-now">
-            <span>SHOP NOW</span>
-            <span class="arrow-indicator">➔</span>
-        </button>
-
-        <div class="sidebar-institutional-footer">
-            <p class="m-0">Air University Kharian Campus</p>
-            <p class="m-0 text-muted extra-small-tag">Operational Hours: 8AM - 9PM</p>
-        </div>
-    </aside>
+<div class="about-viewport-container">
 
     <main class="about-content-workspace">
         
@@ -59,7 +36,7 @@
                 <div class="story-para">
                     <p><strong>Welcome to Cofe Cove!</strong></p>
                      <p><strong>Where great coffee meets good company.</strong></p>
-                    <p>At Cofe Cove, we believe a coffee shop should feel like a pause button in a busy day. We roast our beans in small batches, bake fresh muffins and brownies daily,and serve every cup with the idea that you’re not just grabbing caffeine you’re taking a moment for yourself.</p>
+                    <p>At Cofe Cove, we believe a coffee shop should feel like a pause button in a busy day. We roast our beans in small batches, bake fresh muffins and brownies daily, and serve every cup with the idea that you’re not just grabbing caffeine, you’re taking a moment for yourself.</p>
                 </div>
                 <button class="btn-learn-more">Learn More</button>
             </div>
@@ -94,7 +71,70 @@
 }
 
 <style>
-    /* GLOBAL WRAPPER */
+    /* TOP NAVIGATION BAR STYLING */
+    .top-glass-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 70px;
+        background: rgba(18, 10, 6, 0.6);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+        box-sizing: border-box;
+        z-index: 10000;
+    }
+
+    .nav-brand-side {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-brand-icon {
+        font-size: 1.4rem;
+    }
+
+    .nav-brand-text {
+        color: #ffffff;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        font-size: 1.2rem;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .nav-links-side {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+    }
+
+    .portal-nav-link {
+        background: none;
+        border: none;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        opacity: 0.75;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .portal-nav-link:hover, .portal-nav-link.active-panel-flag {
+        opacity: 1;
+        color: #e67e22; /* Aesthetic Orange highlight */
+    }
+
+    /* GLOBAL WRAPPER ADJUSTED FOR FULL SCREEN */
     .about-viewport-container {
         width: 100vw;
         height: 100vh;
@@ -104,41 +144,11 @@
         font-family: 'Segoe UI', system-ui, sans-serif;
         margin: 0; padding: 0;
         overflow: hidden;
-        position: fixed; top: 0; left: 0;
-    }
-
-    /* SIDEBAR */
-    .sidebar-brand-panel {
-        width: 320px; height: 100%;
-        background-color: #120a06;
-        padding: 50px 35px;
-        display: flex; flex-direction: column;
-        border-right: 1px solid rgba(230, 126, 34, 0.12);
+        position: fixed; 
+        top: 0; 
+        left: 0;
+        padding-top: 70px; /* Space reserved for top navbar */
         box-sizing: border-box;
-    }
-
-    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 55px; }
-    .brand-avatar-glyph {
-        width: 40px; height: 40px;
-        background: linear-gradient(135deg, #e67e22, #d35400);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    }
-    .brand-logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: 1.5px; margin: 0; }
-    
-    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
-    .nav-matrix-item {
-        display: flex; align-items: center; gap: 15px;
-        padding: 14px 0; color: #a0aec0; font-size: 0.85rem; font-weight: 700;
-        text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.25s;
-    }
-    .nav-matrix-item:hover, .nav-matrix-item.active-state-node { color: #e67e22; transform: translateX(6px); }
-    .nav-matrix-item.active-state-node { color: #e67e22 !important; }
-
-    .action-btn-shop-now {
-        background-color: #e67e22; color: #ffffff;
-        padding: 16px; border-radius: 8px; border: none;
-        font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-        cursor: pointer; margin-top: 25px;
     }
 
     /* MAIN CONTENT SCROLLABLE */
@@ -194,7 +204,4 @@
     .icon-circle { font-size: 3rem; margin-bottom: 15px; }
     .feature-node h3 { color: #e67e22; font-size: 1.3rem; margin-bottom: 10px; }
     .feature-node p { color: #a0aec0; font-size: 0.9rem; max-width: 250px; margin: 0 auto; }
-
-    .sidebar-institutional-footer { margin-top: 35px; font-size: 0.75rem; color: #718096; }
-    .extra-small-tag { font-size: 0.65rem; }
 </style>

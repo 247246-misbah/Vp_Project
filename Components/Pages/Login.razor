@@ -5,6 +5,19 @@
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
+<header class="top-glass-navbar">
+    <div class="nav-brand-side">
+        <span class="nav-brand-icon">☕</span>
+        <span class="nav-brand-text">CAFE COVE</span>
+    </div>
+    
+    <nav class="nav-links-side">
+        <button class="portal-nav-link" @onclick='() => Navigation.NavigateTo("/about")'>About Us</button>
+       
+        <button class="portal-nav-link" @onclick='() => Navigation.NavigateTo("/contact")'>Contact</button>
+    </nav>
+</header>
+
 <div class="auth-viewport-wrapper">
     <div class="auth-card-panel shadow-lg">
         
@@ -73,7 +86,70 @@
 </div>
 
 <style>
-    /* Full view wrapper setting up background image and flexible alignment */
+    /* TOP NAVIGATION BAR STYLING */
+    .top-glass-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 70px;
+        background: rgba(18, 10, 6, 0.4);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+        box-sizing: border-box;
+        z-index: 10000; /* Card panel se upar rakhne ke liye */
+    }
+
+    .nav-brand-side {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-brand-icon {
+        font-size: 1.4rem;
+    }
+
+    .nav-brand-text {
+        color: #ffffff;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        font-size: 1.2rem;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .nav-links-side {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+    }
+
+    .portal-nav-link {
+        background: none;
+        border: none;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        opacity: 0.75;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .portal-nav-link:hover {
+        opacity: 1;
+        color: #e67e22; /* Aesthetic Orange highlight */
+    }
+
+    /* FULL VIEWPORT MAIN CONTAINER */
     .auth-viewport-wrapper {
         position: fixed;
         top: 0;
@@ -84,11 +160,12 @@
         display: flex;
         align-items: center;      /* Vertical Mid Center Lock */
         justify-content: center;  /* Horizontal Mid Center Lock */
-        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), 
+        background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
                     url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
         background-size: cover;
         padding: 20px;
         box-sizing: border-box;
+        padding-top: 70px; /* Space reserved for navbar */
     }
 
     .auth-card-panel {
