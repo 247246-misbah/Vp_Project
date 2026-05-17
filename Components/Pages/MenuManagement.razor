@@ -1,0 +1,344 @@
+﻿@page "/menu-management"
+@using System.Data
+@using MySql.Data.MySqlClient
+@inject NavigationManager Navigation
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
+<div class="dashboard-viewport-container">
+    
+    <aside class="sidebar-brand-panel">
+        <div class="brand-header-node">
+            <div class="brand-avatar-glyph"><span>☕</span></div>
+            <h2 class="brand-logo-text">CAFE COVE</h2>
+        </div>
+        <ul class="navigation-matrix-list">
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/dashboard")'>
+                <span class="matrix-icon">🏠</span> Home
+            </li>
+            <li class="nav-matrix-item active-state-node">
+                <span class="matrix-icon">🍳</span> Menu
+            </li>
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/profile")'>
+                <span class="matrix-icon">👤</span> Profile
+            </li>
+        </ul>
+    </aside>
+
+    <main class="dashboard-metric-workspace menu-scroll-panel">
+        <div class="workspace-interactive-layer">
+            
+            <div class="menu-header-row">
+                <h1 class="menu-main-title">Menu Management Panel</h1>
+                <p class="menu-subtext">Admin Privileges: View, update base pricing, add variants or delete entries instantly.</p>
+            </div>
+
+            @if (!string.IsNullOrEmpty(FeedbackMessage))
+            {
+                <div class="status-alert-banner">@FeedbackMessage</div>
+            }
+
+            <div class="crud-form-card">
+                <h3 class="form-block-title">@(IsEditMode ? "📝 Modify Selected Item" : "➕ Add New Coffee/Snack Item")</h3>
+                <div class="form-inputs-inline-grid">
+                    <input type="text" placeholder="Item Name (e.g. Hazelnut Latte)" class="menu-input" @bind="InputName" />
+                    <select class="menu-input select-node" @bind="InputCategory">
+                        <option value="Coffee">Coffee</option>
+                        <option value="Tea">Tea & Beverages</option>
+                        <option value="Snacks">Snacks & Pastries</option>
+                    </select>
+                    <input type="number" placeholder="Price (Rs.)" class="menu-input" @bind="InputPrice" />
+                    
+                    <div class="form-action-cluster">
+                        <button class="btn-primary-action" @onclick="HandleFormSubmit">@(IsEditMode ? "Update Item" : "Insert Item")</button>
+                        @if (IsEditMode)
+                        {
+                            <button class="btn-cancel-action" @onclick="ResetFormState">Cancel</button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-table-container">
+                <table class="custom-admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Price (PKR)</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (MenuList != null && MenuList.Count > 0)
+                        {
+                            @foreach (var item in MenuList)
+                            {
+                                <tr>
+                                    <td>#@item.Id</td>
+                                    <td class="font-bold-item">@item.ItemName</td>
+                                    <td><span class="category-badge">@item.Category</span></td>
+                                    <td class="price-highlight">Rs. @item.Price.ToString("N0")</td>
+                                    <td>
+                                        <div class="table-action-buttons">
+                                            <button class="action-edit-btn" @onclick="() => StartEditMode(item)">Edit</button>
+                                            <button class="action-delete-btn" @onclick="() => DeleteMenuItem(item.Id)">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #a0aec0; padding: 40px;">No items configured in the menu yet. Add one above!</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+@code {
+    private List<MenuItemModel> MenuList = new();
+    
+    // Form Bindings
+    private int TargetId { get; set; }
+    private string InputName { get; set; } = string.Empty;
+    private string InputCategory { get; set; } = "Coffee";
+    private decimal InputPrice { get; set; }
+    
+    private bool IsEditMode { get; set; } = false;
+    private string FeedbackMessage { get; set; } = string.Empty;
+    
+    private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMenuData();
+    }
+
+    private async Task LoadMenuData()
+    {
+        MenuList.Clear();
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+            string query = "SELECT id, item_name, category, price FROM menu ORDER BY id DESC;";
+            using MySqlCommand cmd = new(query, conn);
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                MenuList.Add(new MenuItemModel
+                {
+                    Id = reader.GetInt32("id"),
+                    ItemName = reader.GetString("item_name"),
+                    Category = reader.GetString("category"),
+                    Price = reader.GetDecimal("price")
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            FeedbackMessage = $"❌ Data Fetch Error: {ex.Message}";
+        }
+    }
+
+    private async Task HandleFormSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(InputName) || InputPrice <= 0)
+        {
+            FeedbackMessage = "⚠️ Please enter a valid item name and structural price.";
+            return;
+        }
+
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+            
+            if (IsEditMode)
+            {
+                // SQL Update Action
+                string updateQuery = "UPDATE menu SET item_name=@Name, category=@Cat, price=@Price WHERE id=@Id;";
+                using MySqlCommand cmd = new(updateQuery, conn);
+                cmd.Parameters.AddWithValue("@Name", InputName);
+                cmd.Parameters.AddWithValue("@Cat", InputCategory);
+                cmd.Parameters.AddWithValue("@Price", InputPrice);
+                cmd.Parameters.AddWithValue("@Id", TargetId);
+                await cmd.ExecuteNonQueryAsync();
+                FeedbackMessage = "✅ Menu item updated successfully!";
+            }
+            else
+            {
+                // SQL Insert Action
+                string insertQuery = "INSERT INTO menu (item_name, category, price) VALUES (@Name, @Cat, @Price);";
+                using MySqlCommand cmd = new(insertQuery, conn);
+                cmd.Parameters.AddWithValue("@Name", InputName);
+                cmd.Parameters.AddWithValue("@Cat", InputCategory);
+                cmd.Parameters.AddWithValue("@Price", InputPrice);
+                await cmd.ExecuteNonQueryAsync();
+                FeedbackMessage = "✅ New item added to system index!";
+            }
+
+            ResetFormState();
+            await LoadMenuData();
+        }
+        catch (Exception ex)
+        {
+            FeedbackMessage = $"❌ DB Transaction Fault: {ex.Message}";
+        }
+    }
+
+    private void StartEditMode(MenuItemModel item)
+    {
+        IsEditMode = true;
+        TargetId = item.Id;
+        InputName = item.ItemName;
+        InputCategory = item.Category;
+        InputPrice = item.Price;
+        FeedbackMessage = "";
+    }
+
+    private async Task DeleteMenuItem(int id)
+    {
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+            string deleteQuery = "DELETE FROM menu WHERE id=@Id;";
+            using MySqlCommand cmd = new(deleteQuery, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+            await cmd.ExecuteNonQueryAsync();
+            
+            FeedbackMessage = "🗑️ Item removed from system listings.";
+            if (IsEditMode && TargetId == id) ResetFormState();
+            await LoadMenuData();
+        }
+        catch (Exception ex)
+        {
+            FeedbackMessage = $"❌ Deletion Error: {ex.Message}";
+        }
+    }
+
+    private void ResetFormState()
+    {
+        IsEditMode = false;
+        TargetId = 0;
+        InputName = string.Empty;
+        InputCategory = "Coffee";
+        InputPrice = 0;
+    }
+
+    public class MenuItemModel
+    {
+        public int Id { get; set; }
+        public string ItemName { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+    }
+}
+
+<style>
+    /* Structural Layout Sync */
+    .dashboard-viewport-container {
+        width: 100vw; height: 100vh; display: flex;
+        background-color: #160d08; color: #ffffff;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; padding: 0; overflow: hidden;
+        position: fixed; top: 0; left: 0; z-index: 999;
+    }
+
+    .sidebar-brand-panel {
+        width: 320px; height: 100%; background-color: #120a06;
+        padding: 50px 35px; display: flex; flex-direction: column;
+        border-right: 1px solid rgba(230, 126, 34, 0.12); box-sizing: border-box;
+    }
+
+    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 55px; }
+    .brand-avatar-glyph {
+        width: 40px; height: 40px; background: linear-gradient(135deg, #e67e22, #d35400);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .brand-logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: 1.5px; margin: 0; color: #ffffff; }
+
+    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+    .nav-matrix-item {
+        display: flex; align-items: center; gap: 15px; padding: 14px 0;
+        color: #a0aec0; font-size: 0.85rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.25s ease;
+    }
+    .matrix-icon { width: 20px; font-size: 1rem; opacity: 0.8; text-align: center; display: inline-block; }
+    .nav-matrix-item:hover { color: #ffffff; transform: translateX(6px); }
+    .nav-matrix-item.active-state-node { color: #e67e22 !important; }
+
+    .dashboard-metric-workspace { flex-grow: 1; padding: 45px 70px; box-sizing: border-box; display: flex; flex-direction: column; }
+    .menu-scroll-panel { overflow-y: auto; background-color: #1a110a; }
+    
+    .menu-header-row { margin-bottom: 30px; }
+    .menu-main-title { font-size: 2.5rem; font-weight: 800; color: #ffffff; margin: 0 0 8px 0; }
+    .menu-subtext { color: #cbd5e0; font-size: 0.95rem; opacity: 0.8; margin: 0; }
+
+    .status-alert-banner {
+        background-color: rgba(230, 126, 34, 0.15); border: 1px solid #e67e22;
+        padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 25px;
+    }
+
+    /* CRUD Interactive Interface Form Card */
+    .crud-form-card {
+        background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 25px; border-radius: 12px; margin-bottom: 35px; backdrop-filter: blur(10px);
+    }
+    .form-block-title { margin-top: 0; margin-bottom: 18px; font-size: 1.1rem; color: #e67e22; text-transform: uppercase; letter-spacing: 1px; }
+    .form-inputs-inline-grid { display: grid; grid-template-columns: 1.5fr 1fr 0.8fr auto; gap: 15px; align-items: center; }
+    
+    .menu-input {
+        background: #120a06; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+        padding: 12px 16px; color: #fff; font-size: 0.9rem; outline: none; width: 100%; box-sizing: border-box;
+    }
+    .menu-input:focus { border-color: #e67e22; }
+    .select-node { color: #cbd5e0; cursor: pointer; }
+
+    .form-action-cluster { display: flex; gap: 10px; }
+    .btn-primary-action {
+        background: #e67e22; color: #fff; border: none; padding: 12px 24px;
+        border-radius: 6px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+    }
+    .btn-primary-action:hover { background: #d35400; }
+    .btn-cancel-action {
+        background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 12px 16px;
+        border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-cancel-action:hover { background: rgba(255,255,255,0.2); }
+
+    /* Admin Grid Inventory View */
+    .menu-table-container {
+        background: #ffffff; border-radius: 12px; overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 20px;
+    }
+    .custom-admin-table { width: 100%; border-collapse: collapse; text-align: left; color: #333333; font-size: 0.95rem; }
+    .custom-admin-table th { background: #120a06; color: #ffffff; padding: 16px 20px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+    .custom-admin-table td { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; background: #ffffff; vertical-align: middle; }
+    .custom-admin-table tr:last-child td { border-bottom: none; }
+
+    .font-bold-item { font-weight: 700; color: #1a110a; }
+    .category-badge { background: #f3f4f6; color: #4b5563; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .price-highlight { color: #e67e22; font-weight: 700; }
+
+    .table-action-buttons { display: flex; gap: 10px; justify-content: center; }
+    .action-edit-btn {
+        background: none; border: 1px solid #b68d68; color: #b68d68; padding: 6px 14px;
+        border-radius: 4px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+    }
+    .action-edit-btn:hover { background: #b68d68; color: #fff; }
+    
+    .action-delete-btn {
+        background: none; border: 1px solid #e74c3c; color: #e74c3c; padding: 6px 14px;
+        border-radius: 4px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+    }
+    .action-delete-btn:hover { background: #e74c3c; color: #fff; }
+</style>
