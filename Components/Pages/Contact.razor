@@ -5,7 +5,7 @@
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
 <header class="top-glass-navbar">
-    <div class="nav-brand-side" @onclick='() => Navigation.NavigateTo("/login")' style="cursor: pointer;">
+    <div class="nav-brand-side" @onclick='() => NavTo("/login")' style="cursor: pointer;">
         <span class="nav-brand-icon">☕</span>
         <span class="nav-brand-text">CAFE COVE</span>
     </div>
@@ -96,6 +96,10 @@
         </div>
     </main>
 </div>
+
+@code {
+    private void NavTo(string url) => Navigation.NavigateTo(url);
+}
 
 <style>
     .top-glass-navbar {
