@@ -69,15 +69,15 @@
                     <div class="info-strip-item">
                         <span class="strip-icon-node">📍</span>
                         <div class="strip-text-block">
-                            <p class="info-line-text header-title">Air University Kharian Campus</p>
-                            <p class="info-line-text sub-description">Misbah Visual Programming Project Node</p>
+                            <p class="info-line-text header-title">Main Food Street, Kharian</p>
+                            <p class="info-line-text sub-description">Open Daily: 9 AM – 11 PM</p>
                         </div>
                     </div>
 
                     <div class="info-strip-item">
                         <span class="strip-icon-node">✉️</span>
                         <div class="strip-text-block">
-                            <p class="info-line-text">contact@@cafecove.au</p>
+                            <p class="info-line-text">cafecove@gmail.com</p>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                     </div>
                     <div class="map-render-canvas-area">
                         <div class="map-pin-indicator">
-                            <span class="pin-marker-glyph">📍</span>
+                            <span class="pin-marker-glyph" style="display: inline-block; transition: transform 0.3s ease;">📍</span>
                             <div class="pin-tooltip-box">
                                 <strong>Air University</strong><br/>Kharian Campus
                             </div>
@@ -386,7 +386,6 @@
         transform: translate(-50%, -50%);
         display: flex; flex-direction: column; align-items: center;
     }
-    .pin-marker-glyph { font-size: 1.5rem; animation: bouncePinMarker 2s infinite; }
     
     .pin-tooltip-box {
         background-color: #ffffff; padding: 6px 10px;
@@ -404,10 +403,5 @@
         font-weight: bold; cursor: pointer; color: #555;
         display: flex; align-items: center; justify-content: center;
         border-bottom: 1px solid #eee;
-    }
-
-    @keyframes bouncePinMarker {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
     }
 </style>
