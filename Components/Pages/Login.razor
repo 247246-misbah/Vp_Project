@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@layout Misbah_VisualProgramming_Project.Components.Layout.AuthLayout
 @using Misbah_VisualProgramming_Project.Services
 @using Misbah_VisualProgramming_Project.Data
 @inject AuthService AuthService
@@ -73,7 +74,7 @@
 </div>
 
 <style>
-    /* Absolute full-screen setup with absolute alignment over riding leaking elements */
+    /* Absolute full-screen setup with fixed centering matrix */
     .auth-viewport-wrapper {
         position: fixed;
         top: 0;
@@ -82,8 +83,8 @@
         height: 100vh;
         z-index: 999999;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: center; /* Exact mid vertical center lock */
+        justify-content: center; /* Exact mid horizontal center lock */
         background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), 
                     url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
         background-size: cover;
