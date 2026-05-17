@@ -59,10 +59,10 @@
                     <span class="card-context-subtext">Total gross from completed orders</span>
                 </div>
 
-                <div class="metric-data-card">
-                    <span class="card-meta-label">MACHINE STATUS</span>
-                    <div class="card-numeric-display text-emerald">Optimal</div>
-                    <span class="card-context-subtext">All systems operational</span>
+                <div class="metric-data-card clickable-card" @onclick='() => Navigation.NavigateTo("/menu-management")'>
+                    <span class="card-meta-label">TOTAL MENU ITEMS</span>
+                    <div class="card-numeric-display text-emerald">@TotalMenuItemsCount</div>
+                    <span class="card-context-subtext">Configured recipes in system ➜</span>
                 </div>
 
             </div>
@@ -73,6 +73,7 @@
 @code {
     private int ActiveOrdersCount { get; set; } = 0;
     private decimal DailyRevenue { get; set; } = 0;
+    private int TotalMenuItemsCount { get; set; } = 0; // Added variable for item counter
     
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
 
@@ -101,12 +102,20 @@
             {
                 DailyRevenue = Convert.ToDecimal(await cmd.ExecuteScalarAsync());
             }
+
+            // 3. FIXED: Fetch live dynamic count of items configured in the menu
+            string itemsQuery = "SELECT COUNT(*) FROM menu;";
+            using (MySqlCommand cmd = new(itemsQuery, conn))
+            {
+                TotalMenuItemsCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+            }
         }
         catch (Exception)
         {
             // Fallback default values if database connectivity is offline during initial load
             ActiveOrdersCount = 2;
             DailyRevenue = 450;
+            TotalMenuItemsCount = 10;
         }
     }
 }
@@ -146,7 +155,6 @@
 
     .dashboard-metric-workspace { flex-grow: 1; position: relative; display: flex; flex-direction: column; }
     
-    /* Dynamic Background Coffee Image Layer */
     .background-blend-cover {
         background-image: linear-gradient(to right, #1a110a 35%, rgba(26, 17, 10, 0.75) 70%, rgba(26, 17, 10, 0.4)), url('images/coffee-bg.jpg');
         background-size: cover; background-position: center right;
@@ -167,7 +175,6 @@
     .welcome-main-title { font-size: 3.8rem; font-weight: 800; line-height: 1.15; margin: 0 0 20px 0; letter-spacing: -1px; }
     .welcome-subtext { font-size: 1.05rem; color: #cbd5e0; line-height: 1.6; opacity: 0.85; margin: 0; }
 
-    /* Grid layout metrics */
     .metrics-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1050px; }
     
     .metric-data-card {
@@ -176,7 +183,6 @@
         display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;
     }
     
-    /* Interactive Hover Effect for Navigating */
     .clickable-card { cursor: pointer; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
     .clickable-card:hover { transform: translateY(-5px); border-color: #e67e22; background: rgba(230, 126, 34, 0.05); }
 
