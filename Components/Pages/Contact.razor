@@ -173,7 +173,6 @@
 }
 
 <style>
-    /* TOP NAVIGATION BAR STYLING */
     .top-glass-navbar {
         position: fixed;
         top: 0; left: 0;
@@ -231,7 +230,6 @@
         color: #e67e22;
     }
 
-    /* GLOBAL WRAPPER ADJUSTED FOR FULL SCREEN */
     .contact-viewport-container {
         width: 100vw; height: 100vh;
         display: flex;
@@ -253,7 +251,6 @@
         background-color: #1a110a;
     }
 
-    /* HERO SECTION */
     .contact-hero-section {
         height: 450px;
         background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
@@ -269,7 +266,6 @@
     .hero-display-title { font-size: 3.5rem; font-weight: 800; margin: 15px 0; line-height: 1.1; }
     .aesthetic-divider { width: 80px; height: 4px; background: #e67e22; margin: 20px auto; }
 
-    /* LAYOUT GRID */
     .contact-layout-grid {
         display: grid;
         grid-template-columns: 1.2fr 1fr;
@@ -347,7 +343,6 @@
     }
     .btn-send-message:hover { background: #9d7553; }
 
-    /* RIGHT METADATA PANEL */
     .contact-meta-details-wrapper { padding-top: 10px; }
     .details-section-title {
         font-size: 1.8rem; color: #1a110a;
@@ -365,7 +360,6 @@
     .info-line-text.header-title { font-weight: 700; color: #1a110a; }
     .info-line-text.sub-description { font-size: 0.85rem; color: #777; }
 
-    /* MOCK MAP STYLES */
     .map-embed-mock-container {
         border-radius: 8px; overflow: hidden;
         border: 1px solid #e0e0e0; background-color: #ffffff;
@@ -386,8 +380,6 @@
     .map-render-canvas-area {
         height: 180px; background-color: #e5e3df;
         position: relative;
-        background-image: radial-gradient(#cbc9c5 1.5px, transparent 1.5px);
-        background-size: 15px 15px;
     }
     .map-pin-indicator {
         position: absolute; top: 40%; left: 50%;
@@ -414,8 +406,7 @@
         border-bottom: 1px solid #eee;
     }
 
-    /* Fixed: Escaped @ keyframes to @@keyframes to resolve CS0103 compile error */
-    @@keyframes bouncePinMarker {
+    @keyframes bouncePinMarker {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-5px); }
     }
