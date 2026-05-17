@@ -58,6 +58,11 @@
                 </div>
             </div>
 
+            <div class="form-group-field-block">
+                <label class="form-field-label">Password</label>
+                <input type="password" class="profile-stroke-input-element" placeholder="••••••••" @bind-value="PasswordHash" />
+            </div>
+
             <div class="form-actions-submission-row-bar">
                 <button type="button" class="btn-execution-action-save" @onclick="CommitProfileUpdatesToDatabase">
                     Save Changes
@@ -106,7 +111,7 @@
         align-items: center;
     }
 
-    /* FULL ROUNDED FLOATING AVATAR IMAGE STRUCT (TOP POSITIONING) */
+    /* FULL ROUNDED FLOATING AVATAR IMAGE STRUCT */
     .avatar-top-floating-wrapper {
         display: flex;
         justify-content: center;
@@ -185,7 +190,7 @@
         width: 100%;
     }
 
-    /* SOLID DARK OUTLINE ROUNDED INPUT FIELDS CORE TRACE */
+    /* SOLID DARK OUTLINE ROUNDED INPUT FIELDS */
     .profile-stroke-input-element {
         width: 100%;
         background-color: #ffffff;
@@ -198,7 +203,7 @@
         outline: none;
         box-sizing: border-box;
         transition: border-color 0.2s ease;
-        text-align: center; /* Beautiful structured center aligned input tracing */
+        text-align: center;
     }
 
         .profile-stroke-input-element:focus {
@@ -207,20 +212,20 @@
 
     /* FIXED SYMMETRIC PHONE FIELD CONTAINER LAYOUT */
     .phone-dropdown-input-inline-flex {
-        display: relative;
+        display: block;
+        position: relative;
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* Absolute prefix placement within layout alignment constraints */
     .phone-prefix-combined-wrapper {
         position: absolute;
         display: flex;
         align-items: center;
-        height: 48px; /* Perfectly aligned to match vertical flow height */
+        height: 48px;
         padding-left: 20px;
         user-select: none;
-        pointer-events: none; /* Prevents cursor focus interception block */
+        pointer-events: none;
         z-index: 5;
     }
 
@@ -236,10 +241,9 @@
         color: #777777;
     }
 
-    /* Perfect center entry mapping matching standard system requirements */
     .inline-phone-modifier {
-        padding-left: 70px !important; /* Push text clear out of prefix overlay range */
-        padding-right: 70px !important; /* Balance offset block for clean absolute visual text centering */
+        padding-left: 70px !important;
+        padding-right: 70px !important;
         text-align: center !important;
         letter-spacing: 0.5px;
     }
@@ -288,7 +292,6 @@
             background-color: #eaeaea;
         }
 
-    /* DATABASE STATE EXECUTION INTERACTIVE BANNER TOAST DESIGN */
     .execution-feedback-toast-node {
         background-color: #f0f7f4;
         border: 1px solid #d2e7de;
@@ -308,6 +311,7 @@
     private string Username { get; set; } = string.Empty;
     private string UserEmail { get; set; } = string.Empty;
     private string PhoneNumber { get; set; } = string.Empty;
+    private string PasswordHash { get; set; } = string.Empty; // Added Password string variable
 
     private string DatabaseStatusFeedback { get; set; } = string.Empty;
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
@@ -322,6 +326,7 @@
         Username = string.Empty;
         UserEmail = string.Empty;
         PhoneNumber = string.Empty;
+        PasswordHash = string.Empty;
 
         try
         {
@@ -329,7 +334,8 @@
             {
                 await connection.OpenAsync();
                 
-                string selectQuery = "SELECT Username, Email, PhoneNumber FROM Users WHERE Role = 'Admin' LIMIT 1;";
+                // Query incorporates fetching PasswordHash column data directly
+                string selectQuery = "SELECT Username, Email, PhoneNumber, PasswordHash FROM Users WHERE Role = 'Admin' LIMIT 1;";
                 
                 using (MySqlCommand cmd = new MySqlCommand(selectQuery, connection))
                 {
@@ -340,6 +346,7 @@
                             Username = reader["Username"]?.ToString() ?? "@sabrina";
                             UserEmail = reader["Email"]?.ToString() ?? "sabrina@cafe.com";
                             PhoneNumber = reader["PhoneNumber"]?.ToString() ?? "";
+                            PasswordHash = reader["PasswordHash"]?.ToString() ?? "";
                             DatabaseStatusFeedback = "✅ Profile loaded from database.";
                         }
                         else
@@ -367,11 +374,13 @@
             {
                 await connection.OpenAsync();
 
+                // Update incorporates updating PasswordHash data block
                 string query = @"
                     UPDATE Users 
                     SET Email = @Email, 
                         Username = @Username,
-                        PhoneNumber = @PhoneNo
+                        PhoneNumber = @PhoneNo,
+                        PasswordHash = @PasswordHash
                     WHERE Role = 'Admin' 
                     LIMIT 1;";
 
@@ -380,6 +389,7 @@
                     cmd.Parameters.AddWithValue("@Username", Username);
                     cmd.Parameters.AddWithValue("@Email", UserEmail);
                     cmd.Parameters.AddWithValue("@PhoneNo", PhoneNumber);
+                    cmd.Parameters.AddWithValue("@PasswordHash", PasswordHash);
 
                     int rowsAffected = await cmd.ExecuteNonQueryAsync();
 
@@ -391,13 +401,14 @@
                     {
                         string insertQuery = @"
                             INSERT INTO Users (Username, Email, PhoneNumber, PasswordHash, Role) 
-                            VALUES (@Username, @Email, @PhoneNo, 'hash_placeholder_123', 'Admin');";
+                            VALUES (@Username, @Email, @PhoneNo, @PasswordHash, 'Admin');";
                         
                         using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, connection))
                         {
                             insertCmd.Parameters.AddWithValue("@Username", Username);
                             insertCmd.Parameters.AddWithValue("@Email", UserEmail);
                             insertCmd.Parameters.AddWithValue("@PhoneNo", PhoneNumber);
+                            insertCmd.Parameters.AddWithValue("@PasswordHash", PasswordHash);
                             await insertCmd.ExecuteNonQueryAsync();
                         }
                         DatabaseStatusFeedback = "✅ New Admin profile initialized in Database!";
