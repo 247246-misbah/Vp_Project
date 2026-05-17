@@ -60,9 +60,9 @@
                 </div>
 
                 <div class="metric-card-node">
-                    <div class="metric-label-tag">Machine Status</div>
-                    <div class="metric-primary-value status-optimal-green">Optimal</div>
-                    <div class="metric-desc-label">All systems operational</div>
+                    <div class="metric-label-tag">Total Items</div>
+                    <div class="metric-primary-value items-highlight-amber">@TotalMenuItemsCount</div>
+                    <div class="metric-desc-label">Active entries in catalog database</div>
                 </div>
 
             </div>
@@ -73,6 +73,7 @@
 @code {
     private int ActiveOrdersCount { get; set; } = 0;
     private decimal DailyRevenue { get; set; } = 0;
+    private int TotalMenuItemsCount { get; set; } = 0;
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
 
     protected override async Task OnInitializedAsync()
@@ -96,13 +97,19 @@
             string revenueQuery = "SELECT IFNULL(SUM(total_amount), 0) FROM orders WHERE status = 'Completed' AND DATE(order_date) = CURDATE();";
             using MySqlCommand cmd2 = new(revenueQuery, conn);
             DailyRevenue = Convert.ToDecimal(await cmd2.ExecuteScalarAsync());
+
+            // 3. Query to fetch total catalog items from menu table
+            string menuCountQuery = "SELECT COUNT(*) FROM menu;";
+            using MySqlCommand cmd3 = new(menuCountQuery, conn);
+            TotalMenuItemsCount = Convert.ToInt32(await cmd3.ExecuteScalarAsync());
         }
         catch (Exception ex)
         {
-            // Fallback default values if database has any issue
+            // Fallback default system states
             ActiveOrdersCount = 0;
             DailyRevenue = 0;
-            Console.WriteLine($"Dashboard Data Error: {ex.Message}");
+            TotalMenuItemsCount = 0;
+            Console.WriteLine($"Dashboard Integration Fault: {ex.Message}");
         }
     }
 }
@@ -319,14 +326,14 @@
         margin-bottom: 6px;
     }
 
+    .items-highlight-amber {
+        color: #f1c40f !important;
+    }
+
     .metric-desc-label {
         font-size: 0.75rem;
         color: #a0aec0;
         opacity: 0.7;
-    }
-
-    .status-optimal-green {
-        color: #2ecc71 !important;
     }
 
     @@keyframes fadeInWorkspace {
