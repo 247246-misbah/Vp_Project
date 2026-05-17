@@ -66,21 +66,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MenuManagement.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\MenuManagement.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\MenuManagement.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\MenuManagement.razor",
-              "RelativeToolTip": "Components\\Pages\\MenuManagement.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-17T16:40:22.269Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 6,
@@ -117,10 +104,23 @@
               "RelativeDocumentMoniker": "Components\\Pages\\Dashboard.razor",
               "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Dashboard.razor",
               "RelativeToolTip": "Components\\Pages\\Dashboard.razor",
-              "ViewState": "AgIAADsBAAAAAAAAAAAuwFkBAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-17T07:00:08.825Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MenuManagement.razor",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\MenuManagement.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\MenuManagement.razor",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\MenuManagement.razor",
+              "RelativeToolTip": "Components\\Pages\\MenuManagement.razor",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAFcBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T16:40:22.269Z",
               "EditorCaption": ""
             },
             {
