@@ -3,104 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\sensorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\sensorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\isensorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\isensorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\notfound.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\notfound.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\menuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\menuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\entities\\hardwaresensor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\entities\\hardwaresensor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\cafedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\cafedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\entities\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\entities\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\entities\\menuitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\entities\\menuitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\services\\imenuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:services\\imenuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\error.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\error.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\simulator\\digitaltwin.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\simulator\\digitaltwin.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\menu\\managemenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\menu\\managemenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\pages\\menu\\menulist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\menu\\menulist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -115,326 +35,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Dashboard.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Dashboard.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Dashboard.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Dashboard.razor",
-              "RelativeToolTip": "Components\\Pages\\Dashboard.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAA==",
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Login.razor",
+              "RelativeToolTip": "Components\\Pages\\Login.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:23:41.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "Data\\Entities\\User.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\User.cs",
-              "RelativeToolTip": "Data\\Entities\\User.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAiwBEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:14:05.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "MenuItem.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\MenuItem.cs",
-              "RelativeDocumentMoniker": "Data\\Entities\\MenuItem.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\MenuItem.cs",
-              "RelativeToolTip": "Data\\Entities\\MenuItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:13:19.954Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "HardwareSensor.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\HardwareSensor.cs",
-              "RelativeDocumentMoniker": "Data\\Entities\\HardwareSensor.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\HardwareSensor.cs",
-              "RelativeToolTip": "Data\\Entities\\HardwareSensor.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAswA8AAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:13:15.306Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SensorService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\SensorService.cs",
-              "RelativeDocumentMoniker": "Services\\SensorService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\SensorService.cs",
-              "RelativeToolTip": "Services\\SensorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:11:53.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "OrderService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\OrderService.cs",
-              "RelativeDocumentMoniker": "Services\\OrderService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\OrderService.cs",
-              "RelativeToolTip": "Services\\OrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:11:48.661Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "MenuService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\MenuService.cs",
-              "RelativeDocumentMoniker": "Services\\MenuService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\MenuService.cs",
-              "RelativeToolTip": "Services\\MenuService.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAYwBgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:11:38.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ISensorService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\ISensorService.cs",
-              "RelativeDocumentMoniker": "Services\\ISensorService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\ISensorService.cs",
-              "RelativeToolTip": "Services\\ISensorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:11:15.296Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IOrderService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\IOrderService.cs",
-              "RelativeDocumentMoniker": "Services\\IOrderService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\IOrderService.cs",
-              "RelativeToolTip": "Services\\IOrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:10:55.036Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "IMenuService.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\IMenuService.cs",
-              "RelativeDocumentMoniker": "Services\\IMenuService.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\IMenuService.cs",
-              "RelativeToolTip": "Services\\IMenuService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:10:49.532Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\Order.cs",
-              "RelativeDocumentMoniker": "Data\\Entities\\Order.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\Order.cs",
-              "RelativeToolTip": "Data\\Entities\\Order.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:09:30.448Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "OrderDetail.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\OrderDetail.cs",
-              "RelativeDocumentMoniker": "Data\\Entities\\OrderDetail.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\Entities\\OrderDetail.cs",
-              "RelativeToolTip": "Data\\Entities\\OrderDetail.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:09:29.366Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "CafeDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\CafeDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\CafeDbContext.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\CafeDbContext.cs",
-              "RelativeToolTip": "Data\\CafeDbContext.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:09:26.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAAACsAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T19:07:56.569Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Error.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Error.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Error.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Error.razor",
-              "RelativeToolTip": "Components\\Pages\\Error.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:08:01.372Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "NotFound.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\NotFound.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\NotFound.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\NotFound.razor",
-              "RelativeToolTip": "Components\\Pages\\NotFound.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:08:00.065Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "App.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\App.razor",
-              "RelativeDocumentMoniker": "Components\\App.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\App.razor",
-              "RelativeToolTip": "Components\\App.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:04:29.183Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Routes.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Routes.razor",
-              "RelativeDocumentMoniker": "Components\\Routes.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Routes.razor",
-              "RelativeToolTip": "Components\\Routes.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:04:24.695Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\_Imports.razor",
-              "RelativeDocumentMoniker": "Components\\_Imports.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\_Imports.razor",
-              "RelativeToolTip": "Components\\_Imports.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:03:21.706Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "DigitalTwin.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Simulator\\DigitalTwin.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Simulator\\DigitalTwin.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Simulator\\DigitalTwin.razor",
-              "RelativeToolTip": "Components\\Pages\\Simulator\\DigitalTwin.razor",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAIwD4AAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:01:25.327Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "ManageMenu.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Menu\\ManageMenu.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Menu\\ManageMenu.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Menu\\ManageMenu.razor",
-              "RelativeToolTip": "Components\\Pages\\Menu\\ManageMenu.razor",
-              "ViewState": "AgIAADYAAAAAAAAAAAAIwFcAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:01:10.216Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "MenuList.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Menu\\MenuList.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Menu\\MenuList.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Menu\\MenuList.razor",
-              "RelativeToolTip": "Components\\Pages\\Menu\\MenuList.razor",
-              "ViewState": "AgIAADsAAAAAAAAAAAAIwEoAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:01:02.439Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "Components\\Pages\\Home.razor",
-              "ViewState": "AgIAAD0AAAAAAAAAAADwv1wAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T19:00:47.221Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "Components\\Layout\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "Components\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-16T18:59:19.758Z",
+              "WhenOpened": "2026-05-17T06:52:43.005Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "app.css",
-              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\wwwroot\\app.css",
-              "RelativeDocumentMoniker": "wwwroot\\app.css",
-              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\wwwroot\\app.css",
-              "RelativeToolTip": "wwwroot\\app.css",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAqwEwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-16T16:30:48.317Z",
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\AuthService.cs",
+              "RelativeToolTip": "Services\\AuthService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAuwCAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T06:49:41.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CafeDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\CafeDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\CafeDbContext.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\CafeDbContext.cs",
+              "RelativeToolTip": "Data\\CafeDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T06:48:40.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\User.cs",
+              "RelativeDocumentMoniker": "Data\\User.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\User.cs",
+              "RelativeToolTip": "Data\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T06:47:46.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T19:07:56.569Z",
               "EditorCaption": ""
             }
           ]

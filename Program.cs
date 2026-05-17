@@ -9,14 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// 1. Database Connection Engine Setup
+// Pomelo MySQL Connection Setup (Aapke XAMPP cafe_management DB ke liye)
+var connectionString = "server=127.0.0.1;port=3306;database=cafe_management;user=root;password=;";
 builder.Services.AddDbContext<CafeDbContext>(options =>
-    options.UseSqlite("Data Source=Data/cafecove.db"));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// 2. Strong Binding of Injected Services with Interfaces
-builder.Services.AddScoped<IMenuService, MenuService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<ISensorService, SensorService>();
+// Login Service ko register karen
+builder.Services.AddScoped<AuthService>();
 
 var app = builder.Build();
 
@@ -31,10 +30,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-// Absolute Route Endpoint Target to bypass 404 on Root "/"
+// Agr koi seedha "/" par aaye, use login page par redirect kar do
 app.MapGet("/", async context =>
 {
-    context.Response.Redirect("/dashboard");
+    context.Response.Redirect("/login");
     await Task.CompletedTask;
 });
 
