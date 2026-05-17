@@ -47,7 +47,7 @@
             <nav class="top-row-utility-bar">
                 <a href="javascript:void(0)" class="utility-node-link">Support</a>
                 <a href="javascript:void(0)" class="utility-node-link">Profile</a>
-                <a href="javascript:void(0)" class="utility-node-link">Admin Panel</a>
+                <a href="javascript:void(0)" class="utility-node-link" @onclick='() => Navigation.NavigateTo("/dashboard")'>Admin Panel</a>
             </nav>
 
             <div class="contact-dual-column-layout">
@@ -79,11 +79,12 @@
                     <h3 class="details-section-title">Contact Details</h3>
                     
                     <div class="meta-info-strip-grid">
+                        
                         <div class="info-strip-item">
                             <span class="strip-icon-node">📍</span>
                             <div class="strip-text-block">
-                                <p class="info-line-text m-0">Air University Kharian Campus</p>
-                                <p class="info-line-text text-muted m-0">Misbah Visual Programming Project Node</p>
+                                <p class="info-line-text header-title m-0">Air University Kharian Campus</p>
+                                <p class="info-line-text sub-description text-muted m-0">Misbah Visual Programming Project Node</p>
                             </div>
                         </div>
 
@@ -100,6 +101,7 @@
                                 <p class="info-line-text m-0">+92 123 4567890</p>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="map-embed-mock-container">
@@ -129,6 +131,7 @@
 </div>
 
 <style>
+    /* SYSTEM CONTAINER STRUCTURE */
     .contact-viewport-container {
         width: 100vw;
         height: 100vh;
@@ -145,6 +148,7 @@
         z-index: 999;
     }
 
+    /* LEFT SIDEBAR NAVIGATION MATRIX */
     .sidebar-brand-panel {
         width: 320px;
         height: 100%;
@@ -203,8 +207,9 @@
         transition: all 0.25s ease;
     }
 
-    .nav-matrix-item:hover, .nav-matrix-item.active-state-node {
+    .nav-matrix-item:hover {
         color: #ffffff;
+        transform: translateX(6px);
     }
 
     .nav-matrix-item.active-state-node {
@@ -240,6 +245,7 @@
         font-size: 0.65rem;
     }
 
+    /* RIGHT METRICS/CONTENT ENVIRONMENT */
     .contact-metric-workspace {
         flex-grow: 1;
         height: 100%;
@@ -270,17 +276,25 @@
         letter-spacing: 2px;
         font-weight: 600;
         opacity: 0.65;
+        cursor: pointer;
     }
 
+    .utility-node-link:hover {
+        opacity: 1;
+        color: #e67e22;
+    }
+
+    /* GRID COLUMNS SYSTEM */
     .contact-dual-column-layout {
         display: grid;
         grid-template-columns: 1.2fr 1fr;
         gap: 45px;
-        align-items: start;
+        align-items: center;
         margin-top: auto;
         margin-bottom: auto;
     }
 
+    /* LEFT INPUT GRID PANEL */
     .contact-card-form-wrapper {
         background-color: #120a06;
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -347,10 +361,7 @@
         margin-top: 10px;
     }
 
-    .form-submit-action-btn:hover {
-        opacity: 0.9;
-    }
-
+    /* RIGHT METADATA PANEL - ICON & TEXT SIDE-BY-SIDE SIDEWAYS FIX */
     .contact-meta-details-wrapper {
         padding: 10px;
     }
@@ -371,20 +382,44 @@
 
     .info-strip-item {
         display: flex;
-        align-items: flex-start;
+        align-items: center; /* Vertical row alignment ensures perfect side-by-side centers */
         gap: 18px;
+        width: 100%;
     }
 
     .strip-icon-node {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         color: #e67e22;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px; /* Fixes layout compression */
+    }
+
+    .strip-text-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .info-line-text {
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: 0.98rem;
+        line-height: 1.4;
+        color: #ffffff;
+        margin: 0;
     }
 
+    .info-line-text.header-title {
+        font-weight: 600;
+    }
+
+    .info-line-text.sub-description {
+        font-size: 0.85rem;
+        color: #a0aec0 !important;
+        margin-top: 2px;
+    }
+
+    /* EMBEDDED MAP STYLES */
     .map-embed-mock-container {
         border-radius: 12px;
         overflow: hidden;
@@ -439,7 +474,7 @@
 
     .pin-marker-glyph {
         font-size: 1.8rem;
-        animation: bounce 2s infinite;
+        animation: bouncePinMarker 2s infinite;
     }
 
     .pin-tooltip-box {
@@ -479,11 +514,8 @@
         border-bottom: 1px solid #eee;
     }
 
-    .zoom-mock-btn:hover {
-        background-color: #f9f9f9;
-    }
-
-    @@keyframes bounce {
+    /* ESCAPED BLAZOR COMPILER-SAFE KEYFRAMES */
+    @@keyframes bouncePinMarker {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-6px); }
     }
