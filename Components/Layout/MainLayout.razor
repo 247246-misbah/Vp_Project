@@ -1,37 +1,42 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
 
-@if (Navigation.Uri.Contains("/login") || Navigation.Uri.EndsWith("/"))
-{
-    <div class="login-full-layout">
-        @Body
-    </div>
+@{
+    // Check karein ke user login page par hai ya nahi
+    var isLoginPage = Navigation.Uri.Contains("/login") || Navigation.Uri.EndsWith("/");
 }
-else
-{
-    <div class="page">
+
+<div class="page">
+    @if (!isLoginPage)
+    {
         <div class="sidebar">
             <NavMenu />
         </div>
+    }
 
-        <main>
+    <main class="@(isLoginPage ? "full-screen-login" : "")">
+        @if (!isLoginPage)
+        {
             <div class="top-row px-4">
                 <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
             </div>
+        }
 
-            <article class="content px-4">
-                @Body
-            </article>
-        </main>
-    </div>
-}
+        <article class="@(isLoginPage ? "" : "content px-4")">
+            @Body
+        </article>
+    </main>
+</div>
 
 <style>
-    .login-full-layout {
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
+    /* Agar login page ho to saari default padding aur margins khatam karke center align karein */
+    .full-screen-login {
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 </style>

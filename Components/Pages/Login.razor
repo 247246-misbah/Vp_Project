@@ -1,5 +1,4 @@
 ﻿@page "/login"
-@layout Misbah_VisualProgramming_Project.Components.Layout.AuthLayout
 @using Misbah_VisualProgramming_Project.Services
 @using Misbah_VisualProgramming_Project.Data
 @inject AuthService AuthService
@@ -56,7 +55,7 @@
             <button type="submit" class="btn-submit-portal text-uppercase" disabled="@processingToggle">
                 @if (processingToggle)
                 {
-                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                     <span>Validating...</span>
                 }
                 else
@@ -74,17 +73,17 @@
 </div>
 
 <style>
-    /* Absolute full-screen setup with fixed centering matrix */
+    /* Full view wrapper setting up background image and flexible alignment */
     .auth-viewport-wrapper {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        z-index: 999999;
+        z-index: 9999;
         display: flex;
-        align-items: center; /* Exact mid vertical center lock */
-        justify-content: center; /* Exact mid horizontal center lock */
+        align-items: center;      /* Vertical Mid Center Lock */
+        justify-content: center;  /* Horizontal Mid Center Lock */
         background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), 
                     url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
         background-size: cover;
@@ -175,10 +174,7 @@
         cursor: pointer;
     }
 
-    .btn-submit-portal:hover { 
-        background: #2b6cb0; 
-    }
-    
+    .btn-submit-portal:hover { background: #2b6cb0; }
     .portal-info-footer { font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 15px; }
 </style>
 
