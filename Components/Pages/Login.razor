@@ -1,191 +1,162 @@
 ﻿@page "/login"
+@layout Microsoft.AspNetCore.Components.LayoutComponentBase
 @using Misbah_VisualProgramming_Project.Services
 @using Misbah_VisualProgramming_Project.Data
 @inject AuthService AuthService
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
-<div class="login-wrapper">
-    <div class="login-container">
-        <div class="brand-section text-center">
-            <div class="logo-box">
-                <span class="logo-icon">☕</span>
+<div class="login-outer-viewport">
+    <div class="login-card-box">
+        <div class="brand-header text-center">
+            <div class="logo-circle shadow">
+                <span class="logo-glyph">☕</span>
             </div>
-            <h2 class="app-title">Cafe Cove</h2>
-            <p class="app-subtitle">Management Portal</p>
+            <h2 class="portal-title">Cafe Cove</h2>
+            <p class="portal-subtitle">Management Portal</p>
             
-            <div class="campus-badge">
+            <div class="campus-tag">
                 <span>Air University Kharian Campus</span>
             </div>
         </div>
 
         @if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                <span class="me-2">⚠️</span>
-                <div>@errorMessage</div>
+            <div class="alert alert-danger shadow-sm" role="alert">
+                ⚠️ @errorMessage
             </div>
         }
 
-        <EditForm Model="@loginModel" OnValidSubmit="HandleLoginAsync" FormName="LoginForm">
-            <DataAnnotationsValidator />
-
-            <div class="form-floating mb-3">
-                <InputText id="username" class="form-control" @bind-Value="loginModel.UsernameOrEmail" placeholder="Username or Email" />
-                <label for="username"><span class="form-icon">👤</span> Username or Email</label>
-                <ValidationMessage For="@(() => loginModel.UsernameOrEmail)" class="text-danger small" />
+        <form @onsubmit="HandleLoginAsync" @onsubmit:preventDefault>
+            <div class="mb-3">
+                <label class="form-label text-secondary fw-semibold">Username or Email</label>
+                <input type="text" class="form-control form-control-lg custom-input" @bind="usernameInput" placeholder="administrator" required />
             </div>
 
-            <div class="form-floating mb-3">
-                <InputText type="password" id="password" class="form-control" @bind-Value="loginModel.Password" placeholder="Password" />
-                <label for="password"><span class="form-icon">🔒</span> Password</label>
-                <ValidationMessage For="@(() => loginModel.Password)" class="text-danger small" />
+            <div class="mb-4">
+                <label class="form-label text-secondary fw-semibold">Password</label>
+                <input type="password" class="form-control form-control-lg custom-input" @bind="passwordInput" placeholder="••••••••" required />
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-4 options-row">
+            <div class="d-flex justify-content-between align-items-center mb-4 small-text-row">
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMe" />
-                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                    <input type="checkbox" class="form-check-input" id="remember" />
+                    <label class="form-check-label text-muted" for="remember">Remember Me</label>
                 </div>
-                <a href="javascript:void(0)" class="forgot-link">Forgot Password?</a>
+                <a href="javascript:void(0)" class="forgot-pwd-link">Forgot Password?</a>
             </div>
 
-            <button type="submit" class="btn btn-login w-100" disabled="@isProcessing">
+            <button type="submit" class="btn btn-submit-action w-100 py-3 text-uppercase" disabled="@isProcessing">
                 @if (isProcessing)
                 {
-                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    <span>Verifying Identity...</span>
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    <span>Verifying Credentials...</span>
                 }
                 else
                 {
                     <span>LOG IN 🚀</span>
                 }
             </button>
-        </EditForm>
+        </form>
 
-        <div class="login-footer text-center mt-4">
-            <p class="text-muted small">Staff & Faculty Access Only.</p>
-            <p class="text-muted small">For student portals, <a href="#" class="accent-link">click here</a>.</p>
+        <div class="portal-footer text-center mt-4">
+            <p class="text-muted mb-1">Staff & Faculty Access Only.</p>
+            <p class="text-muted">For student portals, <a href="javascript:void(0)" class="student-link fw-semibold">click here</a>.</p>
         </div>
     </div>
 </div>
 
 <style>
-    .login-wrapper {
-        min-height: 100vh;
+    /* Full screen absolute viewport configuration to hide background layouts */
+    .login-outer-viewport {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
         display: flex;
         align-items: center;
         justify-content: center;
         background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
         padding: 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-sizing: border-box;
     }
 
-    .login-container {
-        background: rgba(255, 255, 255, 0.96);
+    .login-card-box {
+        background: #ffffff;
         border-radius: 16px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         width: 100%;
-        max-width: 450px;
-        padding: 40px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 440px;
+        padding: 45px 40px;
     }
 
-    .logo-box {
-        width: 60px;
-        height: 60px;
+    .logo-circle {
+        width: 70px;
+        height: 70px;
         background: #1a365d;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 15px;
-        box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
     }
 
-    .logo-icon {
-        font-size: 30px;
-    }
-
-    .app-title {
-        color: #1a365d;
-        font-weight: 700;
-        margin-bottom: 2px;
-        letter-spacing: 0.5px;
-    }
-
-    .app-subtitle {
-        color: #555;
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-    }
-
-    .campus-badge {
+    .logo-glyph { font-size: 32px; }
+    .portal-title { color: #1a365d; font-weight: 700; margin-bottom: 2px; font-size: 1.8rem; }
+    .portal-subtitle { color: #555; font-size: 1.05rem; margin-bottom: 15px; }
+    
+    .campus-tag {
         background: #e2e8f0;
         color: #2b6cb0;
-        padding: 6px 16px;
+        padding: 6px 18px;
         border-radius: 50px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 600;
         display: inline-block;
         margin-bottom: 30px;
         border: 1px solid #cbd5e0;
     }
 
-    .form-floating > .form-control:focus ~ label,
-    .form-floating > .form-control:not(:placeholder-shown) ~ label {
-        color: #2b6cb0;
+    .custom-input {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        font-size: 1rem;
     }
 
-    .form-control:focus {
+    .custom-input:focus {
         border-color: #2b6cb0;
-        box-shadow: 0 0 0 0.25rem rgba(43, 108, 176, 0.25);
+        box-shadow: 0 0 0 0.25rem rgba(43, 108, 176, 0.2);
     }
 
-    .form-icon {
-        margin-right: 5px;
-    }
+    .small-text-row { font-size: 0.88rem; }
+    .forgot-pwd-link, .student-link { color: #2b6cb0; text-decoration: none; }
+    .forgot-pwd-link:hover, .student-link:hover { text-decoration: underline; }
 
-    .options-row {
-        font-size: 0.9rem;
-    }
-
-    .forgot-link, .accent-link {
-        color: #2b6cb0;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-        .forgot-link:hover, .accent-link:hover {
-            text-decoration: underline;
-        }
-
-    .btn-login {
+    .btn-submit-action {
         background: #1a365d;
         color: white;
-        padding: 12px;
         font-weight: 600;
         border-radius: 8px;
         border: none;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease-in-out;
     }
 
-        .btn-login:hover {
-            background: #2b6cb0;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
-        }
-
-    .alert {
-        border-radius: 8px;
-        font-size: 0.9rem;
-        padding: 12px;
+    .btn-submit-action:hover {
+        background: #2b6cb0;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(43, 108, 176, 0.3);
     }
+
+    .alert { border-radius: 8px; font-size: 0.9rem; }
 </style>
 
 @code {
-    private LoginInputModel loginModel = new();
+    private string usernameInput = string.Empty;
+    private string passwordInput = string.Empty;
     private string errorMessage = string.Empty;
     private bool isProcessing = false;
 
@@ -196,35 +167,25 @@
 
         try
         {
-            // Backend DB validation layer call logic
-            var user = await AuthService.ValidateUserAsync(loginModel.UsernameOrEmail, loginModel.Password);
+            var user = await AuthService.ValidateUserAsync(usernameInput, passwordInput);
 
             if (user != null)
             {
-                // Login successful! Dashboard route transition trigger.
-                Navigation.NavigateTo("/dashboard");
+                // Force load direct trigger passes absolute clean state transition
+                Navigation.NavigateTo("/dashboard", forceLoad: true);
             }
             else
             {
-                errorMessage = "Invalid Username/Email or Password. Access Denied.";
+                errorMessage = "Access Denied: Invalid Username or Password.";
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"Database Connection Error: {ex.Message}";
+            errorMessage = $"Database Runtime Error: {ex.Message}";
         }
         finally
         {
             isProcessing = false;
         }
-    }
-
-    public class LoginInputModel
-    {
-        [Required(ErrorMessage = "Please enter your username or email address")]
-        public string UsernameOrEmail { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Please enter your password")]
-        public string Password { get; set; } = string.Empty;
     }
 }
