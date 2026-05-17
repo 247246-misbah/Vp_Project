@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|c:\\users\\dell\\source\\repos\\misbah_visualprogramming_project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4E26F978-F6A5-6F44-95CC-A1D8310C33B5}|Misbah_VisualProgramming_Project.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,8 +34,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "Components\\_Imports.razor",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\_Imports.razor",
+              "RelativeToolTip": "Components\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T06:53:59.432Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -40,14 +57,14 @@
               "RelativeDocumentMoniker": "Components\\Pages\\Login.razor",
               "ToolTip": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Components\\Pages\\Login.razor",
               "RelativeToolTip": "Components\\Pages\\Login.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOUAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAAAAUAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-17T06:52:43.005Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
@@ -60,7 +77,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "CafeDbContext.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\CafeDbContext.cs",
               "RelativeDocumentMoniker": "Data\\CafeDbContext.cs",
@@ -73,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Data\\User.cs",
               "RelativeDocumentMoniker": "Data\\User.cs",
@@ -86,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\Misbah_VisualProgramming_Project\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",

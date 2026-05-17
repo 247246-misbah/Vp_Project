@@ -1,0 +1,61 @@
+﻿@page "/dashboard"
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
+<div class="dashboard-wrapper">
+    <nav class="navbar navbar-dark bg-dark px-4 shadow-sm">
+        <span class="navbar-brand mb-0 h1">☕ Cafe Cove Management Portal</span>
+        <div class="d-flex align-items-center text-white">
+            <span class="me-3">🌐 Air University Kharian Campus</span>
+            <a href="/login" class="btn btn-outline-light btn-sm">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="welcome-banner p-4 mb-4 shadow-sm rounded">
+            <h1 class="display-5">Welcome Back, Administrator! 👋</h1>
+            <p class="lead">Your virtual coffee station system management metrics are loaded and synchronized.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-primary text-white">
+                    <h3>Active Orders</h3>
+                    <p class="display-4 font-weight-bold">12</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-success text-white">
+                    <h3>Daily Revenue</h3>
+                    <p class="display-4 font-weight-bold">Rs. 8,450</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-warning text-dark">
+                    <h3>Machine Status</h3>
+                    <p class="display-4 font-weight-bold">Optimal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dashboard-wrapper {
+        min-height: 100vh;
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .welcome-banner {
+        background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+        color: white;
+    }
+
+    .metric-card {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+</style>
