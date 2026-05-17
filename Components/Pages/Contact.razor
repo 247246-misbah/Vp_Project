@@ -1,158 +1,336 @@
 ﻿@page "/contact"
 @using Microsoft.AspNetCore.Authorization
 @attribute [AllowAnonymous]
-@inject NavigationManager Navigation
+@layout MainLayout @* Ya agar aapka koi public layout hai toh uska naam, warna isko empty layout dene ke liye niche blank use hota hai *@
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+@inject NavigationManager Navigation
 
-<header class="top-glass-navbar">
-    <div class="nav-brand-side" @onclick='() => NavTo("/login")' style="cursor: pointer;">
-        <span class="nav-brand-icon">☕</span>
-        <span class="nav-brand-text">CAFE COVE</span>
-    </div>
-    
-    <nav class="nav-links-side">
-        <button class="portal-nav-link" @onclick='() => Navigation.NavigateTo("/about")'>About Us</button>
-        <button class="portal-nav-link" @onclick='() => Navigation.NavigateTo("/gallery")'>Gallery</button>
-        <a href="javascript:void(0)" class="portal-nav-link">Support</a>
-        <button class="portal-nav-link active-panel-flag">Contact</button>
-    </nav>
-</header>
+@* Tip: Agar aap chahti hain ke is par koi bhi layout (Default wala) apply na ho aur yeh bilkul standalone khule jaise About khul raha hai, toh aap upar `@layout EmptyLayout` ya `@layout LayoutComponentBase` check kar sakti hain *@
 
 <div class="contact-viewport-container">
     
-    <main class="contact-main-layout">
-        <div class="contact-grid-wrapper">
+    <aside class="sidebar-brand-panel">
+        <div class="brand-header-node">
+            <div class="brand-avatar-glyph">
+                <span>☕</span>
+            </div>
+            <h2 class="brand-logo-text">CAFE COVE</h2>
+        </div>
+
+        <ul class="navigation-matrix-list">
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/dashboard")'>
+                <span class="matrix-icon">🏠</span> Home
+            </li>
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/about")'>
+                <span class="matrix-icon">ℹ️</span> About Us
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">🍳</span> Menu
+            </li>
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/gallery")'>
+                <span class="matrix-icon">🖼️</span> Gallery
+            </li>
+            <li class="nav-matrix-item active-state-node">
+                <span class="matrix-icon">📞</span> Contact
+            </li>
+        </ul>
+
+        <button class="action-btn-shop-now">
+            <span>SHOP NOW</span>
+            <span class="arrow-indicator">➔</span>
+        </button>
+
+        <div class="sidebar-institutional-footer">
+            <p class="m-0">Step into Cafe Cove!</p>
+            <p class="m-0 text-muted extra-small-tag">Operational Hours: 8AM - 9PM</p>
+        </div>
+    </aside>
+
+    <main class="contact-metric-workspace">
+        <div class="workspace-interactive-layer">
             
-            <div class="contact-card-panel">
-                <div class="form-header-node">
-                    <h2 class="form-title">GET IN TOUCH</h2>
-                    <span class="form-header-icon">🫘</span>
-                </div>
+            <nav class="top-row-utility-bar">
+                <a href="javascript:void(0)" class="utility-node-link">Support</a>
+                <a href="javascript:void(0)" class="utility-node-link">Profile</a>
+                <a href="javascript:void(0)" class="utility-node-link" @onclick='() => Navigation.NavigateTo("/dashboard")'>Admin Panel</a>
+            </nav>
 
-                <form @submit:preventDefault>
-                    <div class="mb-3-custom">
-                        <input type="text" class="form-field-node" placeholder="Your Name" required />
-                    </div>
-
-                    <div class="mb-3-custom">
-                        <input type="email" class="form-field-node" placeholder="Your Email" required />
-                    </div>
-
-                    <div class="mb-3-custom">
-                        <input type="text" class="form-field-node" placeholder="Subject" required />
-                    </div>
-
-                    <div class="mb-4-custom">
-                        <textarea class="form-field-node field-textarea" placeholder="Message" required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-send-message">
-                        <span>Send Message</span>
-                    </button>
-                </form>
-            </div>
-
-            <div class="details-card-panel">
-                <h3 class="details-section-title">Contact Details</h3>
+            <div class="contact-dual-column-layout">
                 
-                <div class="info-matrix-rows">
-                    <div class="info-node-item">
-                        <span class="info-icon-pin">📍</span>
-                        <div class="info-text-block">
-                            <p class="m-0 fw-bold-node">Air University Kharian Campus</p>
-                            <p class="m-0 text-muted-node">Misbah Visual Programming Project Node</p>
-                        </div>
+                <div class="contact-card-form-wrapper">
+                    <div class="form-header-row">
+                        <h1 class="form-main-title">GET IN TOUCH</h1>
+                        <div class="coffee-bag-icon">🤎</div>
                     </div>
 
-                    <div class="info-node-item">
-                        <span class="info-icon-pin">✉️</span>
-                        <div class="info-text-block">
-                            <p class="m-0 text-link-node">contact@cafecove.au</p>
+                    <form class="interactive-input-form" @submit:preventDefault>
+                        <div class="input-field-node">
+                            <input type="text" placeholder="Your Name" class="custom-form-control" />
                         </div>
-                    </div>
-
-                    <div class="info-node-item">
-                        <span class="info-icon-pin">📞</span>
-                        <div class="info-text-block">
-                            <p class="m-0 text-link-node">+92 123 4567890</p>
+                        <div class="input-field-node">
+                            <input type="email" placeholder="Your Email" class="custom-form-control" />
                         </div>
-                    </div>
+                        <div class="input-field-node">
+                            <input type="text" placeholder="Subject" class="custom-form-control" />
+                        </div>
+                        <div class="input-field-node">
+                            <textarea placeholder="Message" rows="5" class="custom-form-control location-textarea"></textarea>
+                        </div>
+                        <button type="submit" class="form-submit-action-btn">Send Message</button>
+                    </form>
                 </div>
 
-                <div class="map-embed-container shadow-sm">
-                    <div class="map-control-header">
-                        <button class="map-mode-btn active">Map</button>
-                        <button class="map-mode-btn">Satellite</button>
+                <div class="contact-meta-details-wrapper">
+                    <h3 class="details-section-title">Contact Details</h3>
+                    
+                    <div class="meta-info-strip-grid">
+                        
+                        <div class="info-strip-item">
+                            <span class="strip-icon-node">📍</span>
+                            <div class="strip-text-block">
+                                <p class="info-line-text header-title m-0">Air University Kharian Campus</p>
+                                <p class="info-line-text sub-description text-muted m-0">Misbah Visual Programming Project Node</p>
+                            </div>
+                        </div>
+
+                        <div class="info-strip-item">
+                            <span class="strip-icon-node">✉️</span>
+                            <div class="strip-text-block">
+                                <p class="info-line-text m-0">contact@@cafecove.au</p>
+                            </div>
+                        </div>
+
+                        <div class="info-strip-item">
+                            <span class="strip-icon-node">📞</span>
+                            <div class="strip-text-block">
+                                <p class="info-line-text m-0">+92 123 4567890</p>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="map-canvas-mock">
-                        <div class="map-marker-pin">📍</div>
-                        <div class="map-popup-badge">
-                            <strong>Air University Kharian Campus</strong>
-                            <span>Misbah Visual Prog...</span>
+
+                    <div class="map-embed-mock-container">
+                        <div class="map-action-tabs-bar">
+                            <button class="map-tab-btn active-map-tab">Map</button>
+                            <button class="map-tab-btn">Satellite</button>
+                        </div>
+                        <div class="map-render-canvas-area">
+                            <div class="map-pin-indicator">
+                                <span class="pin-marker-glyph">📍</span>
+                                <div class="pin-tooltip-box">
+                                    <strong>Air University</strong><br/>Kharian Campus
+                                </div>
+                            </div>
+                            <div class="map-controls-mock">
+                                <button class="zoom-mock-btn">+</button>
+                                <button class="zoom-mock-btn">-</button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
-
         </div>
     </main>
 </div>
 
-@code {
-    private void NavTo(string url) => Navigation.NavigateTo(url);
-}
-
 <style>
-    .top-glass-navbar {
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 70px;
-        background: rgba(18, 10, 6, 0.6);
-        backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 0 50px; box-sizing: border-box; z-index: 10000;
-    }
-
-    .nav-brand-side { display: flex; align-items: center; gap: 10px; }
-    .nav-brand-text { color: #ffffff; font-weight: 800; letter-spacing: 1.5px; font-size: 1.2rem; }
-    .nav-links-side { display: flex; align-items: center; gap: 35px; }
-
-    .portal-nav-link {
-        background: none; border: none; color: #ffffff;
-        font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px;
-        font-weight: 600; opacity: 0.75; cursor: pointer;
-    }
-
-    .portal-nav-link:hover, .portal-nav-link.active-panel-flag { opacity: 1; color: #e67e22; }
-
+    /* SYSTEM CONTAINER STRUCTURE */
     .contact-viewport-container {
-        width: 100vw; height: 100vh; background-color: #160d08; color: #ffffff;
-        position: fixed; top: 0; left: 0; padding-top: 70px; box-sizing: border-box;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        background-color: #160d08;
+        color: #ffffff;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
     }
 
-    .contact-main-layout { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; }
-    .contact-grid-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; max-width: 1100px; }
-    .contact-card-panel, .details-card-panel { background: rgba(26, 17, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 40px; }
-    
-    .form-header-node { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
-    .form-title { font-size: 1.8rem; font-weight: 800; margin: 0; }
-    
-    .mb-3-custom { margin-bottom: 20px; }
-    .mb-4-custom { margin-bottom: 25px; }
-
-    .form-field-node {
-        width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px; padding: 14px 18px; color: #ffffff; font-size: 0.95rem; outline: none; box-sizing: border-box;
+    /* LEFT SIDEBAR NAVIGATION MATRIX */
+    .sidebar-brand-panel {
+        width: 320px;
+        height: 100%;
+        background-color: #120a06;
+        padding: 50px 35px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba(230, 126, 34, 0.12);
+        box-sizing: border-box;
     }
 
-    .form-field-node:focus { border-color: #e67e22; box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15); }
-    .field-textarea { height: 120px; resize: none; }
+    .brand-header-node {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 55px;
+    }
 
-    .btn-send-message { background: #e67e22; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-    .details-section-title { font-size: 1.5rem; font-weight: 700; margin: 0 0 30px 0; color: #e67e22; }
-    .info-matrix-rows { display: flex; flex-direction: column; gap: 25px; margin-bottom: 35px; }
-    .info-node-item { display: flex; align-items: flex-start; gap: 20px; }
-    .fw-bold-node { font-weight: 600; }
-    .text-muted-node { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+    .brand-avatar-glyph {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #e67e22, #d35400);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
 
-    .map-embed-container { width
+    .brand-logo-text {
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin: 0;
+        color: #ffffff;
+    }
+
+    .navigation-matrix-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .nav-matrix-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 14px 0;
+        color: #a0aec0;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .nav-matrix-item:hover {
+        color: #ffffff;
+        transform: translateX(6px);
+    }
+
+    .nav-matrix-item.active-state-node {
+        color: #e67e22 !important;
+    }
+
+    .action-btn-shop-now {
+        background-color: #e67e22;
+        color: #ffffff;
+        padding: 16px 22px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar-institutional-footer {
+        margin-top: 35px;
+        font-size: 0.75rem;
+        color: #718096;
+        line-height: 1.6;
+    }
+
+    .extra-small-tag {
+        font-size: 0.65rem;
+    }
+
+    /* RIGHT METRICS/CONTENT ENVIRONMENT */
+    .contact-metric-workspace {
+        flex-grow: 1;
+        height: 100%;
+        background-color: #160d08;
+        overflow-y: auto;
+    }
+
+    .workspace-interactive-layer {
+        padding: 45px 70px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        min-height: 100%;
+    }
+
+    .top-row-utility-bar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 35px;
+        margin-bottom: 50px;
+    }
+
+    .utility-node-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        opacity: 0.65;
+        cursor: pointer;
+    }
+
+    .utility-node-link:hover {
+        opacity: 1;
+        color: #e67e22;
+    }
+
+    /* GRID COLUMNS SYSTEM */
+    .contact-dual-column-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 45px;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    /* LEFT INPUT GRID PANEL */
+    .contact-card-form-wrapper {
+        background-color: #120a06;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 45px;
+    }
+
+    .form-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+    }
+
+    .form-main-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .coffee-bag-icon {
+        font-size: 2.5rem;
+    }
+
+    .interactive-input-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .custom-form-control {
+        width: 100%;
+        background-color: #1a100a;
