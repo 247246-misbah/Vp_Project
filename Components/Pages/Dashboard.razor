@@ -27,7 +27,7 @@
         </ul>
     </aside>
 
-    <main class="dashboard-metric-workspace background-blend-cover">
+    <main class="dashboard-metric-workspace menu-scroll-panel background-blend-cover">
         
         <div class="top-utility-bar">
             <div class="logout-trigger" @onclick='() => Navigation.NavigateTo("/logout")'>
@@ -66,6 +66,53 @@
                 </div>
 
             </div>
+
+            <div class="queue-section-container">
+                <h3 class="queue-table-title">⏱️ Live Production Order Queue</h3>
+                <div class="menu-table-container">
+                    <table class="custom-admin-table">
+                        <thead>
+                            <tr>
+                                <th>Token ID</th>
+                                <th>Customer Name</th>
+                                <th>Bill Amount</th>
+                                <th>Status</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (PendingOrdersList != null && PendingOrdersList.Count > 0)
+                            {
+                                @foreach (var order in PendingOrdersList)
+                                {
+                                    <tr>
+                                        <td class="font-bold-item" style="color: #e67e22;">#00@(order.Id)</td>
+                                        <td class="font-bold-item">@order.CustomerName</td>
+                                        <td class="price-highlight">Rs. @order.TotalAmount.ToString("N0")</td>
+                                        <td><span class="status-badge-pending">@order.Status</span></td>
+                                        <td>
+                                            <div class="table-action-buttons">
+                                                <button class="action-complete-btn" @onclick="() => CompleteOrderTransaction(order.Id)">
+                                                    ✔ Complete Order
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: #a0aec0; padding: 30px; background: #ffffff;">
+                                        🎉 No active orders in the production queue. All clear!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </main>
 </div>
@@ -73,7 +120,9 @@
 @code {
     private int ActiveOrdersCount { get; set; } = 0;
     private decimal DailyRevenue { get; set; } = 0;
-    private int TotalMenuItemsCount { get; set; } = 0; // Added variable for item counter
+    private int TotalMenuItemsCount { get; set; } = 0;
+    
+    private List<OrderModel> PendingOrdersList = new();
     
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
 
@@ -84,44 +133,91 @@
 
     private async Task LoadDashboardMetrics()
     {
+        PendingOrdersList.Clear();
         try
         {
             using MySqlConnection conn = new(connString);
             await conn.OpenAsync();
 
-            // 1. Fetch live pending orders count
             string countQuery = "SELECT COUNT(*) FROM orders WHERE status = 'Pending';";
             using (MySqlCommand cmd = new(countQuery, conn))
             {
                 ActiveOrdersCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
 
-            // 2. Fetch live total revenue from completed orders
-            string revenueQuery = "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status = 'Completed' OR status = 'Pending';";
+            string revenueQuery = "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status = 'Completed';";
             using (MySqlCommand cmd = new(revenueQuery, conn))
             {
                 DailyRevenue = Convert.ToDecimal(await cmd.ExecuteScalarAsync());
             }
 
-            // 3. FIXED: Fetch live dynamic count of items configured in the menu
             string itemsQuery = "SELECT COUNT(*) FROM menu;";
             using (MySqlCommand cmd = new(itemsQuery, conn))
             {
                 TotalMenuItemsCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
+
+            string queueQuery = "SELECT id, customer_name, total_amount, status FROM orders WHERE status = 'Pending' ORDER BY id ASC;";
+            using (MySqlCommand cmd = new(queueQuery, conn))
+            {
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    PendingOrdersList.Add(new OrderModel
+                    {
+                        Id = reader.GetInt32("id"),
+                        CustomerName = reader.GetString("customer_name"),
+                        TotalAmount = reader.GetDecimal("total_amount"),
+                        Status = reader.GetString("status")
+                    });
+                }
+            }
         }
         catch (Exception)
         {
-            // Fallback default values if database connectivity is offline during initial load
+            // Intermittent DB Fallback simulation data
             ActiveOrdersCount = 2;
             DailyRevenue = 450;
-            TotalMenuItemsCount = 10;
+            TotalMenuItemsCount = 8;
+            
+            PendingOrdersList.Add(new OrderModel { Id = 1, CustomerName = "Zainab (Mock)", TotalAmount = 250, Status = "Pending" });
+            PendingOrdersList.Add(new OrderModel { Id = 2, CustomerName = "Ali (Mock)", TotalAmount = 200, Status = "Pending" });
         }
+    }
+
+    private async Task CompleteOrderTransaction(int orderId)
+    {
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+
+            string updateSql = "UPDATE orders SET status = 'Completed' WHERE id = @Id;";
+            using (MySqlCommand cmd = new(updateSql, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", orderId);
+                await cmd.ExecuteNonQueryAsync();
+            }
+
+            await LoadDashboardMetrics();
+        }
+        catch (Exception)
+        {
+            // Failure safety handling logic channel
+        }
+    }
+
+    public class OrderModel
+    {
+        public int Id { get; set; }
+        public string CustomerName { get; set; } = string.Empty;
+        public decimal TotalAmount { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }
 
 <style>
-    /* Full CSS Layout Framework Configuration */
+    /* Framework Design Layout Styling - Remained Consistent */
     .dashboard-viewport-container {
         width: 100vw; height: 100vh; display: flex;
         background-color: #160d08; color: #ffffff;
@@ -154,13 +250,14 @@
     .nav-matrix-item.active-state-node { color: #e67e22 !important; }
 
     .dashboard-metric-workspace { flex-grow: 1; position: relative; display: flex; flex-direction: column; }
+    .menu-scroll-panel { overflow-y: auto; background-color: #1a110a; }
     
     .background-blend-cover {
         background-image: linear-gradient(to right, #1a110a 35%, rgba(26, 17, 10, 0.75) 70%, rgba(26, 17, 10, 0.4)), url('images/coffee-bg.jpg');
         background-size: cover; background-position: center right;
     }
 
-    .top-utility-bar { height: 80px; display: flex; align-items: center; justify-content: flex-end; padding: 0 60px; }
+    .top-utility-bar { height: 60px; display: flex; align-items: center; justify-content: flex-end; padding: 0 60px; margin-top: 10px; }
     .logout-trigger {
         display: flex; align-items: center; gap: 10px; color: #e67e22; font-size: 0.8rem;
         font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: opacity 0.2s;
@@ -168,18 +265,18 @@
     .logout-trigger:hover { opacity: 0.8; }
     .logout-dot { width: 8px; height: 8px; border: 2px solid #e74c3c; border-radius: 50%; display: inline-block; }
 
-    .workspace-interactive-layer { flex-grow: 1; padding: 10px 70px 60px 70px; display: flex; flex-direction: column; justify-content: center; }
+    .workspace-interactive-layer { flex-grow: 1; padding: 0px 70px 40px 70px; display: flex; flex-direction: column; }
     
-    .welcome-hero-block { margin-bottom: 60px; }
-    .accent-line-node { width: 60px; height: 4px; background-color: #e67e22; margin-bottom: 25px; }
-    .welcome-main-title { font-size: 3.8rem; font-weight: 800; line-height: 1.15; margin: 0 0 20px 0; letter-spacing: -1px; }
-    .welcome-subtext { font-size: 1.05rem; color: #cbd5e0; line-height: 1.6; opacity: 0.85; margin: 0; }
+    .welcome-hero-block { margin-bottom: 40px; }
+    .accent-line-node { width: 60px; height: 4px; background-color: #e67e22; margin-bottom: 20px; }
+    .welcome-main-title { font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin: 0 0 15px 0; letter-spacing: -1px; }
+    .welcome-subtext { font-size: 1rem; color: #cbd5e0; line-height: 1.6; opacity: 0.85; margin: 0; }
 
-    .metrics-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1050px; }
+    .metrics-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1050px; margin-bottom: 45px; }
     
     .metric-data-card {
         background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px; padding: 30px 25px; backdrop-filter: blur(12px);
+        border-radius: 14px; padding: 25px 22px; backdrop-filter: blur(12px);
         display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;
     }
     
@@ -192,6 +289,25 @@
     .text-amber { color: #e67e22; }
     .text-orange { color: #d35400; }
     .text-emerald { color: #2ecc71; }
-    
     .card-context-subtext { font-size: 0.8rem; color: #718096; font-weight: 500; }
+
+    .queue-section-container { max-width: 1050px; width: 100%; }
+    .queue-table-title { font-size: 1.2rem; color: #e67e22; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; margin-top: 0; }
+    
+    .menu-table-container { background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .custom-admin-table { width: 100%; border-collapse: collapse; text-align: left; color: #333333; font-size: 0.95rem; }
+    .custom-admin-table th { background: #120a06; color: #ffffff; padding: 14px 20px; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+    .custom-admin-table td { padding: 14px 20px; border-bottom: 1px solid #edf2f7; background: #ffffff; vertical-align: middle; }
+    
+    .font-bold-item { font-weight: 700; color: #1a110a; }
+    .price-highlight { color: #e67e22; font-weight: 700; }
+    
+    .status-badge-pending { background: rgba(230, 126, 34, 0.12); color: #e67e22; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    
+    .table-action-buttons { display: flex; gap: 10px; }
+    .action-complete-btn {
+        background: #2ecc71; border: none; color: #fff; padding: 6px 14px;
+        border-radius: 4px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: background 0.2s;
+    }
+    .action-complete-btn:hover { background: #27ae60; }
 </style>
