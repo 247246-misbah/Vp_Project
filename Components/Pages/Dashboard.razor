@@ -16,29 +16,18 @@
             <li class="nav-matrix-item active-state-node">
                 <span class="matrix-icon">🏠</span> Home
             </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/about")'>
-                <span class="matrix-icon">ℹ️</span> About Us
-            </li>
+            
             <li class="nav-matrix-item">
                 <span class="matrix-icon">🍳</span> Menu
             </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/gallery")'>
-                <span class="matrix-icon">🖼️</span> Gallery
-            </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/contact")'>
-                <span class="matrix-icon">📞</span> Contact
-            </li>
+            <li class="menu-matrix-item" @onclick='() => Navigation.NavigateTo("/profile")'>
+    <span class="matrix-glyph">👤</span> Profile
+</li>
+
         </ul>
 
-        <button class="action-btn-shop-now">
-            <span>SHOP NOW</span>
-            <span class="arrow-indicator">➔</span>
-        </button>
-
-        <div class="sidebar-institutional-footer">
-            <p class="m-0">Step into Cafe Cove!</p>
-            <p class="m-0 text-muted extra-small-tag">Operational Hours: 8AM - 9PM</p>
-        </div>
+        
+       
     </aside>
 
     <main class="dashboard-metric-workspace">
@@ -46,18 +35,18 @@
         
         <div class="workspace-interactive-layer">
             <nav class="top-row-utility-bar">
-                <a href="javascript:void(0)" class="utility-node-link">Support</a>
+         
                 <a href="javascript:void(0)" class="utility-node-link">Profile</a>
-                <a href="javascript:void(0)" class="utility-node-link active-panel-flag">Admin Panel</a>
+                <a href="/login" class="session-termination-link">
+                    <span class="power-glyph">⭕</span> Logout 
+                </a>
             </nav>
 
             <div class="hero-typography-block">
                 <div class="aesthetic-brand-divider"></div>
                 <h1 class="hero-main-title">Welcome Back,<br />Administrator!</h1>
                 <p class="hero-subtext-para">Your virtual coffee station system management metrics are loaded and synchronized for peak performance.</p>
-                <a href="/login" class="session-termination-link">
-                    <span class="power-glyph">⭕</span> Logout Session
-                </a>
+                
             </div>
 
             <div class="metrics-structural-row-grid">

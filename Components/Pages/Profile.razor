@@ -1,0 +1,386 @@
+﻿@page "/profile"
+@inject NavigationManager Navigation
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
+<div class="cafe-profile-dashboard-container">
+    
+    <aside class="dashboard-sidebar-panel">
+        <div class="sidebar-wave-overlay"></div>
+        
+        <div class="brand-identity-block">
+            <span class="brand-coffee-icon">☕</span>
+            <h2 class="brand-logo-title">CAFE COVE</h2>
+        </div>
+
+        <ul class="sidebar-menu-matrix">
+            <li class="menu-matrix-item" @onclick='() => Navigation.NavigateTo("/dashboard")'>
+                <span class="matrix-glyph">🏠</span> Dashboard
+            </li>
+            <li class="menu-matrix-item">
+                <span class="matrix-glyph">☕</span> Products
+            </li>
+            <li class="menu-matrix-item">
+                <span class="matrix-glyph">📄</span> Billing
+            </li>
+            <li class="menu-matrix-item">
+                <span class="matrix-glyph">🛍️</span> Orders
+            </li>
+            <li class="menu-matrix-item">
+                <span class="matrix-glyph">📊</span> Reports
+            </li>
+            <li class="menu-matrix-item active-panel-node">
+                <span class="matrix-glyph">👤</span> Profile
+            </li>
+            <li class="menu-matrix-item">
+                <span class="matrix-glyph">⚙️</span> Settings
+            </li>
+        </ul>
+
+        <div class="sidebar-decorative-beans-footer">
+            <span class="bean-emoji-node">🫘</span>
+            <span class="bean-emoji-node second-bean">🫘</span>
+        </div>
+
+        <div class="sidebar-logout-trigger" @onclick='() => Navigation.NavigateTo("/login")'>
+            <span class="matrix-glyph">⌱</span> Logout
+        </div>
+    </aside>
+
+    <main class="profile-workspace-view">
+        
+        <header class="workspace-top-navigation-bar">
+            <div class="top-bar-title-node">Cafe House Portal</div>
+            <div class="top-bar-user-status-widget">
+                <div class="notification-bell-badge">
+                    🔔<span class="badge-count-alert">3</span>
+                </div>
+                <div class="user-meta-profile-avatar-block" @onclick='() => Navigation.NavigateTo("/profile")'>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" alt="Admin Avatar" class="mini-avatar-node" />
+                    <div class="meta-label-text-node">
+                        <span class="user-display-profile-name">Sabrina</span>
+                        <span class="user-display-profile-role">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="profile-interactive-form-canvas-wrapper">
+            <div class="profile-interactive-form-canvas">
+                
+                <div class="form-header-identity-row">
+                    <div class="form-header-title-block">
+                        <h1 class="form-main-heading-title">Edit Profile</h1>
+                        <p class="form-sub-heading-description">Update your personal information</p>
+                    </div>
+
+                    <div class="avatar-uploader-circle-frame">
+                        <div class="avatar-image-mask-node">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" alt="Profile Photo" />
+                        </div>
+                        <label class="avatar-camera-action-trigger-fab" for="avatar-file-input">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-file-input" style="display: none;" />
+                        
+                        <div class="aesthetic-flourish-leaf-glyph">🌿</div>
+                    </div>
+                </div>
+
+                <form class="profile-data-inputs-grid-layout" @submit:preventDefault>
+                    
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">First Name</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">👤</span>
+                            <input type="text" @bind="ProfileModel.FirstName" class="custom-dashboard-form-control" placeholder="First Name" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Last Name</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">👥</span>
+                            <input type="text" @bind="ProfileModel.LastName" class="custom-dashboard-form-control" placeholder="Last Name" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Username</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">@string.Format("@")</span>
+                            <input type="text" @bind="ProfileModel.Username" class="custom-dashboard-form-control" placeholder="Username" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Email</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">✉️</span>
+                            <input type="email" @bind="ProfileModel.Email" class="custom-dashboard-form-control" placeholder="Email Address" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Phone Number</label>
+                        <div class="dual-input-phone-combo-node">
+                            <div class="input-icon-group-node phone-code-prefix">
+                                <span class="field-glyph-icon">📞</span>
+                                <select class="custom-dashboard-form-control select-dropdown-node" @bind="ProfileModel.PhoneCountryCode">
+                                    <option value="+92">🇵🇰 +92</option>
+                                    <option value="+1">🇺🇸 +1</option>
+                                    <option value="+44">🇬🇧 +44</option>
+                                </select>
+                            </div>
+                            <input type="text" @bind="ProfileModel.PhoneNumber" class="custom-dashboard-form-control" placeholder="300 1234567" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Birth</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">📅</span>
+                            <input type="date" @bind="ProfileModel.BirthDate" class="custom-dashboard-form-control date-picker-input-node" />
+                        </div>
+                    </div>
+
+                    <div class="input-data-field-strip">
+                        <label class="field-label-tag">Gender</label>
+                        <div class="input-icon-group-node">
+                            <span class="field-glyph-icon">⚧</span>
+                            <select class="custom-dashboard-form-control select-dropdown-node" @bind="ProfileModel.Gender">
+                                <option value="">Select Gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-action-buttons-flex-row">
+                        <button type="submit" class="btn-dashboard-action-save" @onclick="SaveChanges">
+                            💾 Save Changes
+                        </button>
+                        <button type="button" class="btn-dashboard-action-cancel" @onclick='() => Navigation.NavigateTo("/dashboard")'>
+                            Cancel
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    // Model for Data Binding
+    public class UserProfileInfo
+    {
+        public string FirstName { get; set; } = "Sabrina";
+        public string LastName { get; set; } = "Aryan";
+        public string Username { get; set; } = "@Sabrina";
+        public string Email { get; set; } = "SabrinaAry208@gmail.com";
+        public string PhoneCountryCode { get; set; } = "+92";
+        public string PhoneNumber { get; set; } = "904 6470";
+        public DateTime BirthDate { get; set; } = new DateTime(2002, 3, 14);
+        public string Gender { get; set; } = "Female";
+    }
+
+    private UserProfileInfo ProfileModel { get; set; } = new UserProfileInfo();
+
+    private void SaveChanges()
+    {
+        // Yahan aap apna database update query logic dal sakti hain
+        Navigation.NavigateTo("/dashboard");
+    }
+}
+
+<style>
+    /* MASTER SCREEN CONTAINER FOR SYSTEM PORTAL */
+    .cafe-profile-dashboard-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        background-color: #f7f3ee;
+        margin: 0; padding: 0;
+        overflow: hidden;
+        position: fixed; top: 0; left: 0;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* LEFT SIDEBAR WITH WAVING PROFILE GRAPHIC ACCENTS */
+    .dashboard-sidebar-panel {
+        width: 280px;
+        height: 100%;
+        background-color: #1e110a;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    /* Wavy design on sidebar edge */
+    .sidebar-wave-overlay {
+        position: absolute;
+        top: 0; right: -40px;
+        width: 80px; height: 100%;
+        background-color: #1e110a;
+        border-radius: 50%;
+        transform: scaleX(0.4);
+        z-index: -1;
+    }
+
+    .brand-identity-block {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 50px;
+        padding-left: 15px;
+    }
+
+    .brand-coffee-icon { font-size: 1.6rem; }
+    .brand-logo-title {
+        color: #ffffff; font-size: 1.3rem; font-weight: 800; letter-spacing: 1.5px; margin: 0;
+    }
+
+    .sidebar-menu-matrix {
+        list-style: none; padding: 0; margin: 0; flex-grow: 1;
+        display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .menu-matrix-item {
+        display: flex; align-items: center; gap: 15px;
+        padding: 14px 20px; color: #bcaaa4; font-size: 0.95rem; font-weight: 600;
+        cursor: pointer; border-radius: 12px; transition: all 0.25s ease;
+    }
+
+    .menu-matrix-item:hover {
+        color: #ffffff; background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .menu-matrix-item.active-panel-node {
+        background-color: #ffebd8 !important; color: #5d4037 !important; font-weight: 700;
+    }
+
+    .sidebar-decorative-beans-footer {
+        padding-left: 20px; margin-bottom: 20px; display: flex; gap: 5px; opacity: 0.25;
+    }
+    .bean-emoji-node { font-size: 1.8rem; transform: rotate(-15deg); display: inline-block; }
+    .bean-emoji-node.second-bean { transform: rotate(35deg) translateY(5px); }
+
+    .sidebar-logout-trigger {
+        padding: 14px 20px; color: #ef9a9a; font-size: 0.95rem; font-weight: 600;
+        cursor: pointer; display: flex; align-items: center; gap: 15px; margin-top: auto;
+    }
+
+    /* RIGHT MAIN CONTAINER ENVIRONMENT */
+    .profile-workspace-view {
+        flex-grow: 1; height: 100%; display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    /* TOP HEADER UTILITY NAVBAR */
+    .workspace-top-navigation-bar {
+        height: 80px; width: 100%; display: flex; justify-content: space-between;
+        align-items: center; padding: 0 40px; box-sizing: border-box;
+    }
+
+    .top-bar-title-node { font-size: 1.4rem; font-weight: 700; color: #4e342e; }
+    .top-bar-user-status-widget { display: flex; align-items: center; gap: 30px; }
+
+    .notification-bell-badge { font-size: 1.3rem; position: relative; cursor: pointer; }
+    .badge-count-alert {
+        position: absolute; top: -5px; right: -5px; background-color: #d84315;
+        color: white; font-size: 0.65rem; font-weight: 700; border-radius: 50%;
+        width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;
+    }
+
+    .user-meta-profile-avatar-block {
+        display: flex; align-items: center; gap: 12px; cursor: pointer;
+    }
+    .mini-avatar-node { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    .meta-label-text-node { display: flex; flex-direction: column; }
+    .user-display-profile-name { font-size: 0.9rem; font-weight: 700; color: #3e2723; }
+    .user-display-profile-role { font-size: 0.75rem; color: #8d6e63; }
+
+    /* CORE INTERACTIVE LAYOUT FORM CARD SYSTEM */
+    .profile-interactive-form-canvas-wrapper {
+        flex-grow: 1; overflow-y: auto; padding: 10px 40px 40px 40px; box-sizing: border-box;
+    }
+
+    .profile-interactive-form-canvas {
+        background-color: #ffffff; border-radius: 24px; box-shadow: 0 10px 30px rgba(93, 64, 55, 0.04);
+        padding: 50px; max-width: 850px; margin: 0 auto; box-sizing: border-box;
+    }
+
+    .form-header-identity-row {
+        display: flex; justify-content: space-between; align-items: start; margin-bottom: 40px;
+    }
+
+    .form-main-heading-title { font-size: 2.2rem; font-weight: 800; color: #2e1c16; margin: 0 0 8px 0; }
+    .form-sub-heading-description { color: #8d6e63; margin: 0; font-size: 0.95rem; }
+
+    /* PROFILE IMAGE AVATAR UPLOADER FRAME WORK */
+    .avatar-uploader-circle-frame { position: relative; width: 140px; height: 140px; }
+    .avatar-image-mask-node {
+        width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+        border: 4px solid #fff; box-shadow: 0 8px 20px rgba(93,64,55,0.15);
+    }
+    .avatar-image-mask-node img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .avatar-camera-action-trigger-fab {
+        position: absolute; bottom: 5px; right: 5px; width: 34px; height: 34px;
+        background-color: #5d4037; border-radius: 50%; display: flex; align-items: center;
+        justify-content: center; cursor: pointer; color: white; font-size: 0.9rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;
+    }
+    .avatar-camera-action-trigger-fab:hover { transform: scale(1.1); }
+    
+    .aesthetic-flourish-leaf-glyph {
+        position: absolute; top: -10px; right: -40px; font-size: 3.5rem; opacity: 0.15;
+        transform: rotate(25deg); pointer-events: none; color: #5d4037;
+    }
+
+    /* INPUT ROW AND GRID BALANCING SYSTEM */
+    .profile-data-inputs-grid-layout { display: flex; flex-direction: column; gap: 24px; }
+    .input-data-field-strip { display: flex; flex-direction: column; gap: 8px; }
+
+    .field-label-tag { font-size: 0.85rem; font-weight: 700; color: #8d6e63; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    .input-icon-group-node { position: relative; width: 100%; display: flex; align-items: center; }
+    .field-glyph-icon { position: absolute; left: 18px; font-size: 1.1rem; opacity: 0.5; color: #5d4037; }
+
+    .custom-dashboard-form-control {
+        width: 100%; background-color: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px;
+        padding: 14px 14px 14px 50px; font-size: 1rem; color: #3e2723; outline: none;
+        box-sizing: border-box; transition: all 0.2s ease;
+    }
+    .custom-dashboard-form-control:focus { border-color: #5d4037; background-color: #fff; }
+
+    .dual-input-phone-combo-node { display: flex; gap: 15px; width: 100%; }
+    .dual-input-phone-combo-node .phone-code-prefix { width: 160px; flex-shrink: 0; }
+    .dual-input-phone-combo-node input { padding-left: 20px !important; }
+
+    .select-dropdown-node { appearance: none; cursor: pointer; }
+    .date-picker-input-node { cursor: text; }
+
+    /* FORM ACTIONS PANEL */
+    .form-action-buttons-flex-row { display: flex; gap: 15px; margin-top: 20px; }
+
+    .btn-dashboard-action-save {
+        background-color: #5d4037; color: white; border: none; padding: 15px 35px;
+        border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer;
+        box-shadow: 0 4px 15px rgba(93, 64, 55, 0.2); transition: opacity 0.2s;
+    }
+    .btn-dashboard-action-save:hover { opacity: 0.9; }
+
+    .btn-dashboard-action-cancel {
+        background-color: transparent; color: #5d4037; border: 1px solid #5d4037;
+        padding: 15px 35px; border-radius: 12px; font-size: 1rem; font-weight: 700;
+        cursor: pointer; transition: background 0.2s;
+    }
+    .btn-dashboard-action-cancel:hover { background-color: rgba(93, 64, 55, 0.04); }
+</style>
