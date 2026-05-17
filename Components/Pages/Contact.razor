@@ -1,4 +1,6 @@
 ﻿@page "/contact"
+@using System.Data
+@using MySql.Data.MySqlClient
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
@@ -36,20 +38,27 @@
                     <div class="coffee-bag-icon">🤎</div>
                 </div>
 
-                <form class="interactive-input-form" @submit:preventDefault>
+                @if (!string.IsNullOrEmpty(SubmissionFeedback))
+                {
+                    <div class="submission-feedback-toast">
+                        @SubmissionFeedback
+                    </div>
+                }
+
+                <form class="interactive-input-form" @submit:preventDefault="true">
                     <div class="input-field-node">
-                        <input type="text" placeholder="Your Name" class="custom-form-control" />
+                        <input type="text" placeholder="Your Name" class="custom-form-control" @bind-value="FormName" required />
                     </div>
                     <div class="input-field-node">
-                        <input type="email" placeholder="Your Email" class="custom-form-control" />
+                        <input type="email" placeholder="Your Email" class="custom-form-control" @bind-value="FormEmail" required />
                     </div>
                     <div class="input-field-node">
-                        <input type="text" placeholder="Subject" class="custom-form-control" />
+                        <input type="text" placeholder="Subject" class="custom-form-control" @bind-value="FormSubject" required />
                     </div>
                     <div class="input-field-node">
-                        <textarea placeholder="Message" rows="5" class="custom-form-control location-textarea"></textarea>
+                        <textarea placeholder="Message" rows="5" class="custom-form-control location-textarea" @bind-value="FormMessage" required></textarea>
                     </div>
-                    <button type="submit" class="btn-send-message">Send Message</button>
+                    <button type="submit" class="btn-send-message" @onclick="SubmitQueryToDatabase">Send Message</button>
                 </form>
             </div>
 
@@ -106,11 +115,71 @@
 </div>
 
 @code {
+    // Two-Way Data Binding Variables
+    private string FormName { get; set; } = string.Empty;
+    private string FormEmail { get; set; } = string.Empty;
+    private string FormSubject { get; set; } = string.Empty;
+    private string FormMessage { get; set; } = string.Empty;
+
+    // Toast Notification Text Storage
+    private string SubmissionFeedback { get; set; } = string.Empty;
+
+    // Database Connection String Framework
+    private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
+
     private void NavTo(string url) => Navigation.NavigateTo(url);
+
+    private async Task SubmitQueryToDatabase()
+    {
+        // Simple Validation Check
+        if (string.IsNullOrWhiteSpace(FormName) || 
+            string.IsNullOrWhiteSpace(FormEmail) || 
+            string.IsNullOrWhiteSpace(FormSubject) || 
+            string.IsNullOrWhiteSpace(FormMessage))
+        {
+            SubmissionFeedback = "⚠️ Please fill in all the text fields before submitting.";
+            return;
+        }
+
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connString))
+            {
+                await connection.OpenAsync();
+
+                string insertQuery = @"
+                    INSERT INTO Query (name, email, subject, message) 
+                    VALUES (@Name, @Email, @Subject, @Message);";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Name", FormName);
+                    cmd.Parameters.AddWithValue("@Email", FormEmail);
+                    cmd.Parameters.AddWithValue("@Subject", FormSubject);
+                    cmd.Parameters.AddWithValue("@Message", FormMessage);
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            // Show success status toast on UI
+            SubmissionFeedback = "✅ Message sent successfully!";
+
+            // Clear input form containers dynamically
+            FormName = string.Empty;
+            FormEmail = string.Empty;
+            FormSubject = string.Empty;
+            FormMessage = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            SubmissionFeedback = $"❌ Error writing query to database: {ex.Message}";
+        }
+    }
 }
 
 <style>
-    /* TOP NAVIGATION BAR STYLING (Same as About Us) */
+    /* TOP NAVIGATION BAR STYLING */
     .top-glass-navbar {
         position: fixed;
         top: 0;
@@ -186,7 +255,7 @@
         position: fixed; 
         top: 0; 
         left: 0;
-        padding-top: 70px; /* Space reserved for top navbar */
+        padding-top: 70px; 
         box-sizing: border-box;
     }
 
@@ -237,7 +306,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .form-main-title {
@@ -249,6 +318,19 @@
 
     .coffee-bag-icon {
         font-size: 2rem;
+    }
+
+    /* INTERACTIVE FEEDBACK NOTIFICATION BANNER */
+    .submission-feedback-toast {
+        background-color: rgba(230, 126, 34, 0.15);
+        border: 1px solid #e67e22;
+        color: #ffffff;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     .interactive-input-form {
@@ -287,6 +369,11 @@
         border-radius: 6px;
         text-transform: uppercase;
         letter-spacing: 1px;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-send-message:hover {
+        background: #9d7553;
     }
 
     /* RIGHT METADATA PANEL */
@@ -433,7 +520,7 @@
         border-bottom: 1px solid #eee;
     }
 
-    @@keyframes bouncePinMarker {
+    @keyframes bouncePinMarker {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-5px); }
     }
