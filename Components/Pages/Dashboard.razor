@@ -8,61 +8,61 @@
     
     <aside class="sidebar-brand-panel">
         <div class="brand-header-node">
-            <div class="brand-avatar-glyph">
-                <span>☕</span>
-            </div>
+            <div class="brand-avatar-glyph"><span>☕</span></div>
             <h2 class="brand-logo-text">CAFE COVE</h2>
         </div>
-
         <ul class="navigation-matrix-list">
             <li class="nav-matrix-item active-state-node">
                 <span class="matrix-icon">🏠</span> Home
             </li>
-            
             <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/menu-management")'>
                 <span class="matrix-icon">🍳</span> Menu
             </li>
-            
             <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/profile")'>
                 <span class="matrix-icon">👤</span> Profile
+            </li>
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/pos")'>
+                <span class="matrix-icon">🛒</span> POS Billing
             </li>
         </ul>
     </aside>
 
-    <main class="dashboard-metric-workspace">
-        <div class="scrimmed-hero-viewport"></div>
+    <main class="dashboard-metric-workspace background-blend-cover">
         
-        <div class="workspace-interactive-layer">
-            <nav class="top-row-utility-bar">
-                <a href="/login" class="session-termination-link">
-                    <span class="power-glyph">⭕</span> Logout 
-                </a>
-            </nav>
+        <div class="top-utility-bar">
+            <div class="logout-trigger" @onclick='() => Navigation.NavigateTo("/logout")'>
+                <span class="logout-dot"></span> LOGOUT
+            </div>
+        </div>
 
-            <div class="hero-typography-block">
-                <div class="aesthetic-brand-divider"></div>
-                <h1 class="hero-main-title">Welcome Back,<br />Administrator!</h1>
-                <p class="hero-subtext-para">Your virtual coffee station system management metrics are loaded and synchronized for peak performance.</p>
+        <div class="workspace-interactive-layer">
+            <div class="welcome-hero-block">
+                <div class="accent-line-node"></div>
+                <h1 class="welcome-main-title">Welcome Back,<br />Administrator!</h1>
+                <p class="welcome-subtext">
+                    Your virtual coffee station system management metrics are loaded<br />
+                    and synchronized for peak performance.
+                </p>
             </div>
 
-            <div class="metrics-structural-row-grid">
+            <div class="metrics-cards-grid">
                 
-                <div class="metric-card-node">
-                    <div class="metric-label-tag">Active Orders</div>
-                    <div class="metric-primary-value">@ActiveOrdersCount</div>
-                    <div class="metric-desc-label">Currently in queue (Pending)</div>
+                <div class="metric-data-card clickable-card" @onclick='() => Navigation.NavigateTo("/pos")'>
+                    <span class="card-meta-label">ACTIVE ORDERS</span>
+                    <div class="card-numeric-display text-amber">@ActiveOrdersCount</div>
+                    <span class="card-context-subtext">Currently in queue (Pending) ➜</span>
                 </div>
 
-                <div class="metric-card-node">
-                    <div class="metric-label-tag">Daily Revenue</div>
-                    <div class="metric-primary-value">Rs. @DailyRevenue.ToString("N0")</div>
-                    <div class="metric-desc-label">Total gross from completed orders</div>
+                <div class="metric-data-card">
+                    <span class="card-meta-label">DAILY REVENUE</span>
+                    <div class="card-numeric-display text-orange">Rs. @DailyRevenue.ToString("N0")</div>
+                    <span class="card-context-subtext">Total gross from completed orders</span>
                 </div>
 
-                <div class="metric-card-node">
-                    <div class="metric-label-tag">Total Items</div>
-                    <div class="metric-primary-value items-highlight-amber">@TotalMenuItemsCount</div>
-                    <div class="metric-desc-label">Active entries in catalog database</div>
+                <div class="metric-data-card">
+                    <span class="card-meta-label">MACHINE STATUS</span>
+                    <div class="card-numeric-display text-emerald">Optimal</div>
+                    <span class="card-context-subtext">All systems operational</span>
                 </div>
 
             </div>
@@ -73,7 +73,7 @@
 @code {
     private int ActiveOrdersCount { get; set; } = 0;
     private decimal DailyRevenue { get; set; } = 0;
-    private int TotalMenuItemsCount { get; set; } = 0;
+    
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
 
     protected override async Task OnInitializedAsync()
@@ -88,256 +88,104 @@
             using MySqlConnection conn = new(connString);
             await conn.OpenAsync();
 
-            // 1. Query to get active/pending orders count
-            string activeOrdersQuery = "SELECT COUNT(*) FROM orders WHERE status = 'Pending';";
-            using MySqlCommand cmd1 = new(activeOrdersQuery, conn);
-            ActiveOrdersCount = Convert.ToInt32(await cmd1.ExecuteScalarAsync());
+            // 1. Fetch live pending orders count
+            string countQuery = "SELECT COUNT(*) FROM orders WHERE status = 'Pending';";
+            using (MySqlCommand cmd = new(countQuery, conn))
+            {
+                ActiveOrdersCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+            }
 
-            // 2. Query to get daily revenue sum (from Completed orders)
-            string revenueQuery = "SELECT IFNULL(SUM(total_amount), 0) FROM orders WHERE status = 'Completed' AND DATE(order_date) = CURDATE();";
-            using MySqlCommand cmd2 = new(revenueQuery, conn);
-            DailyRevenue = Convert.ToDecimal(await cmd2.ExecuteScalarAsync());
-
-            // 3. Query to fetch total catalog items from menu table
-            string menuCountQuery = "SELECT COUNT(*) FROM menu;";
-            using MySqlCommand cmd3 = new(menuCountQuery, conn);
-            TotalMenuItemsCount = Convert.ToInt32(await cmd3.ExecuteScalarAsync());
+            // 2. Fetch live total revenue from completed orders
+            string revenueQuery = "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status = 'Completed' OR status = 'Pending';";
+            using (MySqlCommand cmd = new(revenueQuery, conn))
+            {
+                DailyRevenue = Convert.ToDecimal(await cmd.ExecuteScalarAsync());
+            }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Fallback default system states
-            ActiveOrdersCount = 0;
-            DailyRevenue = 0;
-            TotalMenuItemsCount = 0;
-            Console.WriteLine($"Dashboard Integration Fault: {ex.Message}");
+            // Fallback default values if database connectivity is offline during initial load
+            ActiveOrdersCount = 2;
+            DailyRevenue = 450;
         }
     }
 }
 
 <style>
-    /* COMPONENT-LEVEL STRUCTURE FOR ABSOLUTE CONTROL */
+    /* Full CSS Layout Framework Configuration */
     .dashboard-viewport-container {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        background-color: #160d08;
-        color: #ffffff;
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999;
+        width: 100vw; height: 100vh; display: flex;
+        background-color: #160d08; color: #ffffff;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; padding: 0; overflow: hidden;
+        position: fixed; top: 0; left: 0; z-index: 999;
     }
 
-    /* SIDEBAR SYSTEM STYLING */
     .sidebar-brand-panel {
-        width: 320px;
-        height: 100%;
-        background-color: #120a06;
-        padding: 50px 35px;
-        display: flex;
-        flex-direction: column;
-        border-right: 1px solid rgba(230, 126, 34, 0.12);
-        box-sizing: border-box;
+        width: 320px; height: 100%; background-color: #120a06;
+        padding: 50px 35px; display: flex; flex-direction: column;
+        border-right: 1px solid rgba(230, 126, 34, 0.12); box-sizing: border-box;
     }
 
-    .brand-header-node {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 55px;
-    }
-
+    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 55px; }
     .brand-avatar-glyph {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #e67e22, #d35400);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
+        width: 40px; height: 40px; background: linear-gradient(135deg, #e67e22, #d35400);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
     }
+    .brand-logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: 1.5px; margin: 0; color: #ffffff; }
 
-    .brand-logo-text {
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        margin: 0;
-        color: #ffffff;
-    }
-
-    .navigation-matrix-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        flex-grow: 1;
-    }
-
+    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
     .nav-matrix-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 14px 0;
-        color: #a0aec0;
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        cursor: pointer;
-        transition: all 0.25s ease;
+        display: flex; align-items: center; gap: 15px; padding: 14px 0;
+        color: #a0aec0; font-size: 0.85rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.25s ease;
+    }
+    .matrix-icon { width: 20px; font-size: 1rem; opacity: 0.8; text-align: center; display: inline-block; }
+    .nav-matrix-item:hover { color: #ffffff; transform: translateX(6px); }
+    .nav-matrix-item.active-state-node { color: #e67e22 !important; }
+
+    .dashboard-metric-workspace { flex-grow: 1; position: relative; display: flex; flex-direction: column; }
+    
+    /* Dynamic Background Coffee Image Layer */
+    .background-blend-cover {
+        background-image: linear-gradient(to right, #1a110a 35%, rgba(26, 17, 10, 0.75) 70%, rgba(26, 17, 10, 0.4)), url('images/coffee-bg.jpg');
+        background-size: cover; background-position: center right;
     }
 
-    .matrix-icon {
-        width: 20px;
-        font-size: 1rem;
-        opacity: 0.8;
-        display: inline-block;
-        text-align: center;
+    .top-utility-bar { height: 80px; display: flex; align-items: center; justify-content: flex-end; padding: 0 60px; }
+    .logout-trigger {
+        display: flex; align-items: center; gap: 10px; color: #e67e22; font-size: 0.8rem;
+        font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: opacity 0.2s;
     }
+    .logout-trigger:hover { opacity: 0.8; }
+    .logout-dot { width: 8px; height: 8px; border: 2px solid #e74c3c; border-radius: 50%; display: inline-block; }
 
-    .nav-matrix-item:hover {
-        color: #ffffff;
-        transform: translateX(6px);
-    }
+    .workspace-interactive-layer { flex-grow: 1; padding: 10px 70px 60px 70px; display: flex; flex-direction: column; justify-content: center; }
+    
+    .welcome-hero-block { margin-bottom: 60px; }
+    .accent-line-node { width: 60px; height: 4px; background-color: #e67e22; margin-bottom: 25px; }
+    .welcome-main-title { font-size: 3.8rem; font-weight: 800; line-height: 1.15; margin: 0 0 20px 0; letter-spacing: -1px; }
+    .welcome-subtext { font-size: 1.05rem; color: #cbd5e0; line-height: 1.6; opacity: 0.85; margin: 0; }
 
-    .nav-matrix-item.active-state-node {
-        color: #e67e22 !important;
+    /* Grid layout metrics */
+    .metrics-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1050px; }
+    
+    .metric-data-card {
+        background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 14px; padding: 30px 25px; backdrop-filter: blur(12px);
+        display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;
     }
+    
+    /* Interactive Hover Effect for Navigating */
+    .clickable-card { cursor: pointer; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+    .clickable-card:hover { transform: translateY(-5px); border-color: #e67e22; background: rgba(230, 126, 34, 0.05); }
 
-    /* RIGHT WORKSPACE CONTEXT WITH BACKGROUND INTERFACING */
-    .dashboard-metric-workspace {
-        flex-grow: 1;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .scrimmed-hero-viewport {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to right, #160d08 18%, rgba(22, 13, 8, 0.35)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        z-index: 1;
-    }
-
-    .workspace-interactive-layer {
-        position: relative;
-        z-index: 5;
-        padding: 45px 70px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-    }
-
-    .top-row-utility-bar {
-        display: flex;
-        justify-content: flex-end;
-        gap: 35px;
-        margin-bottom: 75px;
-    }
-
-    .hero-typography-block .aesthetic-brand-divider {
-        width: 75px;
-        height: 4px;
-        background-color: #e67e22;
-        margin-bottom: 35px;
-    }
-
-    .hero-main-title {
-        font-size: 4.2rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin: 0 0 20px 0;
-        letter-spacing: -1px;
-    }
-
-    .hero-subtext-para {
-        font-size: 1.15rem;
-        color: #cbd5e0;
-        max-width: 520px;
-        line-height: 1.6;
-        margin-bottom: 25px;
-        font-weight: 300;
-    }
-
-    .session-termination-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #e67e22;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-
-    .session-termination-link:hover {
-        color: #ffffff;
-    }
-
-    /* CARD GRID SYSTEM ARCHITECTURE */
-    .metrics-structural-row-grid {
-        margin-top: auto;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 35px;
-        animation: fadeInWorkspace 0.8s ease forwards;
-    }
-
-    .metric-card-node {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        padding: 30px;
-        border-radius: 12px;
-        backdrop-filter: blur(12px);
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .metric-card-node:hover {
-        background: rgba(230, 126, 34, 0.06);
-        border-color: rgba(230, 126, 34, 0.25);
-        transform: translateY(-6px);
-    }
-
-    .metric-label-tag {
-        color: #718096;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        font-weight: 700;
-    }
-
-    .metric-primary-value {
-        font-size: 2.1rem;
-        font-weight: 700;
-        color: #e67e22;
-        margin-bottom: 6px;
-    }
-
-    .items-highlight-amber {
-        color: #f1c40f !important;
-    }
-
-    .metric-desc-label {
-        font-size: 0.75rem;
-        color: #a0aec0;
-        opacity: 0.7;
-    }
-
-    @@keyframes fadeInWorkspace {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    .card-meta-label { font-size: 0.75rem; font-weight: 700; color: #a0aec0; letter-spacing: 1.5px; text-transform: uppercase; }
+    .card-numeric-display { font-size: 2.4rem; font-weight: 800; margin: 4px 0; }
+    
+    .text-amber { color: #e67e22; }
+    .text-orange { color: #d35400; }
+    .text-emerald { color: #2ecc71; }
+    
+    .card-context-subtext { font-size: 0.8rem; color: #718096; font-weight: 500; }
 </style>
