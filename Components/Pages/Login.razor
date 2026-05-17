@@ -1,101 +1,110 @@
 ﻿@page "/login"
-@layout Microsoft.AspNetCore.Components.LayoutComponentBase
 @using Misbah_VisualProgramming_Project.Services
 @using Misbah_VisualProgramming_Project.Data
 @inject AuthService AuthService
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
-<div class="login-outer-viewport">
-    <div class="login-card-box">
-        <div class="brand-header text-center">
-            <div class="logo-circle shadow">
-                <span class="logo-glyph">☕</span>
+<div class="auth-viewport-wrapper">
+    <div class="auth-card-panel shadow-lg">
+        
+        <div class="brand-identity text-center">
+            <div class="brand-avatar shadow">
+                <span class="avatar-glyph">☕</span>
             </div>
-            <h2 class="portal-title">Cafe Cove</h2>
-            <p class="portal-subtitle">Management Portal</p>
+            <h2 class="brand-title">Cafe Cove Management Portal</h2>
             
-            <div class="campus-tag">
+            <div class="institution-sub-badge">
                 <span>Air University Kharian Campus</span>
             </div>
         </div>
 
-        @if (!string.IsNullOrEmpty(errorMessage))
+        @if (!string.IsNullOrEmpty(feedbackMessage))
         {
-            <div class="alert alert-danger shadow-sm" role="alert">
-                ⚠️ @errorMessage
+            <div class="alert alert-danger border-0 rounded-3 text-center small mb-3 animate-fade" role="alert">
+                ⚠️ @feedbackMessage
             </div>
         }
 
-        <form @onsubmit="HandleLoginAsync" @onsubmit:preventDefault>
+        <form @onsubmit="ExecuteAuthenticationAttempt" @onsubmit:preventDefault>
+            
             <div class="mb-3">
-                <label class="form-label text-secondary fw-semibold">Username or Email</label>
-                <input type="text" class="form-control form-control-lg custom-input" @bind="usernameInput" placeholder="administrator" required />
+                <label class="form-label text-muted fw-semibold small">Email or Username</label>
+                <div class="input-group-custom">
+                    <span class="input-icon-node">👤</span>
+                    <input type="text" class="form-control-node" @bind="credentialInput" placeholder="administrator" required />
+                </div>
             </div>
 
             <div class="mb-4">
-                <label class="form-label text-secondary fw-semibold">Password</label>
-                <input type="password" class="form-control form-control-lg custom-input" @bind="passwordInput" placeholder="••••••••" required />
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-4 small-text-row">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="remember" />
-                    <label class="form-check-label text-muted" for="remember">Remember Me</label>
+                <label class="form-label text-muted fw-semibold small">Password</label>
+                <div class="input-group-custom">
+                    <span class="input-icon-node">🔒</span>
+                    <input type="password" class="form-control-node" @bind="passwordInput" placeholder="••••••••••••" required />
                 </div>
-                <a href="javascript:void(0)" class="forgot-pwd-link">Forgot Password?</a>
             </div>
 
-            <button type="submit" class="btn btn-submit-action w-100 py-3 text-uppercase" disabled="@isProcessing">
-                @if (isProcessing)
+            <div class="d-flex justify-content-between align-items-center mb-4 structural-action-row text-muted">
+                <div class="form-check m-0">
+                    <input type="checkbox" class="form-check-input" id="sessionLock" />
+                    <label class="form-check-label check-label-text ms-1" for="sessionLock">Remember Me</label>
+                </div>
+                <a href="javascript:void(0)" class="utility-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn-submit-portal text-uppercase" disabled="@processingToggle">
+                @if (processingToggle)
                 {
-                    <span class="spinner-border spinner-border-sm me-2"></span>
-                    <span>Verifying Credentials...</span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                    <span>Validating Account...</span>
                 }
                 else
                 {
-                    <span>LOG IN 🚀</span>
+                    <span>LOG IN</span>
                 }
             </button>
         </form>
 
-        <div class="portal-footer text-center mt-4">
-            <p class="text-muted mb-1">Staff & Faculty Access Only.</p>
-            <p class="text-muted">For student portals, <a href="javascript:void(0)" class="student-link fw-semibold">click here</a>.</p>
+        <div class="portal-info-footer text-center mt-4">
+            <p class="mb-1 text-muted">Staff & Faculty Access Only.</p>
+            <p class="m-0 text-muted">For student portals, <a href="javascript:void(0)" class="utility-link fw-semibold">click here.</a></p>
         </div>
+
     </div>
 </div>
 
 <style>
-    /* Full screen absolute viewport configuration to hide background layouts */
-    .login-outer-viewport {
+    /* Absolute full-screen wrapper style to lock background canvas leaking */
+    .auth-viewport-wrapper {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        z-index: 99999;
+        z-index: 999999;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        background: linear-gradient(135deg, #112233 0%, #1e3a5f 100%);
         padding: 20px;
         box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
 
-    .login-card-box {
+    .auth-card-panel {
         background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
         width: 100%;
-        max-width: 440px;
-        padding: 45px 40px;
+        max-width: 460px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .logo-circle {
-        width: 70px;
-        height: 70px;
-        background: #1a365d;
+    .brand-avatar {
+        width: 60px;
+        height: 60px;
+        background: #1e3a5f;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -103,89 +112,109 @@
         margin: 0 auto 15px;
     }
 
-    .logo-glyph { font-size: 32px; }
-    .portal-title { color: #1a365d; font-weight: 700; margin-bottom: 2px; font-size: 1.8rem; }
-    .portal-subtitle { color: #555; font-size: 1.05rem; margin-bottom: 15px; }
+    .avatar-glyph { font-size: 28px; }
+    .brand-title { color: #112233; font-weight: 700; font-size: 1.45rem; margin-bottom: 8px; letter-spacing: -0.3px; }
     
-    .campus-tag {
-        background: #e2e8f0;
+    .institution-sub-badge {
+        background: #edf2f7;
         color: #2b6cb0;
-        padding: 6px 18px;
-        border-radius: 50px;
+        padding: 5px 14px;
+        border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 600;
         display: inline-block;
         margin-bottom: 30px;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* Customized Form Inputs matching the uploaded image spec sheet */
+    .input-group-custom {
+        display: flex;
+        align-items: center;
+        background: #f7fafc;
         border: 1px solid #cbd5e0;
+        border-radius: 6px;
+        padding: 4px 12px;
+        transition: border-color 0.2s;
     }
 
-    .custom-input {
-        border-radius: 8px;
-        border: 1px solid #ced4da;
-        font-size: 1rem;
-    }
-
-    .custom-input:focus {
+    .input-group-custom:focus-within {
         border-color: #2b6cb0;
-        box-shadow: 0 0 0 0.25rem rgba(43, 108, 176, 0.2);
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
     }
 
-    .small-text-row { font-size: 0.88rem; }
-    .forgot-pwd-link, .student-link { color: #2b6cb0; text-decoration: none; }
-    .forgot-pwd-link:hover, .student-link:hover { text-decoration: underline; }
-
-    .btn-submit-action {
-        background: #1a365d;
-        color: white;
-        font-weight: 600;
-        border-radius: 8px;
+    .input-icon-node { font-size: 1.1rem; margin-right: 10px; color: #a0aec0; }
+    
+    .form-control-node {
         border: none;
+        background: transparent;
+        width: 100%;
+        padding: 10px 0;
+        outline: none;
+        color: #2d3748;
+        font-size: 0.95rem;
+    }
+
+    .structural-action-row { font-size: 0.85rem; }
+    .check-label-text { user-select: none; cursor: pointer; }
+    .utility-link { color: #2b6cb0; text-decoration: none; font-weight: 500; }
+    .utility-link:hover { text-decoration: underline; }
+
+    .btn-submit-portal {
+        background: #112233;
+        color: #ffffff;
+        width: 100%;
+        padding: 14px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 700;
+        font-size: 0.95rem;
         letter-spacing: 0.5px;
-        transition: all 0.2s ease-in-out;
+        transition: background 0.2s;
+        cursor: pointer;
     }
 
-    .btn-submit-action:hover {
-        background: #2b6cb0;
-        color: white;
-        transform: translateY(-1px);
-        box-shadow: 0 5px 15px rgba(43, 108, 176, 0.3);
-    }
-
-    .alert { border-radius: 8px; font-size: 0.9rem; }
+    .btn-submit-portal:hover { background: #2b6cb0; }
+    .btn-submit-portal:disabled { background: #a0aec0; cursor: not-allowed; }
+    
+    .portal-info-footer { font-size: 0.8rem; line-height: 1.4; }
+    .animate-fade { animation: fadeIn 0.3s ease-in-out; }
+    @@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 
 @code {
-    private string usernameInput = string.Empty;
+    private string credentialInput = string.Empty;
     private string passwordInput = string.Empty;
-    private string errorMessage = string.Empty;
-    private bool isProcessing = false;
+    private string feedbackMessage = string.Empty;
+    private bool processingToggle = false;
 
-    private async Task HandleLoginAsync()
+    private async Task ExecuteAuthenticationAttempt()
     {
-        errorMessage = string.Empty;
-        isProcessing = true;
+        feedbackMessage = string.Empty;
+        processingToggle = true;
 
         try
         {
-            var user = await AuthService.ValidateUserAsync(usernameInput, passwordInput);
+            var matchedUser = await AuthService.ValidateUserAsync(credentialInput, passwordInput);
 
-            if (user != null)
+            if (matchedUser != null)
             {
-                // Force load direct trigger passes absolute clean state transition
+                // Successful login triggers dynamic hard reset transition to secure area
                 Navigation.NavigateTo("/dashboard", forceLoad: true);
             }
             else
             {
-                errorMessage = "Access Denied: Invalid Username or Password.";
+                feedbackMessage = "Access Denied: Invalid parameters matched against user schemas.";
             }
         }
-        catch (Exception ex)
+        catch (Exception systemFault)
         {
-            errorMessage = $"Database Runtime Error: {ex.Message}";
+            feedbackMessage = $"Repository Connectivity Error: {systemFault.Message}";
         }
         finally
         {
-            isProcessing = false;
+            processingToggle = false;
         }
     }
 }
