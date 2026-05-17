@@ -1,0 +1,199 @@
+﻿@page "/about"
+@inject NavigationManager Navigation
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
+<div class="about-viewport-container">
+    
+    <aside class="sidebar-brand-panel">
+        <div class="brand-header-node">
+            <div class="brand-avatar-glyph">
+                <span>☕</span>
+            </div>
+            <h2 class="brand-logo-text">CAFE COVE</h2>
+        </div>
+
+        <ul class="navigation-matrix-list">
+            <li class="nav-matrix-item" @onclick='() => NavTo("/dashboard")'>
+                <span class="matrix-icon">🏠</span> Home
+            </li>
+           <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/about")'>
+    <span class="matrix-icon">ℹ️</span> About Us
+</li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">🍳</span> Menu
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">🖼️</span> Gallery
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">📞</span> Contact
+            </li>
+        </ul>
+
+        <button class="action-btn-shop-now">
+            <span>SHOP NOW</span>
+            <span class="arrow-indicator">➔</span>
+        </button>
+
+        <div class="sidebar-institutional-footer">
+            <p class="m-0">Air University Kharian Campus</p>
+            <p class="m-0 text-muted extra-small-tag">Operational Hours: 8AM - 9PM</p>
+        </div>
+    </aside>
+
+    <main class="about-content-workspace">
+        
+        <section class="about-hero-section">
+            <div class="hero-overlay">
+                <div class="hero-text-center">
+                    <p class="hero-top-tag">A SPECIAL COFFEE HOUSE</p>
+                    <h1 class="hero-display-title">WHERE COFFEE <br/> MEETS PASSION</h1>
+                    <div class="aesthetic-divider"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-layout-grid">
+            <div class="story-text-block">
+                <h2 class="story-title">STORY ABOUT COFFEE SHOP</h2>
+                <div class="story-para">
+                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>It was popularized in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker.</p>
+                </div>
+                <button class="btn-learn-more">Learn More</button>
+            </div>
+            <div class="story-image-block">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop" alt="Coffee Beans" />
+            </div>
+        </section>
+
+        <section class="features-icon-row">
+            <div class="feature-node">
+                <div class="icon-circle">☕</div>
+                <h3>Coffee</h3>
+                <p>We source the best beans from the finest boutique roasters.</p>
+            </div>
+            <div class="feature-node">
+                <div class="icon-circle">🧁</div>
+                <h3>Pastries</h3>
+                <p>Freshly baked artisanal delicacies every single day.</p>
+            </div>
+            <div class="feature-node">
+                <div class="icon-circle">🥪</div>
+                <h3>Toasties</h3>
+                <p>Perfect crispy, warm blends with seasonal fillings.</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+@code {
+    private void NavTo(string url) => Navigation.NavigateTo(url);
+}
+
+<style>
+    /* GLOBAL WRAPPER */
+    .about-viewport-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        background-color: #160d08;
+        color: #ffffff;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; padding: 0;
+        overflow: hidden;
+        position: fixed; top: 0; left: 0;
+    }
+
+    /* SIDEBAR */
+    .sidebar-brand-panel {
+        width: 320px; height: 100%;
+        background-color: #120a06;
+        padding: 50px 35px;
+        display: flex; flex-direction: column;
+        border-right: 1px solid rgba(230, 126, 34, 0.12);
+        box-sizing: border-box;
+    }
+
+    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 55px; }
+    .brand-avatar-glyph {
+        width: 40px; height: 40px;
+        background: linear-gradient(135deg, #e67e22, #d35400);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .brand-logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: 1.5px; margin: 0; }
+    
+    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+    .nav-matrix-item {
+        display: flex; align-items: center; gap: 15px;
+        padding: 14px 0; color: #a0aec0; font-size: 0.85rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.25s;
+    }
+    .nav-matrix-item:hover, .nav-matrix-item.active-state-node { color: #e67e22; transform: translateX(6px); }
+    .nav-matrix-item.active-state-node { color: #e67e22 !important; }
+
+    .action-btn-shop-now {
+        background-color: #e67e22; color: #ffffff;
+        padding: 16px; border-radius: 8px; border: none;
+        font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+        cursor: pointer; margin-top: 25px;
+    }
+
+    /* MAIN CONTENT SCROLLABLE */
+    .about-content-workspace {
+        flex-grow: 1;
+        overflow-y: auto;
+        height: 100%;
+        background-color: #1a110a;
+    }
+
+    /* SECTION 1: HERO */
+    .about-hero-section {
+        height: 450px;
+        background: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
+        background-size: cover;
+        position: relative;
+    }
+    .hero-overlay {
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+    .hero-top-tag { color: #e67e22; font-weight: 600; letter-spacing: 3px; font-size: 0.9rem; }
+    .hero-display-title { font-size: 3.5rem; font-weight: 800; margin: 15px 0; line-height: 1.1; }
+    .aesthetic-divider { width: 80px; height: 4px; background: #e67e22; margin: 20px auto; }
+
+    /* SECTION 2: STORY */
+    .story-layout-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        padding: 80px 70px;
+        background: #ffffff;
+        color: #333;
+        align-items: center;
+        gap: 50px;
+    }
+    .story-title { font-size: 2rem; color: #1a110a; font-weight: 800; margin-bottom: 25px; }
+    .story-para p { font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 20px; }
+    .btn-learn-more {
+        background: #b68d68; color: white; border: none;
+        padding: 12px 30px; font-weight: 600; cursor: pointer;
+    }
+    .story-image-block img { width: 100%; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+    /* SECTION 3: ICONS */
+    .features-icon-row {
+        display: flex;
+        justify-content: space-around;
+        padding: 80px 70px;
+        background: #120a06;
+        text-align: center;
+    }
+    .icon-circle { font-size: 3rem; margin-bottom: 15px; }
+    .feature-node h3 { color: #e67e22; font-size: 1.3rem; margin-bottom: 10px; }
+    .feature-node p { color: #a0aec0; font-size: 0.9rem; max-width: 250px; margin: 0 auto; }
+
+    .sidebar-institutional-footer { margin-top: 35px; font-size: 0.75rem; color: #718096; }
+    .extra-small-tag { font-size: 0.65rem; }
+</style>

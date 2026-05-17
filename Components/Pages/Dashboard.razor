@@ -1,61 +1,311 @@
 ﻿@page "/dashboard"
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+@inject NavigationManager Navigation
 
-<div class="dashboard-wrapper">
-    <nav class="navbar navbar-dark bg-dark px-4 shadow-sm">
-        <span class="navbar-brand mb-0 h1">☕ Cafe Cove Management Portal</span>
-        <div class="d-flex align-items-center text-white">
-            <span class="me-3">🌐 Air University Kharian Campus</span>
-            <a href="/login" class="btn btn-outline-light btn-sm">Logout</a>
-        </div>
-    </nav>
-
-    <div class="container mt-5">
-        <div class="welcome-banner p-4 mb-4 shadow-sm rounded">
-            <h1 class="display-5">Welcome Back, Administrator! 👋</h1>
-            <p class="lead">Your virtual coffee station system management metrics are loaded and synchronized.</p>
+<div class="dashboard-viewport-container">
+    
+    <aside class="sidebar-brand-panel">
+        <div class="brand-header-node">
+            <div class="brand-avatar-glyph">
+                <span>☕</span>
+            </div>
+            <h2 class="brand-logo-text">CAFE COVE</h2>
         </div>
 
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-primary text-white">
-                    <h3>Active Orders</h3>
-                    <p class="display-4 font-weight-bold">12</p>
-                </div>
+        <ul class="navigation-matrix-list">
+            <li class="nav-matrix-item active-state-node">
+                <span class="matrix-icon">🏠</span> Home
+            </li>
+            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/about")'>
+                <span class="matrix-icon">ℹ️</span> About Us
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">🍳</span> Menu
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">🖼️</span> Gallery
+            </li>
+            <li class="nav-matrix-item">
+                <span class="matrix-icon">📞</span> Contact
+            </li>
+        </ul>
+
+        <button class="action-btn-shop-now">
+            <span>SHOP NOW</span>
+            <span class="arrow-indicator">➔</span>
+        </button>
+
+        <div class="sidebar-institutional-footer">
+            <p class="m-0">Step into Cafe Cove!</p>
+            <p class="m-0 text-muted extra-small-tag">Operational Hours: 8AM - 9PM</p>
+        </div>
+    </aside>
+
+    <main class="dashboard-metric-workspace">
+        <div class="scrimmed-hero-viewport"></div>
+        
+        <div class="workspace-interactive-layer">
+            <nav class="top-row-utility-bar">
+                <a href="javascript:void(0)" class="utility-node-link">Support</a>
+                <a href="javascript:void(0)" class="utility-node-link">Profile</a>
+                <a href="javascript:void(0)" class="utility-node-link active-panel-flag">Admin Panel</a>
+            </nav>
+
+            <div class="hero-typography-block">
+                <div class="aesthetic-brand-divider"></div>
+                <h1 class="hero-main-title">Welcome Back,<br />Administrator!</h1>
+                <p class="hero-subtext-para">Your virtual coffee station system management metrics are loaded and synchronized for peak performance.</p>
+                <a href="/login" class="session-termination-link">
+                    <span class="power-glyph">⭕</span> Logout Session
+                </a>
             </div>
-            <div class="col-md-4">
-                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-success text-white">
-                    <h3>Daily Revenue</h3>
-                    <p class="display-4 font-weight-bold">Rs. 8,450</p>
+
+            <div class="metrics-structural-row-grid">
+                
+                <div class="metric-card-node">
+                    <div class="metric-label-tag">Active Orders</div>
+                    <div class="metric-primary-value">12</div>
+                    <div class="metric-desc-label">Currently in queue</div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card metric-card border-0 shadow-sm p-3 text-center bg-warning text-dark">
-                    <h3>Machine Status</h3>
-                    <p class="display-4 font-weight-bold">Optimal</p>
+
+                <div class="metric-card-node">
+                    <div class="metric-label-tag">Daily Revenue</div>
+                    <div class="metric-primary-value">Rs. 8,450</div>
+                    <div class="metric-desc-label">Total gross today</div>
                 </div>
+
+                <div class="metric-card-node">
+                    <div class="metric-label-tag">Machine Status</div>
+                    <div class="metric-primary-value status-optimal-green">Optimal</div>
+                    <div class="metric-desc-label">All systems operational</div>
+                </div>
+
             </div>
         </div>
-    </div>
+    </main>
 </div>
 
 <style>
-    .dashboard-wrapper {
-        min-height: 100vh;
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* COMPONENT-LEVEL STRUCTURE FOR ABSOLUTE CONTROL */
+    .dashboard-viewport-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        background-color: #160d08;
+        color: #ffffff;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
     }
 
-    .welcome-banner {
-        background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
-        color: white;
+    /* SIDEBAR SYSTEM STYLING */
+    .sidebar-brand-panel {
+        width: 320px;
+        height: 100%;
+        background-color: #120a06;
+        padding: 50px 35px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba(230, 126, 34, 0.12);
+        box-sizing: border-box;
     }
 
-    .metric-card {
-        transition: transform 0.2s ease-in-out;
+    .brand-header-node {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 55px;
     }
 
-        .metric-card:hover {
-            transform: translateY(-5px);
+    .brand-avatar-glyph {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #e67e22, #d35400);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    .brand-logo-text {
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin: 0;
+        color: #ffffff;
+    }
+
+    .navigation-matrix-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .nav-matrix-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 14px 0;
+        color: #a0aec0;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .matrix-icon {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+
+    .nav-matrix-item:hover, .nav-matrix-item.active-state-node {
+        color: #ffffff;
+        transform: translateX(6px);
+    }
+
+    .nav-matrix-item.active-state-node {
+        color: #e67e22 !important;
+    }
+
+    .action-btn-shop-now {
+        background-color: #e67e22;
+        color: #ffffff;
+        padding: 16px 22px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: all 0.2s ease;
+    }
+
+        .action-btn-shop-now:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
         }
-</style>
+
+    .sidebar-institutional-footer {
+        margin-top: 35px;
+        font-size: 0.75rem;
+        color: #718096;
+        line-height: 1.6;
+    }
+
+    .extra-small-tag {
+        font-size: 0.65rem;
+    }
+
+    /* RIGHT WORKSPACE CONTEXT WITH BACKGROUND INTERFACING */
+    .dashboard-metric-workspace {
+        flex-grow: 1;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .scrimmed-hero-viewport {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, #160d08 18%, rgba(22, 13, 8, 0.35)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+    }
+
+    .workspace-interactive-layer {
+        position: relative;
+        z-index: 5;
+        padding: 45px 70px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .top-row-utility-bar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 35px;
+        margin-bottom: 75px;
+    }
+
+    .utility-node-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        opacity: 0.65;
+        transition: opacity 0.2s ease;
+    }
+
+        .utility-node-link:hover, .utility-node-link.active-panel-flag {
+            opacity: 1;
+            color: #e67e22;
+        }
+
+    .hero-typography-block .aesthetic-brand-divider {
+        width: 75px;
+        height: 4px;
+        background-color: #e67e22;
+        margin-bottom: 35px;
+    }
+
+    .hero-main-title {
+        font-size: 4.2rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin: 0 0 20px 0;
+        letter-spacing: -1px;
+    }
+
+    .hero-subtext-para {
+        font-size: 1.15rem;
+        color: #cbd5e0;
+        max-width: 520px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        font-weight: 300;
+    }
+
+    .session-termination-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #e67e22;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+        .session-termination-link:hover {
+            color: #ffffff;
+        }
+
+    /* CARD GRID SYSTEM ARCHITECTURE */
+    .metrics-structural-row-grid {
+        margin-top: auto;
+        display: grid;
+        grid-template
