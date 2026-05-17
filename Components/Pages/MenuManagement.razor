@@ -71,10 +71,13 @@
                     <tbody>
                         @if (MenuList != null && MenuList.Count > 0)
                         {
-                            @foreach (var item in MenuList)
+                            @for (int i = 0; i < MenuList.Count; i++)
                             {
+                                var item = MenuList[i];
+                                int serialNo = i + 1; // Fixed: UI numbers will always start from 1 sequentially
+
                                 <tr>
-                                    <td>#@item.Id</td>
+                                    <td>#@serialNo</td>
                                     <td class="font-bold-item">@item.ItemName</td>
                                     <td><span class="category-badge">@item.Category</span></td>
                                     <td class="price-highlight">Rs. @item.Price.ToString("N0")</td>
@@ -104,7 +107,6 @@
 @code {
     private List<MenuItemModel> MenuList = new();
     
-    // Form Bindings
     private int TargetId { get; set; }
     private string InputName { get; set; } = string.Empty;
     private string InputCategory { get; set; } = "Coffee";
@@ -128,7 +130,6 @@
             using MySqlConnection conn = new(connString);
             await conn.OpenAsync();
             
-            // FIXED: Changed ORDER BY to ASC so lists start sequentially from ID #1
             string query = "SELECT id, item_name, category, price FROM menu ORDER BY id ASC;";
             using MySqlCommand cmd = new(query, conn);
             using var reader = await cmd.ExecuteReaderAsync();
@@ -243,7 +244,7 @@
 }
 
 <style>
-    /* Layout styling elements remain exactly unchanged */
+    /* Styling elements remain completely identical */
     .dashboard-viewport-container {
         width: 100vw; height: 100vh; display: flex;
         background-color: #160d08; color: #ffffff;
