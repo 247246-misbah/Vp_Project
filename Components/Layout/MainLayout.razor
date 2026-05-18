@@ -2,41 +2,44 @@
 @inject NavigationManager Navigation
 
 @{
-    // Check karein ke user login page par hai ya nahi
+    // Check karein ke user login page ya profile page par hai ya nahi
     var isLoginPage = Navigation.Uri.Contains("/login") || Navigation.Uri.EndsWith("/");
+    var isProfilePage = Navigation.Uri.Contains("/profile");
+    
+    // Agar dono mein se koi bhi true ho, to layout elements hide karein
+    var hideSidebarAndHeader = isLoginPage || isProfilePage;
 }
 
 <div class="page">
-    @if (!isLoginPage)
+    @if (!hideSidebarAndHeader)
     {
         <div class="sidebar">
             <NavMenu />
         </div>
     }
 
-    <main class="@(isLoginPage ? "full-screen-login" : "")">
-        @if (!isLoginPage)
+    <main class="@(hideSidebarAndHeader ? "full-screen-layout" : "")">
+        @if (!hideSidebarAndHeader)
         {
             <div class="top-row px-4">
                 <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
             </div>
         }
 
-        <article class="@(isLoginPage ? "" : "content px-4")">
+        <article class="@(hideSidebarAndHeader ? "" : "content px-4")">
             @Body
         </article>
     </main>
 </div>
 
 <style>
-    /* Agar login page ho to saari default padding aur margins khatam karke center align karein */
-    .full-screen-login {
+    /* Login aur Profile pages ko saari default spacing khatam karke poori screen dega */
+    .full-screen-layout {
         width: 100vw !important;
         height: 100vh !important;
         margin: 0 !important;
         padding: 0 !important;
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        flex-direction: column !important;
     }
 </style>

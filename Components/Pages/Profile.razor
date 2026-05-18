@@ -4,18 +4,14 @@
 @inject IJSRuntime JSRuntime
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
+<nav class="simple-navbar">
+    <span class="navbar-project-name">Cafe Management System</span>
+    <a href="/dashboard" class="navbar-dashboard-btn">Dashboard</a>
+</nav>
+
 <div class="brown-minimal-viewport">
     <div class="edit-profile-centered-card">
         
-        <div class="avatar-top-floating-wrapper">
-            <div class="avatar-image-ring">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop" class="avatar-profile-img-node" alt="Female Admin Profile" />
-                <div class="avatar-edit-action-badge">
-                    <span>✏️</span>
-                </div>
-            </div>
-        </div>
-
         <h1 class="form-display-main-title">Edit Profile</h1>
 
         @if (!string.IsNullOrEmpty(DatabaseStatusFeedback))
@@ -79,91 +75,93 @@
 </div>
 
 <style>
-    /* SOLID MINIMAL CANVAS SYSTEM WITH EXPLICIT CENTERING SYSTEM */
-    .brown-minimal-viewport {
+    /* GLOBAL RESET HELPER FOR NAVBAR PLACEMENT */
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* SIMPLE NAVBAR SYSTEM */
+    .simple-navbar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh;
+        height: 60px;
+        background-color: #170a04;
+        border-bottom: 1px solid #2d180c;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        box-sizing: border-box;
+        z-index: 1000000;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .navbar-project-name {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.3px;
+    }
+
+    .navbar-dashboard-btn {
+        background-color: #5d2f13;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px 18px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+    }
+
+        .navbar-dashboard-btn:hover {
+            background-color: #7a3f1b;
+        }
+
+    /* VIEWPORT CONTEXT WRAPPER - FIXED TO REMOVE LEFT GAP */
+    .brown-minimal-viewport {
+        position: fixed; /* Forces page out of the underlying HTML structure template flow */
+        top: 60px; /* Starts cleanly right below the 60px navbar */
+        left: 0; /* Forces alignment back to absolute zero on the left edge */
+        right: 0;
+        bottom: 0;
+        width: 100vw; /* Explicitly claims full browser display real estate */
+        height: calc(100vh - 60px);
         background: linear-gradient(180deg, #1d0f08 0%, #170a04 100%);
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
-        padding: 40px;
+        overflow-y: auto;
+        padding: 40px 20px;
         box-sizing: border-box;
-        z-index: 999999;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* FULLY CENTERED WHITE CARD COMPONENT CONTEXT */
+    /* COMPACTED WHITE CARD COMPONENT */
     .edit-profile-centered-card {
         width: 100%;
-        max-width: 440px;
+        max-width: 380px;
         background: #ffffff;
-        border-radius: 40px;
-        box-shadow: 0 35px 90px rgba(0, 0, 0, 0.45);
-        padding: 70px 40px 45px 40px;
+        border-radius: 28px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+        padding: 30px 25px 30px 25px;
         box-sizing: border-box;
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    /* FULL ROUNDED FLOATING AVATAR IMAGE STRUCT */
-    .avatar-top-floating-wrapper {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        position: absolute;
-        top: -65px;
-        left: 0;
-    }
-
-    .avatar-image-ring {
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        background: #ffffff;
-        padding: 4px;
-        box-shadow: 0 12px 28px rgba(0,0,0,0.22);
-        position: relative;
-    }
-
-    .avatar-profile-img-node {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-        display: block;
-    }
-
-    .avatar-edit-action-badge {
-        position: absolute;
-        bottom: 4px;
-        right: 4px;
-        width: 32px;
-        height: 32px;
-        background-color: #1a5ca3;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 0.8rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-
     /* CARD CENTRAL EXPLICIT TYPOGRAPHY */
     .form-display-main-title {
-        font-size: 2.1rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: #000000;
         text-align: center;
-        margin: 25px 0 25px 0;
+        margin: 0 0 20px 0;
         letter-spacing: -0.5px;
     }
 
@@ -171,7 +169,7 @@
     .profile-input-fields-stack {
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        gap: 14px;
         width: 100%;
     }
 
@@ -183,35 +181,36 @@
     }
 
     .form-field-label {
-        font-size: 0.88rem;
+        font-size: 0.82rem;
         font-weight: 600;
         color: #929196;
-        margin-bottom: 6px;
-        text-align: center;
+        margin-bottom: 4px;
+        text-align: left;
         width: 100%;
+        padding-left: 4px;
     }
 
     /* SOLID DARK OUTLINE ROUNDED INPUT FIELDS */
     .profile-stroke-input-element {
         width: 100%;
         background-color: #ffffff;
-        border: 1.8px solid #333333;
-        border-radius: 14px;
-        padding: 12px 16px;
-        font-size: 1rem;
+        border: 1.5px solid #333333;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #000000;
         outline: none;
         box-sizing: border-box;
         transition: border-color 0.2s ease;
-        text-align: center;
+        text-align: left;
     }
 
         .profile-stroke-input-element:focus {
             border-color: #1a5ca3;
         }
 
-    /* FIXED SYMMETRIC PHONE FIELD CONTAINER LAYOUT */
+    /* FIXED PHONE FIELD LAYOUT */
     .phone-dropdown-input-inline-flex {
         display: block;
         position: relative;
@@ -223,38 +222,36 @@
         position: absolute;
         display: flex;
         align-items: center;
-        height: 48px;
-        padding-left: 20px;
+        height: 40px;
+        padding-left: 14px;
         user-select: none;
         pointer-events: none;
         z-index: 5;
     }
 
     .country-prefix-static-tag {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #333333;
-        margin-right: 5px;
+        margin-right: 4px;
     }
 
     .dropdown-arrow-indicator-node {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
         color: #777777;
     }
 
     .inline-phone-modifier {
-        padding-left: 70px !important;
-        padding-right: 70px !important;
-        text-align: center !important;
-        letter-spacing: 0.5px;
+        padding-left: 58px !important;
+        text-align: left !important;
     }
 
-    /* ACTION ALIGNMENT MATRIX PANEL HOUSING FOOTERS BUTTON */
+    /* SUBMISSION ROW FORM BUTTONS */
     .form-actions-submission-row-bar {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        margin-top: 15px;
+        gap: 10px;
+        margin-top: 10px;
         width: 100%;
     }
 
@@ -263,9 +260,9 @@
         background-color: #5d2f13;
         color: #ffffff;
         border: none;
-        border-radius: 14px;
-        padding: 15px;
-        font-size: 1rem;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 0.95rem;
         font-weight: 700;
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.2s ease;
@@ -281,9 +278,9 @@
         background-color: #f5f5f7;
         color: #555555;
         border: 1px solid #dddddd;
-        border-radius: 14px;
-        padding: 12px;
-        font-size: 0.98rem;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 0.92rem;
         font-weight: 600;
         cursor: pointer;
         transition: background-color 0.2s ease;
@@ -297,12 +294,12 @@
         background-color: #f0f7f4;
         border: 1px solid #d2e7de;
         color: #1e6b43;
-        padding: 12px;
-        border-radius: 12px;
-        font-size: 0.88rem;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 0.82rem;
         font-weight: 600;
         text-align: center;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         width: 100%;
         box-sizing: border-box;
     }
@@ -312,7 +309,7 @@
     private string Username { get; set; } = string.Empty;
     private string UserEmail { get; set; } = string.Empty;
     private string PhoneNumber { get; set; } = string.Empty;
-    private string PasswordHash { get; set; } = string.Empty; // Added Password string variable
+    private string PasswordHash { get; set; } = string.Empty;
 
     private string DatabaseStatusFeedback { get; set; } = string.Empty;
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
@@ -334,8 +331,6 @@
             using (MySqlConnection connection = new MySqlConnection(connString))
             {
                 await connection.OpenAsync();
-                
-                // Query incorporates fetching PasswordHash column data directly
                 string selectQuery = "SELECT Username, Email, PhoneNumber, PasswordHash FROM Users WHERE Role = 'Admin' LIMIT 1;";
                 
                 using (MySqlCommand cmd = new MySqlCommand(selectQuery, connection))
@@ -375,7 +370,6 @@
             {
                 await connection.OpenAsync();
 
-                // Update incorporates updating PasswordHash data block
                 string query = @"
                     UPDATE Users 
                     SET Email = @Email, 
@@ -396,7 +390,7 @@
 
                     if (rowsAffected > 0)
                     {
-                        DatabaseStatusFeedback = "✅ Profile changes committed to 'cafe_management' database successfully!";
+                        DatabaseStatusFeedback = "✅ Profile changes committed successfully!";
                     }
                     else
                     {
@@ -412,7 +406,7 @@
                             insertCmd.Parameters.AddWithValue("@PasswordHash", PasswordHash);
                             await insertCmd.ExecuteNonQueryAsync();
                         }
-                        DatabaseStatusFeedback = "✅ New Admin profile initialized in Database!";
+                        DatabaseStatusFeedback = "✅ New Admin profile initialized!";
                     }
                 }
             }
