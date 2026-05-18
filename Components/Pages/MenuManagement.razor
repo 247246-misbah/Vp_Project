@@ -1,6 +1,7 @@
 ﻿@page "/menu-management"
 @using System.Data
 @using MySql.Data.MySqlClient
+@inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
@@ -280,7 +281,7 @@
     .menu-scroll-panel { overflow-y: auto; background-color: #1a110a; }
     
     .menu-header-row { margin-bottom: 30px; }
-    .menu-main-title { font-size: 2.5rem; font-weight: 800; color: #ffffff; margin: 0 0 8px 0; }
+    .menu-main-title { font-size: 2.0rem; font-weight: 800; color: #ffffff; margin: 0 0 8px 0; }
 
     .status-alert-banner {
         background-color: rgba(230, 126, 34, 0.15); border: 1px solid #e67e22;

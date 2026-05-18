@@ -2,133 +2,256 @@
 @using System.Data
 @using MySql.Data.MySqlClient
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 @rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
 
-<div class="dashboard-viewport-container">
+<div class="dashboard-viewport-container fluid-scroll @(isLightTheme ? "light-theme-mode" : "")">
     
     <aside class="sidebar-brand-panel">
-        <div class="brand-header-node">
-            <div class="brand-avatar-glyph"><span>☕</span></div>
-            <h2 class="brand-logo-text">CAFE COVE</h2>
+        <div class="brand-container-top">
+            <div class="brand-header-node">
+                <div class="brand-avatar-glyph"><span>☕</span></div>
+                <h2 class="brand-logo-text">CAFE COVE</h2>
+            </div>
+            <ul class="navigation-matrix-list">
+                <li class="nav-matrix-item @(!showReviews ? "active-state-node" : "")" @onclick="SwitchToHomeView">
+                    <span class="matrix-icon">🏠</span> Home
+                </li>
+                <li class="nav-matrix-item" @onclick="NavigateToMenu">
+                    <span class="matrix-icon">🍳</span> Menu
+                </li>
+                <li class="nav-matrix-item" @onclick="NavigateToProfile">
+                    <span class="matrix-icon">👤</span> Profile
+                </li>
+                <li class="nav-matrix-item" @onclick="NavigateToPos">
+                    <span class="matrix-icon">🛒</span> POS Billing
+                </li>
+                <li class="nav-matrix-item @(showReviews ? "active-state-node" : "")" @onclick="SwitchToReviewsView">
+                    <span class="matrix-icon">💬</span> Reviews
+                </li>
+            </ul>
         </div>
-        <ul class="navigation-matrix-list">
-            <li class="nav-matrix-item active-state-node">
-                <span class="matrix-icon">🏠</span> Home
-            </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/menu-management")'>
-                <span class="matrix-icon">🍳</span> Menu
-            </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/profile")'>
-                <span class="matrix-icon">👤</span> Profile
-            </li>
-            <li class="nav-matrix-item" @onclick='() => Navigation.NavigateTo("/pos")'>
-                <span class="matrix-icon">🛒</span> POS Billing
-            </li>
-        </ul>
+
+        <div class="sidebar-quick-settings">
+            <div class="settings-separator"></div>
+            <span class="settings-title">🎛️ SYSTEM CONTROLS</span>
+            
+            <div class="settings-row">
+                <span class="settings-label">Server Sync</span>
+                <span class="status-indicator @(isDbConnected ? "online" : "offline")">
+                    <span class="indicator-dot"></span> @(isDbConnected ? "ONLINE" : "OFFLINE")
+                </span>
+            </div>
+
+            <div class="settings-row">
+                <span class="settings-label">Display Mode</span>
+                <button type="button" class="accent-toggle-btn" @onclick="ToggleThemeMode">
+                    @(isLightTheme ? "🌙 DARK THEME" : "☀️ LIGHT THEME")
+                </button>
+            </div>
+        </div>
     </aside>
 
-    <main class="dashboard-metric-workspace menu-scroll-panel background-blend-cover">
+    <main class="dashboard-metric-workspace background-blend-cover">
         
         <div class="top-utility-bar">
-            <div class="logout-trigger" @onclick='() => Navigation.NavigateTo("/logout")'>
-                <span class="logout-dot"></span> LOGOUT
+            <div class="logout-box-container" @onclick="NavigateToLogin">
+                <span class="logout-icon-glyph"></span>
+                <span class="logout-text-node">LOGOUT</span>
             </div>
         </div>
 
-        <div class="workspace-interactive-layer">
-            <div class="welcome-hero-block">
-                <div class="accent-line-node"></div>
-                <h1 class="welcome-main-title">Welcome Back,<br />Administrator!</h1>
-                <p class="welcome-subtext">
-                    Your virtual coffee station system management metrics are loaded<br />
-                    and synchronized for peak performance.
-                </p>
-            </div>
-
-            <div class="metrics-cards-grid">
-                
-                <div class="metric-data-card clickable-card" @onclick='() => Navigation.NavigateTo("/pos")'>
-                    <span class="card-meta-label">ACTIVE ORDERS</span>
-                    <div class="card-numeric-display text-amber">@ActiveOrdersCount</div>
-                    <span class="card-context-subtext">Currently in queue (Pending) ➜</span>
+        <div class="workspace-interactive-layer fluid-container">
+            
+            @if (!showReviews)
+            {
+                <div class="welcome-hero-block">
+                    <div class="accent-line-node"></div>
+                    <h1 class="welcome-main-title">Welcome Back,<br />Administrator!</h1>
                 </div>
 
-                <div class="metric-data-card">
-                    <span class="card-meta-label">DAILY REVENUE</span>
-                    <div class="card-numeric-display text-orange">Rs. @DailyRevenue.ToString("N0")</div>
-                    <span class="card-context-subtext">Total gross from completed orders</span>
+                <div class="metrics-cards-grid">
+                    <div class="metric-data-card clickable-card" @onclick="NavigateToPos">
+                        <span class="card-meta-label">ACTIVE ORDERS</span>
+                        <div class="card-numeric-display text-amber">@ActiveOrdersCount</div>
+                        <span class="card-context-subtext">Currently in queue (Pending) ➜</span>
+                    </div>
+
+                    <div class="metric-data-card">
+                        <span class="card-meta-label">DAILY REVENUE</span>
+                        <div class="card-numeric-display text-orange">Rs. @DailyRevenue.ToString("N0")</div>
+                        <span class="card-context-subtext">Total gross from completed orders</span>
+                    </div>
+
+                    <div class="metric-data-card clickable-card" @onclick="NavigateToMenu">
+                        <span class="card-meta-label">TOTAL MENU ITEMS</span>
+                        <div class="card-numeric-display text-emerald">@TotalMenuItemsCount</div>
+                        <span class="card-context-subtext">Configured recipes in system ➜</span>
+                    </div>
                 </div>
 
-                <div class="metric-data-card clickable-card" @onclick='() => Navigation.NavigateTo("/menu-management")'>
-                    <span class="card-meta-label">TOTAL MENU ITEMS</span>
-                    <div class="card-numeric-display text-emerald">@TotalMenuItemsCount</div>
-                    <span class="card-context-subtext">Configured recipes in system ➜</span>
-                </div>
-
-            </div>
-
-            <div class="queue-section-container">
-                <h3 class="queue-table-title">⏱️ Live Production Order Queue</h3>
-                <div class="menu-table-container">
-                    <table class="custom-admin-table">
-                        <thead>
-                            <tr>
-                                <th>Token ID</th>
-                                <th>Customer Name</th>
-                                <th>Bill Amount</th>
-                                <th>Status</th>
-                                <th style="text-align: center;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (PendingOrdersList != null && PendingOrdersList.Count > 0)
-                            {
-                                @foreach (var order in PendingOrdersList)
+                <div class="queue-section-container">
+                    <h3 class="queue-table-title">⏱️ Live Production Order Queue</h3>
+                    <div class="menu-table-container">
+                        <table class="custom-admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Token ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Bill Amount</th>
+                                    <th>Status</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (PendingOrdersList != null && PendingOrdersList.Count > 0)
+                                {
+                                    @foreach (var order in PendingOrdersList)
+                                    {
+                                        <tr>
+                                            <td class="font-bold-item" style="color: #e67e22;">#00@(order.Id)</td>
+                                            <td class="font-bold-item">@order.CustomerName</td>
+                                            <td class="price-highlight">Rs. @order.TotalAmount.ToString("N0")</td>
+                                            <td><span class="status-badge-pending">@order.Status</span></td>
+                                            <td>
+                                                <div class="table-action-buttons">
+                                                    <button type="button" class="action-complete-btn" @onclick="() => CompleteOrderTransaction(order.Id, order.TotalAmount)">
+                                                        ✔ Complete Order
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-                                        <td class="font-bold-item" style="color: #e67e22;">#00@(order.Id)</td>
-                                        <td class="font-bold-item">@order.CustomerName</td>
-                                        <td class="price-highlight">Rs. @order.TotalAmount.ToString("N0")</td>
-                                        <td><span class="status-badge-pending">@order.Status</span></td>
-                                        <td>
-                                            <div class="table-action-buttons">
-                                                <button class="action-complete-btn" @onclick="() => CompleteOrderTransaction(order.Id)">
-                                                    ✔ Complete Order
-                                                </button>
-                                            </div>
+                                        <td colspan="5" style="text-align: center; color: #a0aec0; padding: 30px; background: #ffffff;">
+                                            🎉 No active orders in the production queue. All clear!
                                         </td>
                                     </tr>
                                 }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="5" style="text-align: center; color: #a0aec0; padding: 30px; background: #ffffff;">
-                                        🎉 No active orders in the production queue. All clear!
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="welcome-hero-block">
+                    <div class="accent-line-node"></div>
+                    <h1 class="welcome-main-title">Customer Feedback<br />& Inquiries</h1>
+                </div>
+
+                <div class="reviews-section-structure">
+                    <h3 class="queue-table-title reviews-title">📬 Message Inbox</h3>
+                    
+                    <div class="reviews-cards-grid">
+                        @if (CustomerQueriesList != null && CustomerQueriesList.Count > 0)
+                        {
+                            @foreach (var q in CustomerQueriesList)
+                            {
+                                <div class="feedback-data-card">
+                                    <div class="card-meta-block">
+                                        <div class="card-avatar-initials">
+                                            <span>@(q.Name.Length > 0 ? q.Name[0].ToString().ToUpper() : "?")</span>
+                                        </div>
+                                        <div class="card-user-details">
+                                            <span class="feedback-username">@q.Name</span>
+                                            <span class="feedback-email-badge">@q.Email</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-message-body">
+                                        <span class="quote-glyph-open">“</span>
+                                        <p class="feedback-text">@q.Message</p>
+                                        <span class="quote-glyph-close">”</span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="empty-reviews-state">
+                                <span class="empty-glyph">📥</span>
+                                <p>No customer reviews or messages found inside database table 'query' yet.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
 
         </div>
     </main>
 </div>
 
 @code {
+    private bool showReviews { get; set; } = false;
+    private bool isDbConnected { get; set; } = false;
+    private bool isLightTheme { get; set; } = false;
+
     private int ActiveOrdersCount { get; set; } = 0;
     private decimal DailyRevenue { get; set; } = 0;
     private int TotalMenuItemsCount { get; set; } = 0;
     
     private List<OrderModel> PendingOrdersList = new();
+    private List<QueryModel> CustomerQueriesList = new();
     
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
+    private int CurrentRevenueRecordId { get; set; } = 0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var savedTheme = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "appThemeMode");
+            if (!string.IsNullOrEmpty(savedTheme))
+            {
+                isLightTheme = (savedTheme == "light");
+                StateHasChanged();
+            }
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        DailyRevenue = 0;
+        await InitializeDailyRevenueRecord();
         await LoadDashboardMetrics();
+    }
+
+    private async Task InitializeDailyRevenueRecord()
+    {
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+            
+            string insertSql = "INSERT INTO daily_revenue (amount_generated) VALUES (0); SELECT LAST_INSERT_ID();";
+            using (MySqlCommand cmd = new(insertSql, conn))
+            {
+                CurrentRevenueRecordId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+            }
+        }
+        catch (Exception){}
+    }
+
+    private async Task ToggleThemeMode()
+    {
+        isLightTheme = !isLightTheme;
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "appThemeMode", isLightTheme ? "light" : "dark");
+    }
+
+    private void NavigateToMenu() => Navigation.NavigateTo("/menu-management");
+    private void NavigateToProfile() => Navigation.NavigateTo("/profile");
+    private void NavigateToPos() => Navigation.NavigateTo("/pos");
+    private void NavigateToLogin() => Navigation.NavigateTo("/login");
+
+    private void SwitchToHomeView() => showReviews = false;
+
+    private async Task SwitchToReviewsView()
+    {
+        showReviews = true;
+        await LoadCustomerQueries();
     }
 
     private async Task LoadDashboardMetrics()
@@ -138,17 +261,12 @@
         {
             using MySqlConnection conn = new(connString);
             await conn.OpenAsync();
+            isDbConnected = true;
 
             string countQuery = "SELECT COUNT(*) FROM orders WHERE status = 'Pending';";
             using (MySqlCommand cmd = new(countQuery, conn))
             {
                 ActiveOrdersCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-            }
-
-            string revenueQuery = "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status = 'Completed';";
-            using (MySqlCommand cmd = new(revenueQuery, conn))
-            {
-                DailyRevenue = Convert.ToDecimal(await cmd.ExecuteScalarAsync());
             }
 
             string itemsQuery = "SELECT COUNT(*) FROM menu;";
@@ -175,17 +293,44 @@
         }
         catch (Exception)
         {
-            // Intermittent DB Fallback simulation data
-            ActiveOrdersCount = 2;
-            DailyRevenue = 450;
-            TotalMenuItemsCount = 8;
-            
-            PendingOrdersList.Add(new OrderModel { Id = 1, CustomerName = "Zainab (Mock)", TotalAmount = 250, Status = "Pending" });
-            PendingOrdersList.Add(new OrderModel { Id = 2, CustomerName = "Ali (Mock)", TotalAmount = 200, Status = "Pending" });
+            isDbConnected = false;
+            ActiveOrdersCount = 1;
+            TotalMenuItemsCount = 12;
+            PendingOrdersList.Add(new OrderModel { Id = 8, CustomerName = "Eman Arif", TotalAmount = 830, Status = "Pending" });
         }
     }
 
-    private async Task CompleteOrderTransaction(int orderId)
+    private async Task LoadCustomerQueries()
+    {
+        CustomerQueriesList.Clear();
+        try
+        {
+            using MySqlConnection conn = new(connString);
+            await conn.OpenAsync();
+
+            string selectSql = "SELECT name, email, message FROM query ORDER BY id DESC;";
+            using (MySqlCommand cmd = new(selectSql, conn))
+            {
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    CustomerQueriesList.Add(new QueryModel
+                    {
+                        Name = reader.IsDBNull(reader.GetOrdinal("name")) ? "" : reader.GetString("name"),
+                        Email = reader.IsDBNull(reader.GetOrdinal("email")) ? "" : reader.GetString("email"),
+                        Message = reader.IsDBNull(reader.GetOrdinal("message")) ? "" : reader.GetString("message")
+                    });
+                }
+            }
+        }
+        catch (Exception)
+        {
+            CustomerQueriesList.Add(new QueryModel { Name = "Sarah Ahmed", Email = "sarah@gmail.com", Message = "Loved the cozy space!" });
+            CustomerQueriesList.Add(new QueryModel { Name = "Zain Malik", Email = "zain@gmail.com", Message = "Excellent customer service and environment." });
+        }
+    }
+
+    private async Task CompleteOrderTransaction(int orderId, decimal orderAmount)
     {
         try
         {
@@ -199,12 +344,22 @@
                 await cmd.ExecuteNonQueryAsync();
             }
 
+            DailyRevenue += orderAmount;
+
+            if (CurrentRevenueRecordId > 0)
+            {
+                string updateRevenueSql = "UPDATE daily_revenue SET amount_generated = @Amount WHERE id = @RecordId;";
+                using (MySqlCommand revenueCmd = new(updateRevenueSql, conn))
+                {
+                    revenueCmd.Parameters.AddWithValue("@Amount", DailyRevenue);
+                    revenueCmd.Parameters.AddWithValue("@RecordId", CurrentRevenueRecordId);
+                    await revenueCmd.ExecuteNonQueryAsync();
+                }
+            }
+
             await LoadDashboardMetrics();
         }
-        catch (Exception)
-        {
-            // Failure safety handling logic channel
-        }
+        catch (Exception){}
     }
 
     public class OrderModel
@@ -214,100 +369,189 @@
         public decimal TotalAmount { get; set; }
         public string Status { get; set; } = string.Empty;
     }
+
+    public class QueryModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+    }
 }
 
 <style>
-    /* Framework Design Layout Styling - Remained Consistent */
-    .dashboard-viewport-container {
-        width: 100vw; height: 100vh; display: flex;
-        background-color: #160d08; color: #ffffff;
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        margin: 0; padding: 0; overflow: hidden;
-        position: fixed; top: 0; left: 0; z-index: 999;
-    }
-
-    .sidebar-brand-panel {
-        width: 320px; height: 100%; background-color: #120a06;
-        padding: 50px 35px; display: flex; flex-direction: column;
-        border-right: 1px solid rgba(230, 126, 34, 0.12); box-sizing: border-box;
-    }
-
-    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 55px; }
-    .brand-avatar-glyph {
-        width: 40px; height: 40px; background: linear-gradient(135deg, #e67e22, #d35400);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-    }
+    .dashboard-viewport-container { width: 100vw; height: 100vh; display: flex; background-color: #160d08; color: #ffffff; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; overflow: hidden; position: fixed; top: 0; left: 0; z-index: 999; transition: background 0.3s ease, color 0.3s ease; }
+    .fluid-scroll { overflow-y: auto; }
+    .sidebar-brand-panel { width: 320px; height: 100%; background-color: #120a06; padding: 45px 35px 30px 35px; display: flex; flex-direction: column; border-right: 1px solid rgba(230, 126, 34, 0.12); box-sizing: border-box; justify-content: space-between; }
+    .brand-container-top { width: 100%; display: flex; flex-direction: column; }
+    .brand-header-node { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+    .brand-avatar-glyph { width: 40px; height: 40px; background: linear-gradient(135deg, #e67e22, #d35400); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     .brand-logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: 1.5px; margin: 0; color: #ffffff; }
-
-    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
-    .nav-matrix-item {
-        display: flex; align-items: center; gap: 15px; padding: 14px 0;
-        color: #a0aec0; font-size: 0.85rem; font-weight: 700;
-        text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.25s ease;
-    }
-    .matrix-icon { width: 20px; font-size: 1rem; opacity: 0.8; text-align: center; display: inline-block; }
-    .nav-matrix-item:hover { color: #ffffff; transform: translateX(6px); }
-    .nav-matrix-item.active-state-node { color: #e67e22 !important; }
-
+    .navigation-matrix-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+    .nav-matrix-item { display: flex; align-items: center; gap: 16px; padding: 12px 14px; color: #cbd5e0; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; border-radius: 8px; transition: all 0.2s ease; }
+    .matrix-icon { width: 32px; height: 32px; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; }
+    .nav-matrix-item.active-state-node { color: #e67e22 !important; background: rgba(230, 126, 34, 0.06); }
+    .nav-matrix-item.active-state-node .matrix-icon { background: linear-gradient(135deg, #e67e22, #d35400); color: #fff; }
+    .sidebar-quick-settings { display: flex; flex-direction: column; gap: 14px; margin-top: auto; width: 100%; }
+    .settings-separator { height: 1px; background: rgba(255, 255, 255, 0.06); width: 100%; margin-bottom: 10px; }
+    .settings-title { font-size: 0.68rem; font-weight: 800; color: #718096; letter-spacing: 1.5px; }
+    .settings-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 600; }
+    .settings-label { color: #cbd5e0; }
+    .status-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; }
+    .indicator-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .status-indicator.online { color: #2ecc71; }
+    .status-indicator.online .indicator-dot { background-color: #2ecc71; }
+    .status-indicator.offline { color: #e74c3c; }
+    .status-indicator.offline .indicator-dot { background-color: #e74c3c; }
+    .accent-toggle-btn { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255,255,255,0.08); color: #e67e22; padding: 6px 12px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; }
     .dashboard-metric-workspace { flex-grow: 1; position: relative; display: flex; flex-direction: column; }
-    .menu-scroll-panel { overflow-y: auto; background-color: #1a110a; }
-    
-    .background-blend-cover {
-        background-image: linear-gradient(to right, #1a110a 35%, rgba(26, 17, 10, 0.75) 70%, rgba(26, 17, 10, 0.4)), url('images/coffee-bg.jpg');
-        background-size: cover; background-position: center right;
-    }
-
-    .top-utility-bar { height: 60px; display: flex; align-items: center; justify-content: flex-end; padding: 0 60px; margin-top: 10px; }
-    .logout-trigger {
-        display: flex; align-items: center; gap: 10px; color: #e67e22; font-size: 0.8rem;
-        font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: opacity 0.2s;
-    }
-    .logout-trigger:hover { opacity: 0.8; }
-    .logout-dot { width: 8px; height: 8px; border: 2px solid #e74c3c; border-radius: 50%; display: inline-block; }
-
+    .background-blend-cover { background-image: linear-gradient(to right, #1a110a 35%, rgba(26, 17, 10, 0.75) 70%, rgba(26, 17, 10, 0.4)), url('images/coffee-bg.jpg'); background-size: cover; background-position: center right; }
+    .top-utility-bar { height: 60px; display: flex; align-items: center; justify-content: flex-end; padding: 0 70px; margin-top: 20px; }
     .workspace-interactive-layer { flex-grow: 1; padding: 0px 70px 40px 70px; display: flex; flex-direction: column; }
-    
     .welcome-hero-block { margin-bottom: 40px; }
     .accent-line-node { width: 60px; height: 4px; background-color: #e67e22; margin-bottom: 20px; }
-    .welcome-main-title { font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin: 0 0 15px 0; letter-spacing: -1px; }
-    .welcome-subtext { font-size: 1rem; color: #cbd5e0; line-height: 1.6; opacity: 0.85; margin: 0; }
-
+    .welcome-main-title { font-size: 2.0rem; font-weight: 800; line-height: 1.2; margin: 0; letter-spacing: -0.5px; }
     .metrics-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1050px; margin-bottom: 45px; }
-    
-    .metric-data-card {
-        background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px; padding: 25px 22px; backdrop-filter: blur(12px);
-        display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;
-    }
-    
-    .clickable-card { cursor: pointer; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+    .metric-data-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 14px; padding: 25px 22px; backdrop-filter: blur(12px); display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; }
+    .clickable-card { cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
     .clickable-card:hover { transform: translateY(-5px); border-color: #e67e22; background: rgba(230, 126, 34, 0.05); }
-
-    .card-meta-label { font-size: 0.75rem; font-weight: 700; color: #a0aec0; letter-spacing: 1.5px; text-transform: uppercase; }
-    .card-numeric-display { font-size: 2.4rem; font-weight: 800; margin: 4px 0; }
-    
+    .card-meta-label { font-size: 0.75rem; font-weight: 700; color: #a0aec0; letter-spacing: 1.5px; }
+    .card-numeric-display { font-size: 2.4rem; font-weight: 800; }
     .text-amber { color: #e67e22; }
     .text-orange { color: #d35400; }
     .text-emerald { color: #2ecc71; }
-    .card-context-subtext { font-size: 0.8rem; color: #718096; font-weight: 500; }
-
+    .card-context-subtext { font-size: 0.8rem; color: #718096; }
     .queue-section-container { max-width: 1050px; width: 100%; }
-    .queue-table-title { font-size: 1.2rem; color: #e67e22; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; margin-top: 0; }
-    
+    .queue-table-title { font-size: 1.2rem; color: #e67e22; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
     .menu-table-container { background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
     .custom-admin-table { width: 100%; border-collapse: collapse; text-align: left; color: #333333; font-size: 0.95rem; }
-    .custom-admin-table th { background: #120a06; color: #ffffff; padding: 14px 20px; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
-    .custom-admin-table td { padding: 14px 20px; border-bottom: 1px solid #edf2f7; background: #ffffff; vertical-align: middle; }
-    
+    .custom-admin-table th { background: #120a06; color: #ffffff; padding: 14px 20px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; }
+    .custom-admin-table td { padding: 14px 20px; border-bottom: 1px solid #edf2f7; background: #ffffff; }
     .font-bold-item { font-weight: 700; color: #1a110a; }
     .price-highlight { color: #e67e22; font-weight: 700; }
+    .status-badge-pending { background: rgba(230, 126, 34, 0.12); color: #e67e22; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    .action-complete-btn { background: #2ecc71; border: none; color: #fff; padding: 6px 14px; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    .logout-box-container { display: flex; align-items: center; gap: 10px; background: rgba(230, 126, 34, 0.1); border: 1px solid rgba(230, 126, 34, 0.3); padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .logout-box-container:hover { background: #e67e22; transform: translateY(-2px); }
+    .logout-text-node { color: #e67e22; font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; }
+    .logout-box-container:hover .logout-text-node { color: #ffffff !important; }
+
+    /* Light Theme Styling Blocks */
+    .light-theme-mode { background-color: #f7f5f2 !important; color: #2d3748 !important; }
+    .light-theme-mode .sidebar-brand-panel { background-color: #ffffff !important; border-right: 1px solid #e2e8f0 !important; }
+    .light-theme-mode .brand-logo-text { color: #1a202c !important; }
+    .light-theme-mode .nav-matrix-item { color: #4a5568 !important; }
+    .light-theme-mode .nav-matrix-item.active-state-node { color: #d35400 !important; background: rgba(211, 84, 0, 0.06) !important; }
+    .light-theme-mode .metric-data-card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; }
+    .light-theme-mode .background-blend-cover { background-image: linear-gradient(to right, #f7f5f2 40%, rgba(247, 245, 242, 0.85) 75%, rgba(247, 245, 242, 0.6)), url('images/coffee-bg.jpg') !important; }
     
-    .status-badge-pending { background: rgba(230, 126, 34, 0.12); color: #e67e22; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-    
-    .table-action-buttons { display: flex; gap: 10px; }
-    .action-complete-btn {
-        background: #2ecc71; border: none; color: #fff; padding: 6px 14px;
-        border-radius: 4px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: background 0.2s;
+    /* Horizontal Cards Layout Grid (Premium Style Alignment) */
+    .reviews-cards-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+        gap: 24px !important;
+        max-width: 1050px !important;
+        width: 100% !important;
+        margin-top: 20px !important;
     }
-    .action-complete-btn:hover { background: #27ae60; }
+
+    .feedback-data-card {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.07) !important;
+        border-radius: 16px !important;
+        padding: 24px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        box-sizing: border-box !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    .feedback-data-card:hover {
+        transform: translateY(-4px) !important;
+        border-color: rgba(230, 126, 34, 0.3) !important;
+    }
+
+    .card-meta-block {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+    }
+
+    .card-avatar-initials {
+        width: 44px !important;
+        height: 44px !important;
+        background: linear-gradient(135deg, #e67e22, #d35400) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.15rem !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 8px rgba(230, 126, 34, 0.2) !important;
+    }
+
+    .card-user-details {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+    }
+
+    .feedback-username {
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+    }
+
+    .light-theme-mode .feedback-username {
+        color: #1a202c !important;
+    }
+
+    .feedback-email-badge {
+        font-size: 0.78rem !important;
+        color: #a0aec0 !important;
+    }
+
+    .card-message-body {
+        position: relative !important;
+        padding: 5px 0 0 0 !important;
+    }
+
+    .feedback-text {
+        font-size: 0.94rem !important;
+        line-height: 1.5 !important;
+        color: #e2e8f0 !important;
+        margin: 0 !important;
+        font-style: italic !important;
+    }
+
+    .light-theme-mode .feedback-text {
+        color: #4a5568 !important;
+    }
+
+    .quote-glyph-open, .quote-glyph-close {
+        color: rgba(230, 126, 34, 0.3) !important;
+        font-size: 1.5rem !important;
+        font-weight: bold !important;
+        line-height: 0 !important;
+        display: inline-block !important;
+    }
+    
+    .quote-glyph-open { vertical-align: bottom !important; margin-right: 2px !important; }
+    .quote-glyph-close { vertical-align: top !important; margin-left: 2px !important; }
+
+    .empty-reviews-state {
+        grid-column: 1 / -1 !important;
+        text-align: center !important;
+        padding: 50px !important;
+        color: #a0aec0 !important;
+    }
+
+    .empty-glyph {
+        font-size: 3rem !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
 </style>

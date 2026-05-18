@@ -1,0 +1,10 @@
+﻿@page "/logout"
+@inject NavigationManager Navigation
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Agar aapne session clear karne ka koi method lagana ho to yahan lag sakta hai
+        Navigation.NavigateTo("/login");
+    }
+}
