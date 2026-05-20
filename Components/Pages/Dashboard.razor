@@ -197,7 +197,6 @@
     private List<QueryModel> CustomerQueriesList = new();
     
     private string connString = "Server=localhost;Database=cafe_management;Uid=root;Pwd=;";
-    private int CurrentRevenueRecordId { get; set; } = 0;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -214,25 +213,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        DailyRevenue = 0;
-        await InitializeDailyRevenueRecord();
+        DailyRevenue = 0; // Local counter initialization
         await LoadDashboardMetrics();
-    }
-
-    private async Task InitializeDailyRevenueRecord()
-    {
-        try
-        {
-            using MySqlConnection conn = new(connString);
-            await conn.OpenAsync();
-            
-            string insertSql = "INSERT INTO daily_revenue (amount_generated) VALUES (0); SELECT LAST_INSERT_ID();";
-            using (MySqlCommand cmd = new(insertSql, conn))
-            {
-                CurrentRevenueRecordId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-            }
-        }
-        catch (Exception){}
     }
 
     private async Task ToggleThemeMode()
@@ -344,18 +326,8 @@
                 await cmd.ExecuteNonQueryAsync();
             }
 
+            // Database logic dropped, local application state tracks the amount smoothly
             DailyRevenue += orderAmount;
-
-            if (CurrentRevenueRecordId > 0)
-            {
-                string updateRevenueSql = "UPDATE daily_revenue SET amount_generated = @Amount WHERE id = @RecordId;";
-                using (MySqlCommand revenueCmd = new(updateRevenueSql, conn))
-                {
-                    revenueCmd.Parameters.AddWithValue("@Amount", DailyRevenue);
-                    revenueCmd.Parameters.AddWithValue("@RecordId", CurrentRevenueRecordId);
-                    await revenueCmd.ExecuteNonQueryAsync();
-                }
-            }
 
             await LoadDashboardMetrics();
         }
