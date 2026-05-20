@@ -78,9 +78,9 @@
                     </div>
 
                     <div class="metric-data-card">
-                        <span class="card-meta-label">DAILY REVENUE</span>
+                        <span class="card-meta-label">LIVE REVENUE</span>
                         <div class="card-numeric-display text-orange">Rs. @DailyRevenue.ToString("N0")</div>
-                        <span class="card-context-subtext">Total gross from completed orders</span>
+                        <span class="card-context-subtext">Total from this session</span>
                     </div>
 
                     <div class="metric-data-card clickable-card" @onclick="NavigateToMenu">
@@ -190,7 +190,10 @@
     private bool isLightTheme { get; set; } = false;
 
     private int ActiveOrdersCount { get; set; } = 0;
-    private decimal DailyRevenue { get; set; } = 0;
+    
+    // Purely in-memory runtime static variable (Resets ONLY when app is completely rerun)
+    private static decimal DailyRevenue { get; set; } = 0;
+
     private int TotalMenuItemsCount { get; set; } = 0;
     
     private List<OrderModel> PendingOrdersList = new();
@@ -213,7 +216,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        DailyRevenue = 0; // Local counter initialization
         await LoadDashboardMetrics();
     }
 
@@ -257,6 +259,7 @@
                 TotalMenuItemsCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
 
+            // Standard safe queue fetch (only checks pending status from orders table)
             string queueQuery = "SELECT id, customer_name, total_amount, status FROM orders WHERE status = 'Pending' ORDER BY id ASC;";
             using (MySqlCommand cmd = new(queueQuery, conn))
             {
@@ -273,8 +276,9 @@
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine($"Database Error: {ex.Message}");
             isDbConnected = false;
             ActiveOrdersCount = 1;
             TotalMenuItemsCount = 12;
@@ -326,12 +330,15 @@
                 await cmd.ExecuteNonQueryAsync();
             }
 
-            // Database logic dropped, local application state tracks the amount smoothly
+            // Directly increment static revenue variable instantly!
             DailyRevenue += orderAmount;
 
             await LoadDashboardMetrics();
         }
-        catch (Exception){}
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Transaction Error: {ex.Message}");
+        }
     }
 
     public class OrderModel
@@ -351,6 +358,7 @@
 }
 
 <style>
+    /* CSS code (Bilkul same aur pure dark/light functionality) */
     .dashboard-viewport-container { width: 100vw; height: 100vh; display: flex; background-color: #160d08; color: #ffffff; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; overflow: hidden; position: fixed; top: 0; left: 0; z-index: 999; transition: background 0.3s ease, color 0.3s ease; }
     .fluid-scroll { overflow-y: auto; }
     .sidebar-brand-panel { width: 320px; height: 100%; background-color: #120a06; padding: 45px 35px 30px 35px; display: flex; flex-direction: column; border-right: 1px solid rgba(230, 126, 34, 0.12); box-sizing: border-box; justify-content: space-between; }
@@ -407,7 +415,6 @@
     .logout-text-node { color: #e67e22; font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; }
     .logout-box-container:hover .logout-text-node { color: #ffffff !important; }
 
-    /* Light Theme Styling Blocks */
     .light-theme-mode { background-color: #f7f5f2 !important; color: #2d3748 !important; }
     .light-theme-mode .sidebar-brand-panel { background-color: #ffffff !important; border-right: 1px solid #e2e8f0 !important; }
     .light-theme-mode .brand-logo-text { color: #1a202c !important; }
@@ -416,114 +423,21 @@
     .light-theme-mode .metric-data-card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; }
     .light-theme-mode .background-blend-cover { background-image: linear-gradient(to right, #f7f5f2 40%, rgba(247, 245, 242, 0.85) 75%, rgba(247, 245, 242, 0.6)), url('images/coffee-bg.jpg') !important; }
     
-    /* Horizontal Cards Layout Grid (Premium Style Alignment) */
-    .reviews-cards-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
-        gap: 24px !important;
-        max-width: 1050px !important;
-        width: 100% !important;
-        margin-top: 20px !important;
-    }
-
-    .feedback-data-card {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.07) !important;
-        border-radius: 16px !important;
-        padding: 24px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 14px !important;
-        box-sizing: border-box !important;
-        backdrop-filter: blur(10px) !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-        transition: transform 0.2s ease !important;
-    }
-
-    .feedback-data-card:hover {
-        transform: translateY(-4px) !important;
-        border-color: rgba(230, 126, 34, 0.3) !important;
-    }
-
-    .card-meta-block {
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-    }
-
-    .card-avatar-initials {
-        width: 44px !important;
-        height: 44px !important;
-        background: linear-gradient(135deg, #e67e22, #d35400) !important;
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        font-size: 1.15rem !important;
-        border-radius: 50% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-shadow: 0 2px 8px rgba(230, 126, 34, 0.2) !important;
-    }
-
-    .card-user-details {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2px !important;
-    }
-
-    .feedback-username {
-        font-size: 1.05rem !important;
-        font-weight: 600 !important;
-        color: #ffffff !important;
-    }
-
-    .light-theme-mode .feedback-username {
-        color: #1a202c !important;
-    }
-
-    .feedback-email-badge {
-        font-size: 0.78rem !important;
-        color: #a0aec0 !important;
-    }
-
-    .card-message-body {
-        position: relative !important;
-        padding: 5px 0 0 0 !important;
-    }
-
-    .feedback-text {
-        font-size: 0.94rem !important;
-        line-height: 1.5 !important;
-        color: #e2e8f0 !important;
-        margin: 0 !important;
-        font-style: italic !important;
-    }
-
-    .light-theme-mode .feedback-text {
-        color: #4a5568 !important;
-    }
-
-    .quote-glyph-open, .quote-glyph-close {
-        color: rgba(230, 126, 34, 0.3) !important;
-        font-size: 1.5rem !important;
-        font-weight: bold !important;
-        line-height: 0 !important;
-        display: inline-block !important;
-    }
-    
+    .reviews-cards-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important; gap: 24px !important; max-width: 1050px !important; width: 100% !important; margin-top: 20px !important; }
+    .feedback-data-card { background: rgba(255, 255, 255, 0.03) !important; border: 1px solid rgba(255, 255, 255, 0.07) !important; border-radius: 16px !important; padding: 24px !important; display: flex !important; flex-direction: column !important; gap: 14px !important; box-sizing: border-box !important; backdrop-filter: blur(10px) !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important; transition: transform 0.2s ease !important; }
+    .feedback-data-card:hover { transform: translateY(-4px) !important; border-color: rgba(230, 126, 34, 0.3) !important; }
+    .card-meta-block { display: flex !important; align-items: center !important; gap: 12px !important; }
+    .card-avatar-initials { width: 44px !important; height: 44px !important; background: linear-gradient(135deg, #e67e22, #d35400) !important; color: #ffffff !important; font-weight: 700 !important; font-size: 1.15rem !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; box-shadow: 0 2px 8px rgba(230, 126, 34, 0.2) !important; }
+    .card-user-details { display: flex !important; flex-direction: column !important; gap: 2px !important; }
+    .feedback-username { font-size: 1.05rem !important; font-weight: 600 !important; color: #ffffff !important; }
+    .light-theme-mode .feedback-username { color: #1a202c !important; }
+    .feedback-email-badge { font-size: 0.78rem !important; color: #a0aec0 !important; }
+    .card-message-body { position: relative !important; padding: 5px 0 0 0 !important; }
+    .feedback-text { font-size: 0.94rem !important; line-height: 1.5 !important; color: #e2e8f0 !important; margin: 0 !important; font-style: italic !important; }
+    .light-theme-mode .feedback-text { color: #4a5568 !important; }
+    .quote-glyph-open, .quote-glyph-close { color: rgba(230, 126, 34, 0.3) !important; font-size: 1.5rem !important; font-weight: bold !important; line-height: 0 !important; display: inline-block !important; }
     .quote-glyph-open { vertical-align: bottom !important; margin-right: 2px !important; }
     .quote-glyph-close { vertical-align: top !important; margin-left: 2px !important; }
-
-    .empty-reviews-state {
-        grid-column: 1 / -1 !important;
-        text-align: center !important;
-        padding: 50px !important;
-        color: #a0aec0 !important;
-    }
-
-    .empty-glyph {
-        font-size: 3rem !important;
-        display: block !important;
-        margin-bottom: 10px !important;
-    }
+    .empty-reviews-state { grid-column: 1 / -1 !important; text-align: center !important; padding: 50px !important; color: #a0aec0 !important; }
+    .empty-glyph { font-size: 3rem !important; display: block !important; margin-bottom: 10px !important; }
 </style>
