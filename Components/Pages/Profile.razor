@@ -17,18 +17,22 @@
         @if (!string.IsNullOrEmpty(DatabaseStatusFeedback))
         {
             <div class="execution-feedback-toast-node">
-                @if (DatabaseStatusFeedback.Contains("✅"))
-                {
-                    <span>✅ @DatabaseStatusFeedback.Substring(2)</span>
-                }
-                else if (DatabaseStatusFeedback.Contains("❌"))
-                {
-                    <span>❌ @DatabaseStatusFeedback.Substring(2)</span>
-                }
-                else
-                {
-                    <span>@DatabaseStatusFeedback</span>
-                }
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    @if (DatabaseStatusFeedback.Contains("successfully") || DatabaseStatusFeedback.Contains("initialized") || DatabaseStatusFeedback.Contains("loaded"))
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg>
+                        <span>@DatabaseStatusFeedback.Replace("✅", "").Trim()</span>
+                    }
+                    else
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                        </svg>
+                        <span>@DatabaseStatusFeedback.Replace("❌", "").Replace("⚠️", "").Trim()</span>
+                    }
+                </div>
             </div>
         }
 
@@ -122,14 +126,14 @@
             background-color: #7a3f1b;
         }
 
-    /* VIEWPORT CONTEXT WRAPPER - FIXED TO REMOVE LEFT GAP */
+    /* VIEWPORT CONTEXT WRAPPER */
     .brown-minimal-viewport {
-        position: fixed; /* Forces page out of the underlying HTML structure template flow */
-        top: 60px; /* Starts cleanly right below the 60px navbar */
-        left: 0; /* Forces alignment back to absolute zero on the left edge */
+        position: fixed;
+        top: 60px;
+        left: 0;
         right: 0;
         bottom: 0;
-        width: 100vw; /* Explicitly claims full browser display real estate */
+        width: 100vw;
         height: calc(100vh - 60px);
         background: linear-gradient(180deg, #1d0f08 0%, #170a04 100%);
         display: flex;
@@ -190,7 +194,7 @@
         padding-left: 4px;
     }
 
-    /* SOLID DARK OUTLINE ROUNDED INPUT FIELDS */
+    /* SOLID INPUT FIELDS */
     .profile-stroke-input-element {
         width: 100%;
         background-color: #ffffff;
@@ -207,10 +211,10 @@
     }
 
         .profile-stroke-input-element:focus {
-            border-color: #1a5ca3;
+            border-color: #5d2f13;
         }
 
-    /* FIXED PHONE FIELD LAYOUT */
+    /* PHONE FIELD LAYOUT */
     .phone-dropdown-input-inline-flex {
         display: block;
         position: relative;
@@ -246,7 +250,7 @@
         text-align: left !important;
     }
 
-    /* SUBMISSION ROW FORM BUTTONS */
+    /* FORM BUTTONS */
     .form-actions-submission-row-bar {
         display: flex;
         flex-direction: column;
@@ -290,19 +294,24 @@
             background-color: #eaeaea;
         }
 
+    /* DYNAMIC NOTIFICATION ALERT BOX STYLING */
     .execution-feedback-toast-node {
-        background-color: #f0f7f4;
-        border: 1px solid #d2e7de;
-        color: #1e6b43;
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 0.82rem;
+        background-color: #fdfaf7;
+        border: 1px solid #f3e5da;
+        color: #5d2f13;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
         font-weight: 600;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 16px;
         width: 100%;
         box-sizing: border-box;
     }
+    
+        .execution-feedback-toast-node svg {
+            flex-shrink: 0;
+        }
 </style>
 
 @code {
@@ -339,15 +348,15 @@
                     {
                         if (await reader.ReadAsync())
                         {
-                            Username = reader["Username"]?.ToString() ?? "@sabrina";
-                            UserEmail = reader["Email"]?.ToString() ?? "sabrina@cafe.com";
+                            Username = reader["Username"]?.ToString() ?? "admin";
+                            UserEmail = reader["Email"]?.ToString() ?? "admin@cafe.com";
                             PhoneNumber = reader["PhoneNumber"]?.ToString() ?? "";
                             PasswordHash = reader["PasswordHash"]?.ToString() ?? "";
-                            DatabaseStatusFeedback = "✅ Profile loaded from database.";
+                            DatabaseStatusFeedback = "Profile loaded from database successfully.";
                         }
                         else
                         {
-                            DatabaseStatusFeedback = "⚠️ No existing Admin record found. Enter details and click Save Changes.";
+                            DatabaseStatusFeedback = "No existing Admin record found. Enter details and click Save Changes.";
                         }
                     }
                 }
@@ -355,7 +364,7 @@
         }
         catch (Exception ex)
         {
-            DatabaseStatusFeedback = $"❌ System Error Loading Profile: {ex.Message}";
+            DatabaseStatusFeedback = $"System Error Loading Profile: {ex.Message}";
         }
     }
 
@@ -363,7 +372,7 @@
     {
         try
         {
-            DatabaseStatusFeedback = "🔄 Synchronizing data with Database server...";
+            DatabaseStatusFeedback = "Synchronizing data with Database server...";
             await Task.Delay(200);
 
             using (MySqlConnection connection = new MySqlConnection(connString))
@@ -390,7 +399,7 @@
 
                     if (rowsAffected > 0)
                     {
-                        DatabaseStatusFeedback = "✅ Profile changes committed successfully!";
+                        DatabaseStatusFeedback = "Profile changes committed successfully!";
                     }
                     else
                     {
@@ -406,14 +415,14 @@
                             insertCmd.Parameters.AddWithValue("@PasswordHash", PasswordHash);
                             await insertCmd.ExecuteNonQueryAsync();
                         }
-                        DatabaseStatusFeedback = "✅ New Admin profile initialized!";
+                        DatabaseStatusFeedback = "New Admin profile initialized successfully!";
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            DatabaseStatusFeedback = $"❌ Critical System Error: {ex.Message}";
+            DatabaseStatusFeedback = $"Critical System Error: {ex.Message}";
         }
     }
 }

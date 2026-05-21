@@ -7,7 +7,10 @@
 
 <header class="top-glass-navbar">
     <div class="nav-brand-side" @onclick='() => NavTo("/login")' style="cursor: pointer;">
-        <span class="nav-brand-icon">☕</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup-hot-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-.99A.5.5 0 0 0 13.5 6zM13 12.5a2 2 0 0 1-.316-.025l.867-3.898A2.001 2.001 0 0 1 13 12.5"/>
+  <path d="m4.4.8-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 3.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 3.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 3 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 4.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 6.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 6.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 6 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 7.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.252.382l-.019.025-.005.008-.002.002A.5.5 0 0 1 9.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 9.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 9 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 10.4.8"/>
+</svg>
         <span class="nav-brand-text">CAFE COVE</span>
     </div>
     
@@ -36,7 +39,10 @@
             <div class="contact-card-form-wrapper">
                 <div class="form-header-row">
                     <h2 class="form-main-title">GET IN TOUCH</h2>
-                    <div class="coffee-bag-icon">🤎</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-heart" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 3.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+</svg>
                 </div>
 
                 @if (!string.IsNullOrEmpty(SubmissionFeedback))
@@ -68,7 +74,9 @@
                 
                 <div class="meta-info-strip-grid">
                     <div class="info-strip-item">
-                        <span class="strip-icon-node">📍</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+</svg>
                         <div class="strip-text-block">
                             <p class="info-line-text header-title">Main Food Street, Kharian</p>
                             <p class="info-line-text sub-description">Open Daily: 9 AM – 11 PM</p>
@@ -76,14 +84,18 @@
                     </div>
 
                     <div class="info-strip-item">
-                        <span class="strip-icon-node">✉️</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-heart-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 3.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+</svg>
                         <div class="strip-text-block">
                             <p class="info-line-text">cafecove@gmail.com</p>
                         </div>
                     </div>
 
                     <div class="info-strip-item">
-                        <span class="strip-icon-node">📞</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+</svg>
                         <div class="strip-text-block">
                             <p class="info-line-text">+92 123 4567890</p>
                         </div>
@@ -97,7 +109,9 @@
                     </div>
                     <div class="map-render-canvas-area">
                         <div class="map-pin-indicator">
-                            <span class="pin-marker-glyph" style="display: inline-block; transition: transform 0.3s ease;">📍</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+</svg>
                             <div class="pin-tooltip-box">
                                 <strong>Air University</strong><br/>Kharian Campus
                             </div>
@@ -173,236 +187,3 @@
     }
 }
 
-<style>
-    .top-glass-navbar {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 70px;
-        background: rgba(18, 10, 6, 0.6);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 50px;
-        box-sizing: border-box;
-        z-index: 10000;
-    }
-
-    .nav-brand-side {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .nav-brand-icon { font-size: 1.4rem; }
-
-    .nav-brand-text {
-        color: #ffffff;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        font-size: 1.2rem;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .nav-links-side {
-        display: flex;
-        align-items: center;
-        gap: 35px;
-    }
-
-    .portal-nav-link {
-        background: none; border: none;
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 600;
-        opacity: 0.75;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        padding: 0;
-    }
-
-    .portal-nav-link:hover, .portal-nav-link.active-panel-flag {
-        opacity: 1;
-        color: #e67e22;
-    }
-
-    .contact-viewport-container {
-        width: 100vw; height: 100vh;
-        display: flex;
-        background-color: #160d08;
-        color: #ffffff;
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        margin: 0; padding: 0;
-        overflow: hidden;
-        position: fixed; 
-        top: 0; left: 0;
-        padding-top: 70px; 
-        box-sizing: border-box;
-    }
-
-    .contact-content-workspace {
-        flex-grow: 1;
-        overflow-y: auto;
-        height: 100%;
-        background-color: #1a110a;
-    }
-
-    .contact-hero-section {
-        height: 450px;
-        background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600&auto=format&fit=crop') no-repeat center center;
-        background-size: cover;
-        position: relative;
-    }
-    .hero-overlay {
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex; align-items: center; justify-content: center; text-align: center;
-    }
-    .hero-top-tag { color: #e67e22; font-weight: 600; letter-spacing: 3px; font-size: 0.9rem; }
-    .hero-display-title { font-size: 3.5rem; font-weight: 800; margin: 15px 0; line-height: 1.1; }
-    .aesthetic-divider { width: 80px; height: 4px; background: #e67e22; margin: 20px auto; }
-
-    .contact-layout-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        padding: 80px 70px;
-        background: #ffffff;
-        color: #333;
-        align-items: start;
-        gap: 50px;
-    }
-
-    .contact-card-form-wrapper {
-        background-color: #120a06;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 40px;
-        color: #fff;
-    }
-
-    .form-header-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .form-main-title {
-        font-size: 1.8rem;
-        color: #fff;
-        font-weight: 800;
-        margin: 0;
-    }
-
-    .coffee-bag-icon { font-size: 2rem; }
-
-    .submission-feedback-toast {
-        background-color: rgba(230, 126, 34, 0.15);
-        border: 1px solid #e67e22;
-        color: #ffffff;
-        padding: 12px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .interactive-input-form {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    .custom-form-control {
-        width: 100%;
-        background-color: #1a100a;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 6px;
-        padding: 14px 18px;
-        color: #ffffff;
-        font-size: 0.95rem;
-        outline: none;
-        box-sizing: border-box;
-    }
-
-    .custom-form-control:focus { border-color: #e67e22; }
-    .location-textarea { resize: none; }
-
-    .btn-send-message {
-        background: #b68d68; 
-        color: white; border: none;
-        padding: 14px; font-weight: 600; 
-        cursor: pointer; border-radius: 6px;
-        text-transform: uppercase; letter-spacing: 1px;
-        transition: background-color 0.2s ease;
-    }
-    .btn-send-message:hover { background: #9d7553; }
-
-    .contact-meta-details-wrapper { padding-top: 10px; }
-    .details-section-title {
-        font-size: 1.8rem; color: #1a110a;
-        font-weight: 800; margin-top: 0; margin-bottom: 25px;
-    }
-
-    .meta-info-strip-grid {
-        display: flex; flex-direction: column;
-        gap: 20px; margin-bottom: 30px;
-    }
-    .info-strip-item { display: flex; align-items: center; gap: 15px; }
-    .strip-icon-node { font-size: 1.4rem; color: #e67e22; }
-    .strip-text-block { display: flex; flex-direction: column; }
-    .info-line-text { font-size: 0.95rem; color: #555; margin: 0; }
-    .info-line-text.header-title { font-weight: 700; color: #1a110a; }
-    .info-line-text.sub-description { font-size: 0.85rem; color: #777; }
-
-    .map-embed-mock-container {
-        border-radius: 8px; overflow: hidden;
-        border: 1px solid #e0e0e0; background-color: #ffffff;
-    }
-    .map-action-tabs-bar {
-        background-color: #f5f5f5; padding: 6px 12px;
-        display: flex; gap: 8px; border-bottom: 1px solid #e0e0e0;
-    }
-    .map-tab-btn {
-        background: none; border: none; font-size: 0.75rem;
-        font-weight: 600; padding: 4px 10px; cursor: pointer; color: #666666;
-    }
-    .map-tab-btn.active-map-tab {
-        background-color: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        border-radius: 4px; color: #000000;
-    }
-
-    .map-render-canvas-area {
-        height: 180px; background-color: #e5e3df;
-        position: relative;
-    }
-    .map-pin-indicator {
-        position: absolute; top: 40%; left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex; flex-direction: column; align-items: center;
-    }
-    
-    .pin-tooltip-box {
-        background-color: #ffffff; padding: 6px 10px;
-        border-radius: 4px; font-size: 0.7rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        white-space: nowrap; margin-top: 4px; border: 1px solid #ddd;
-    }
-    .map-controls-mock {
-        position: absolute; bottom: 10px; right: 10px;
-        display: flex; flex-direction: column; border-radius: 4px; overflow: hidden;
-    }
-    .zoom-mock-btn {
-        background-color: #ffffff; border: none;
-        width: 24px; height: 24px; font-size: 1rem;
-        font-weight: bold; cursor: pointer; color: #555;
-        display: flex; align-items: center; justify-content: center;
-        border-bottom: 1px solid #eee;
-    }
-</style>
